@@ -8,6 +8,10 @@
     "homepage",
     "boeblingen"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ullumullu/cf_homepage.git"
+  },
   "scripts": {
     "predeploy": "grunt build",
     "start": "node ./build/bin/www"
@@ -33,5 +37,6 @@
     "grunt-processhtml": "^0.3.3",
     "grunt-usemin": "^2.1.1",
     "open": "0.0.5"
-  }
+  },
+  "license": "MIT"
 }
