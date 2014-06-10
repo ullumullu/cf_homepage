@@ -1,0 +1,15 @@
+# Ignore configuration files that may contain sensitive inf
+
+# Ignore paths that contain generated content.
+build/
+node_modules/
+
+# Ignore default text files
+robots.txt
+/CHANGELOG.txt
+/COPYRIGHT.txt
+/INSTALL*.txt
+/LICENSE.txt
+/MAINTAINERS.txt
+/UPGRADE.txt
+/README.txt

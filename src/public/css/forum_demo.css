@@ -1,0 +1,231 @@
+/* Forum Demo CSS */
+
+
+/* STYLES FOR OVERALL LAYOUT */
+body {
+	background-image: url(./../img/home_background2.jpg);
+	background-position: center center;
+	background-repeat: no-repeat;
+    background-size: cover;
+	background-attachment:fixed;
+}
+
+.search-container {
+  position: relative;
+}
+
+.bgblurred {
+	background-image: url(./../img/home_background2.jpg);
+	background-position: center center;
+	background-repeat: no-repeat;
+    background-size: cover;
+	background-attachment:fixed;
+	
+	z-index: 1;
+	
+	position:absolute;
+	width:100%;
+	height:100%;
+	-webkit-filter: blur(13px);
+	-moz-filter: blur(13px);
+	-o-filter: blur(13px);
+	-ms-filter: blur(13px);
+	filter: blur(13px);
+}
+
+.bgblurred_content {
+	z-index: 100;
+	position: relative;
+	background: rgba(34,34,34,0.55);
+	width:100%;
+	height:100%;
+}
+
+/* TEXT STYLES */
+
+.navigationStyle {
+	font-family: 'Ubuntu',Helvetica,Arial,sans-serif;
+	font-size: 25px;
+	font-weight: 700;
+	color: white;
+	float:center;
+	text-decoration: none;
+	padding: 12px 15px;
+	text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.contentStyle {
+	font-family: 'Ubuntu',Helvetica,Arial,sans-serif;
+	font-size: 20px;
+	font-weight: 400;
+	color: white;
+	float:center;
+	text-decoration: none;
+	padding: 12px 15px;
+	text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.footerStyle {
+	font-family: 'Source Sans Pro',Helvetica,Arial,sans-serif;
+	font-size: 12px;
+	font-weight: 400;
+	color: #F6EDEC;
+	float:center;
+	text-decoration: none;
+	padding: 8px 8px
+	margin: 0;
+}
+
+.wellcome_quote {
+	font-family: 'Ubuntu',Helvetica,Arial,sans-serif;
+	font-size: 40px;
+	font-weight: 400;
+	color: #f1d1aa;
+	line-height:2em;
+	float:center;
+	text-decoration: none;
+	margin-top: 10%;
+	padding: 12px 15px;
+	text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* HEADER STYLES */
+
+#header {
+	background-color: inherit;
+	overflow: hidden;
+}
+
+/* NAVIGATION STYLES */
+
+#navigation {
+	background-color: inherit;
+	overflow: hidden;
+}
+
+#navigation > nav {
+	float:left;
+	margin-top: 5%;
+	margin-left: 5%;
+	background-color: black;
+	float: left;
+	position:fixed;
+	width: 300 px;
+}
+
+
+
+.selected {
+	color: black;
+}
+
+.navigationStyle:hover {
+	color: red;
+}
+
+nav  {
+}
+
+nav li {
+	border-style: solid;
+	border-width: 0;
+}
+
+nav > ul > li {
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	border-right-width: 1px;
+	border-color: white;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+nav > ul > li:first-child {
+	padding-top: 7px;
+}
+
+nav > ul > li:last-child {
+	padding-bottom: 7px;
+}
+
+
+/* FOOTER STYLES */
+
+#footer {
+	background-color: inherit;
+	overflow: hidden;
+	border-top: white;
+	border-top-style: solid;
+	border-width: 1px;
+}
+
+
+
+
+/* GENERAL STYLES */
+h1 {
+	font-family: 'Source Sans Pro',Helvetica,Arial,sans-serif;
+}
+
+p { 
+	font-family: 'Source Sans Pro',Helvetica,Arial,sans-serif;
+	margin: 0;
+}
+
+dl, ol, ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	list-style-image: none;
+}
+
+/* MAINCONTENT STYLES */
+
+#maincontent {
+	position:relative;
+	overflow: hidden;
+	max-width: 70%;
+	margin-left: 22.2188% !important;
+	border-left-style: solid;
+	border-width: 3px;
+	border-color: whitesmoke;
+}
+
+#newsticker {
+	float: left;
+	background-color: inherit;
+	width: 70%;
+}
+
+#infobar_right {
+	float: left;
+	width: 30%;
+	height: 400px;
+	background-color: inherit;
+}
+
+/* CLEARFIX */
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+ 
+.clearfix {
+    display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+    display: block;
+}
+ 
+* html .clearfix {
+    height: 1%;
+}
+
+
