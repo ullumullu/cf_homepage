@@ -1,8 +1,10 @@
 # Ignore configuration files that may contain sensitive inf
+certificates/*
 
 # Ignore paths that contain generated content.
 build/
 node_modules/
+data/
 
 # Ignore default text files
 robots.txt

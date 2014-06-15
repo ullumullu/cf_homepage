@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Club Forum Admin Area</title>
+	<script type="text/javascript" src="../../js/libs/tinymce.min.js"></script>
+	<script type="text/javascript">
+		tinymce.init({
+		    selector: "textarea.tiny",
+		    plugins: [
+		        "advlist autolink lists link image charmap print preview anchor",
+		        "searchreplace visualblocks code fullscreen",
+		        "insertdatetime media table contextmenu paste"
+		    ],
+		    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+		});
+	</script>
+</head>
+<body>
+<div class="container-fluid>
+	<form method="post" enctype="application/x-www-form-urlencoded" action="/articles">
+		<h1>Add New Post </h1>
+
+		<h4>Title </h4>
+		<div class="input-group">
+		  <span class="input-group-addon"></span>
+		  <input type="text" class="form-control" placeholder="Enter title here" />
+		</div>
+		<h4>Abstract </h4>
+		<div class="input-group">
+			<span class="input-group-addon"></span>
+	    	<textarea  class="form-control" rows="3"></textarea>
+	    </div>
+		<h4>Content </h4>
+	    <textarea class="tiny"></textarea>
+	</form>
+</div>
+
+<!-- build:remove:build -->
+<script src="//localhost:35729/livereload.js"></script>
+<!--  /build  -->
+</body>
+</html>

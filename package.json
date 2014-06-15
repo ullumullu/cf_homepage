@@ -17,9 +17,17 @@
     "start": "node ./build/bin/www"
   },
   "dependencies": {
+    "bcrypt": "^0.7.8",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.3.1",
+    "compression": "^1.0.7",
+    "cookie-parser": "^1.1.0",
     "debug": "^1.0.1",
     "express": "^4.4.1",
-    "hbs": "^2.7.0"
+    "express-session": "^1.3.1",
+    "hbs": "^2.7.0",
+    "mongoose": "^3.8.12",
+    "node-gyp": "^0.13.1"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -35,6 +43,7 @@
     "grunt-nodemon": "^0.2.1",
     "grunt-open": "^0.2.3",
     "grunt-processhtml": "^0.3.3",
+    "grunt-shell-spawn": "^0.3.0",
     "grunt-usemin": "^2.1.1",
     "open": "0.0.5"
   },

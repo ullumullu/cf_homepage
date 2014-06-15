@@ -51,7 +51,7 @@ module.exports = function(grunt) {
 
     concurrent: {
       dev: {
-        tasks: ['nodemon:dev', 'watch'],
+        tasks: ['shell:devdb', 'nodemon:dev', 'watch'],
         options: {
           logConcurrentOutput: true
         }
@@ -144,6 +144,21 @@ module.exports = function(grunt) {
       },
     },
 
+	shell: {
+	  devdb: {
+	      command: 'mongod --dbpath ./data/db',
+	      options: {
+	          async: false,
+	          stdout: false,
+	          stderr: true,
+	          failOnError: true,
+	          execOptions: {
+	              cwd: '.'
+	          }
+	       }
+	    }
+	},
+
     uglify: {
       options:{
         // banner to be put on the top of the minified file using package name and todays date
@@ -222,6 +237,9 @@ module.exports = function(grunt) {
 
     // Load the plugin that provides the "concurrent" task.
   grunt.loadNpmTasks('grunt-concurrent');
+
+  // Load the plugin that provides the "grunt-shell-spawn" task.
+  grunt.loadNpmTasks('grunt-shell-spawn');
 
   // Stylesheets task(s)
   grunt.registerTask(
