@@ -5,7 +5,8 @@ module.exports = function(grunt) {
   var globalConfig = {
     src: 'src', // <%= globalConfig.src %>
     staticfiles: 'public', // <%= globalConfig.staticfiles %>
-    dest: 'build' // <%= globalConfig.dest %>
+    dest: 'build', // <%= globalConfig.dest %>
+    dbpath: './data/db'
   }
 
   // Project configuration.
@@ -146,7 +147,7 @@ module.exports = function(grunt) {
 
 	shell: {
 	  devdb: {
-	      command: 'mongod --dbpath ./data/db',
+	      command: 'mongod --dbpath <%= globalConfig.dbpath %>',
 	      options: {
 	          async: false,
 	          stdout: false,

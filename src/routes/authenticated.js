@@ -1,17 +1,21 @@
+// App configuration files
+var env = process.env.NODE_ENV || 'development',
+    config = require('../config/config.'+env+'.js');
+    
 var express = require('express');
 var router = express.Router();
+
+var routesutil = require('./routesutil.js');
 
 var cfDB = require('../lib/ForumDB.js');
 var usermgmt = require('../lib/usermanagement.js');
 
-var JSONPREFIX = ")]}',\n";
-
 var requirehttps = function(request, response, next) {
 	if(request.protocol === 'https') {
-		console.log('ITS HTTPS!!!');
+		console.log('RESULT: HTTPS');
 		next();
 	} else {
-		console.log('ITS HTTP!!!');
+		console.log('RESULT: HTTP');
 		// THis is not the "correct" way... however it is more than sufficient for our needs
 		var err = new Error('Forbidden');
 		err.status = 403;
@@ -19,11 +23,13 @@ var requirehttps = function(request, response, next) {
 	}
 };
 
-router.all('*', requirehttps);
+if(config.ssl.enabled) {
+	router.all('*', requirehttps);
+}
 
 router.get("/",  function(request, response) {
    	if(request.session.authenticated) {
-		response.redirect('area', 302);
+		response.redirect('adminarea/area', 302);
 	} else {
 		response.render('adminarea/login_adminarea');
 	}
@@ -31,7 +37,7 @@ router.get("/",  function(request, response) {
 
 router.get("/login",  function(request, response) {
 	if(request.session.authenticated) {
-		response.redirect('area', 302);
+		response.redirect('adminarea/area', 302);
 	} else {
 		response.render('adminarea/login_adminarea');
 	}
@@ -42,12 +48,9 @@ router.post("/login",  function(request, response) {
 	var password = request.param('password', null);
 	usermgmt.authenticate(loginname, password, function(isAuthenticated) {
 		if(isAuthenticated) {
-			
 			request.session.authenticated = true;
 			request.session.loginname =  loginname;
-			console.log(request.session.cookie.maxAge);
 			response.redirect('area', 302);
-			// TODO do the authentication
 			console.log("AUTHENTICATED");
 		} else {
 			response.render('adminarea/login_adminarea', {errorMsg : "Wrong Username and/or Password!"});
@@ -65,15 +68,15 @@ var requireAuthentication = function(request, response, next) {
 		err.status = 401;
 		next(err);
 	}
-	
 };
 
-
-router.all('*', requireAuthentication);
+if(config.requiresauthentication) {
+  router.all('*', requireAuthentication);	
+}
 
 /* GET new article page. */
 router.get('/area', function(request, response) {
-   response.render('adminarea/adminarea');
+  	response.render('adminarea/adminarea');
 });
 
 router.get('/homeContent', function(request, response) {
@@ -85,8 +88,7 @@ router.get('/homeContent', function(request, response) {
 		    		'Content-Type': 'application/json',
 		    		'Cache-Control': 'no-cache'
 		    	});
-		    var body = JSONPREFIX + JSON.stringify(home[0]);
-		    response.send(body);
+		    routesutil.sendJson(request, response, home[0]);
 		} else {
 			console.log('Nothing found for Home!');
 		}
@@ -106,26 +108,129 @@ router.post('/homeContent', function(request, response) {
 				    response.set({
 				    		'Content-Type': 'application/json',
 				    		'Cache-Control': 'no-cache'
-				    	});	
-			var body = JSONPREFIX + JSON.stringify({status:"OK"});
-		    response.send(body);
+				    	});
+		    routesutil.sendJson(request, response, {status:"OK"});
 		} else {
 			response.status(500);
 		    response.set({
 		    		'Content-Type': 'application/json',
 		    		'Cache-Control': 'no-cache'
 		    	});	
-			var body = JSONPREFIX + JSON.stringify({status:"ERROR UPDATE"});
-		    response.send(body);
+		    routesutil.sendJson(request, response, {status:"ERROR UPDATE"});
 		}
 	});
 
 
 });
 
-router.post('/articles', function(request, response) {
-    response.writeHead(200, "OK", {'Content-Type': 'text/html'});
-    response.end();
+/**
+*	--- ARTICLES API ---
+*   Allowed commands: PUT, POST, GET, DELETE
+*/
+
+/**
+* Get articles
+*/
+router.get('/managearticles/articles', function(request, response) {
+	var articlesModel =  cfDB.articlesmodel;
+	articlesModel.find({})
+	.sort({'date': -1})
+	.exec(function (err, articles) {
+			if(articles) {
+			    routesutil.sendJson(request, response, {articles: articles});
+			} else {
+				response.status(404);
+				routesutil.sendJson(request, response, {articles: articles});
+			}
+		});
+});
+
+/**
+* This is a brand new article
+*/
+router.post('/managearticles/articles', function(request, response) {
+
+	var body = request.body;
+	// Ceate the new document
+	var articlesModel =  cfDB.articlesmodel;
+	var newArticle = new articlesModel(body);
+	// And store it into the DB
+	newArticle.save(function(err, newArticle) {
+		if(!err) {
+		   response.status(200);
+		    response.set({
+		    		'Content-Type': 'application/json',
+		    		'Cache-Control': 'no-cache'
+		    	});
+			// :TODO: Strip down to the essentials!
+			routesutil.sendJson(request, response, newArticle);
+		} else {
+			response.status(500);
+		    response.set({
+		    		'Content-Type': 'application/json',
+		    		'Cache-Control': 'no-cache'
+		    	});	
+		    routesutil.sendJson(request, response, {status:"ERROR CREATE"}); 
+		}
+	});
+});
+
+
+/**
+* And this is an update 
+*/
+router.put('/managearticles/articles/:articleID', function(request, response) {
+   var body = request.body;
+	console.log(body);
+	var id = request.params.articleID;
+
+	var articlesmodel =  cfDB.articlesmodel;
+	articlesmodel.findByIdAndUpdate(id, body, function (err, updatedArticle) {
+		if(updatedArticle) {
+		    response.status(200);
+				    response.set({
+				    		'Content-Type': 'application/json',
+				    		'Cache-Control': 'no-cache'
+				    	});
+		    routesutil.sendJson(request, response, updatedArticle);
+		} else {
+			response.status(500);
+		    response.set({
+		    		'Content-Type': 'application/json',
+		    		'Cache-Control': 'no-cache'
+		    	});	
+		    routesutil.sendJson(request, response, {status:"ERROR UPDATE"});
+		}
+	});
+});
+
+router.delete('/managearticles/articles/:articleID', function(request, response) {
+    console.log("ID " + request.params.articleID);
+   
+    	response.status(200);
+		    response.set({
+		    	'Status': 'OK'
+		    });
+		    response.send();
+		/* FOR TESTING THE REAL DELETION IS "DEACTIVATED"
+    var articlesModel =  cfDB.articlesmodel;
+	articlesModel.remove({ _id: request.params.articleID}, function (err) {
+		if(!err) {
+			response.status(200);
+		    response.set({
+		    	'Status': 'OK'
+		    });
+		    response.send();
+		} else {
+			response.status(404);
+		    response.set({
+		    	'Status': 'File not found yo!'
+		    });
+		    response.send();
+		}
+
+	});
+*/
 });
 
 module.exports = router;

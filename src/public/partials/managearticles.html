@@ -1,4 +1,76 @@
-<div class="container-fluid">
- TODO MANAGE ALL ARTICLES
- <a href="#managearticles/thisarticle"> CLICK </a>
+<div class="container-fluid" style="max-height:100vh; overflow: none; display:block">
+ 	<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
+	<div id="errmessages" class="alert alert-danger alert-dismissable" data-ng-show="errmessages">
+		<button type="button" class="close" ng-click="errmessages = undefined">&times;</button>
+		<span data-ng-bind="errmessages"></span>
+	</div>
+ 	<div class="row">
+ 		<div class="col-md-4">
+ 			<div class="panel panel-default">
+ 				<div class="panel-heading">
+ 					<div style="clear:none;display:inline-block;">
+ 						<h4 style="margin: 5px;">Articles</h4>
+ 					</div> 
+ 					<div style="float:right;">
+	 					<a href="#managearticles/newarticle" style="text-decoration: none">
+	 					<button>
+	 		 				<span class="glyphicon glyphicon-plus"> </span>		
+	 		 			</button>
+	 		 			</a>
+	 		 			<button ng-click="deleteArticle()">
+	 		 				<span class="glyphicon glyphicon-minus"> </span>		
+	 		 			</button>	
+	 				</div>
+				</div> 
+				<div class="panel-body" style="padding:0px; overflow:none; height: 77vh">
+				  	<div class="input-group">
+				      <input type="text" class="form-control"  name="s" placeholder="Search" value="" ng-model="searchText">
+				      <span class="input-group-btn">
+				        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+				      </span>
+				  	</div><!-- /input-group -->
+					<div class="list-group jscrollpane" style="margin:0px;">
+					  <a class="list-group-item from-bottom-to-top" ng-repeat="article in articles | listOfArticlesFilter:searchText"
+					  ng-click="select(article)" ng-class="{active: article == selected}"  >
+					    <h4 class="list-group-item-heading">{{article.title}}{{article.status=='Draft' ? ' - Draft' : ''}}</h4>
+					    <p style="clear:both" class="list-group-item-text">{{article.date | date:'medium' }}</p>
+					    <p class="list-group-item-text">{{article.author}}</p>
+					    <div style="float:right; position:absolute; right:5px; bottom:5px;">
+					    	<span class="glyphicon glyphicon-bullhorn" ng-show="article.config.publish_fb"></span>
+					    	<span class="glyphicon glyphicon-comment" ng-show="article.config.enablecomments">{{article.comments.length}}</span>
+					    	<span class="glyphicon glyphicon-thumbs-up">{{article.meta.favs}}</span>
+					    </div>
+					  </a>
+					</div>
+				</div>
+ 			</div>
+ 		</div>
+ 		<!-- SELECTED ARTICLE CONTENT IS SHOWN HERE-->
+ 		<div class="col-md-8" style="padding:0; margin:0;">
+ 			<div class="panel panel-default">
+ 				<div class="panel-heading">
+ 					<div style="clear:none;display:inline-block;">
+ 						<h4 style="margin: 5px;">{{selected.title}}</h4>
+ 					</div> 
+ 					<div style="float:right;">
+	 					<a href="#managearticles/{{selected._id}}" style="text-decoration: none">
+	 					<button>
+	 		 				<span class="glyphicon glyphicon-pencil"> </span>		
+	 		 			</button>
+	 		 			</a>
+	 				</div>
+				</div>
+				<div class="panel-body jscrollpane" style="padding:0px; overflow:hidden; height: 77vh" >
+					<p ng-bind-html="selected.body"> </p> 
+				</div>
+ 			</div>
+ 		</div>
+ 	</div>	
 </div>
+
+<script>
+	$(function() {
+		$('.jscrollpane').jScrollPane({autoReinitialise: true});
+	});
+</script>
+

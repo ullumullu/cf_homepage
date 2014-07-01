@@ -53,142 +53,24 @@
 	<div class="col-md-9"> 
 		<div class="bgblurred"></div>
 		<div class="bgblurred_content">
-			<div class="gridlayoutcontainer clearfix"> 
+			<div class="gridlayoutcontainer clearfix">
+			{{#each articles}}
 				<div class="column clearfix">
 					<article>
 						<header>
-							<h3>Friday, June 13, 2014</h3>
-							<h2>Klimaanlage endlich...</h2>
+							<h3>{{date}}</h3>
+							<h2>{{title_short}}</h2>
 						</header>
 						<div class="articlecontent">
 							<p class="newscontentstyle">
-								... repariert. Die Klimaanlage ist wieder voll am Start... QWERTZZUIAOPASSASASAAS, </p>
+								{{abstract}}</p>
 						</div>
 						<footer>
-							<a class="footerstyle" href="/news/details1">Read more</a>
+							<a class="footerstyle" href="/news/{{_id}}">Read more</a>
 						</footer>
 					</article>
 				</div>
-				<div class="column clearfix">
-					<article>
-						<header>
-							<h3>Friday, June 13, 2014</h3>
-							<h2>Neues aus der Küche</h2>
-						</header>
-						<div class="articlecontent">
-							<p class="newscontentstyle">
-								Das Club Forum hat ab sofort eine neue Küche mit Herd und Ofen. Nun steht gutem Essen nichts mehr im Wege... </p>
-						</div>
-						<footer>
-							<a class="footerstyle" href="/news/details2">Read more</a>
-						</footer>
-					</article>
-				</div>
-				<div class="column clearfix">
-					<article>
-						<header>
-							<h3>Friday, June 13, 2014</h3>
-							<h2>Sitzung am 12.06.2014</h2>
-						</header>
-						<div class="articlecontent">
-							<p class="newscontentstyle">
-								Lorem ipsum dolor sit amet, </p>
-						</div>
-						<footer>
-							<a class="footerstyle" href="/news/details3">Read more</a>
-						</footer>
-					</article>
-				</div>
-				<div class="column clearfix">
-					<article>
-						<header>
-							<h3>Friday, June 13, 2014</h3>
-							<h2>Neugestalltung des ...</h2>
-						</header>
-						<div class="articlecontent">
-							<p class="newscontentstyle">
-								... Discoraums. Lorem ipsum dolor sit amet, </p>
-						</div>
-						<footer>
-							<a class="footerstyle" href="/news/details">Read more</a>
-						</footer>
-					</article>
-				</div>
-				<div class="column clearfix">
-					<article>
-						<header>
-							<h3>Friday, June 13, 2014</h3>
-							<h2>Andreas der Knecht</h2>
-						</header>
-						<div class="articlecontent">
-							<p class="newscontentstyle">
-								Lorem ipsum dolor sit amet, </p>
-						</div>
-						<footer>
-							<a class="footerstyle" href="/news/details">Read more</a>
-						</footer>
-					</article>
-				</div>
-				<div class="column clearfix">
-					<article>
-						<header>
-							<h3>Friday, June 13, 2014</h3>
-							<h2>Tischtennisball verschwunden</h2>
-						</header>
-						<div class="articlecontent">
-							<p class="newscontentstyle">
-								Lorem ipsum dolor sit amet, </p>
-						</div>
-						<footer>
-							<a class="footerstyle" href="/news/details">Read more</a>
-						</footer>
-					</article>
-				</div>
-				<div class="column clearfix">
-					<article>
-						<header>
-							<h3>Friday, June 13, 2014</h3>
-							<h2>Random Text 1</h2>
-						</header>
-						<div class="articlecontent">
-							<p class="newscontentstyle">
-								Lorem ipsum dolor sit amet, </p>
-						</div>
-						<footer>
-							<a class="footerstyle" href="/news/details">Read more</a>
-						</footer>
-					</article>
-				</div>
-				<div class="column clearfix">
-					<article>
-						<header>
-							<h3>Friday, June 13, 2014</h3>
-							<h2>Neues aus der Küche</h2>
-						</header>
-						<div class="articlecontent">
-							<p class="newscontentstyle">
-								Lorem ipsum dolor sit amet, </p>
-						</div>
-						<footer>
-							<a class="footerstyle" href="/news/details">Read more</a>
-						</footer>
-					</article>
-				</div>
-				<div class="column clearfix">
-					<article>
-						<header>
-							<h3>Friday, June 13, 2014</h3>
-							<h2>Keine Vermietungen ...</h2>
-						</header>
-						<div class="articlecontent">
-							<p class="newscontentstyle">
-								... sind ab kommendenen Mai mehr möglich. Ausnahmen bestätigen die Regel.</p>
-						</div>
-						<footer>
-							<a class="footerstyle" href="/news/details">Read more</a>
-						</footer>
-					</article>
-				</div>
+			{{/each}}
 			</div>
 		</div>	
 	</div>

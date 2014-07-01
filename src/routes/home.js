@@ -1,3 +1,7 @@
+// App configuration files
+var env = process.env.NODE_ENV || 'development',
+    config = require('../config/config.'+env+'.js');
+
 var express = require('express');
 var router = express.Router();
 
@@ -20,7 +24,21 @@ router.get('/', function(request, response) {
 
 /* GET news page. */
 router.get('/news', function(request, response) {
-   response.render('forum_news');
+
+	var Articles =  cfDB.articlesmodel;
+	Articles
+	.find({})
+	.sort({'date': -1})
+	.limit(9)
+	.exec(function (err, articles) {
+			if(articles) {
+				console.log("Found articles", articles);
+			    response.render('forum_news', {articles: articles});
+			} else {
+				console.log('Nothing found for Articles!');
+				response.render('forum_news');
+			}
+		});
 });
 
 /* GET news page. */
