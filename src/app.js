@@ -18,16 +18,23 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
 
-// parse application/json
-app.use(compression());
-app.use(cookieParser());
-app.use(session({ 
+var sess = { 
     secret: 'keyboard cat', // 
     cookie: { secure: true, maxAge: 3600000 },
     rolling: true 
-}));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+};
+// in devlopment mode disable security
+if (app.get('env') === 'development') {
+    sess.cookie.secure = false;
+}
+
+// parse application/json
+app.use(compression());
+app.use(cookieParser());
+app.use(session(sess));
+
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb'}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', home);

@@ -2,21 +2,22 @@ var adminApp = angular.module('adminApp', [
   'ngRoute',
   'ngAnimate',
   'ngSanitize',
-  'adminControllers'
+  'ArticlesControllers',
+  'ui.bootstrap'
 ]);
 
+
+/* CONFIGURATION TASKS */
 adminApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/managehome', {
         templateUrl: '../partials/managehome.html',
-        controller: 'ManageHomeCtrl',
-        activeTab: 'managehome'
+        controller: 'ManageHomeCtrl'
       }).
       when('/managearticles', {
         templateUrl: '../partials/managearticles.html',
-        controller: 'ManageArticlesCtrl',
-        activeTab: 'managearticles'
+        controller: 'ManageArticlesCtrl'
       }).
       when('/managearticles/:articleId', {
         templateUrl: '../partials/article.html',
@@ -28,10 +29,17 @@ adminApp.config(['$routeProvider',
   }]).run(['$rootScope', '$location', function($rootScope, $location){
           var path = function() { return $location.path();};
           $rootScope.$watch(path, function(newVal, oldVal){
-          $rootScope.activetab = newVal;
-      });
+            $rootScope.activetab = newVal.split('/')[1];
+          });
 }]);                  
 
+/* DIRECTIVES */
+
+/**
+  ckEditor directive, inits the div with a running ckEditor. This is 
+  necessary in order to add specific event listeners that update changes
+  into the scope object.
+*/
 adminApp.directive('ckEditor', function() {
   return {
     require: '?ngModel',
@@ -61,7 +69,26 @@ adminApp.directive('ckEditor', function() {
   };
 });
 
+adminApp.directive('clickAnimateFlash', function($animate, $parse) {
+  return {
+    restrict: 'A',
+    link: function(scope, elm, attr) {
+      var pipeChain = attr.clickAnimateFlash.split('|');
+      var clickFn = $parse(pipeChain[0]);
+      if(pipeChain[1]) {
+        var animationEleID = pipeChain[1].trim();
+        elm.on('click', function (event){
+          var animationele = $('#'+animationEleID);
+          $animate.addClass(animationele, 'hideEle', function() {
+              $animate.removeClass(animationele, 'hideEle', scope.$apply(clickFn));
+          });
+        });
+      }
+    }
+  };
+});
 
+/* FILTER */
 adminApp.filter('listOfArticlesFilter',['$filter',function ($filter) {
   return function(input, searchText) {
     if(searchText) {
@@ -83,14 +110,3 @@ adminApp.filter('listOfArticlesFilter',['$filter',function ($filter) {
 }]);
 
 
-adminApp.service('sharedArticle', function(){
-        var article= {};
-        return{
-            getArticle: function(){
-                return article;
-            },
-            setArticle: function(value){
-                article=value;
-            }
-        };
-    });

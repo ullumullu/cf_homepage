@@ -1,19 +1,19 @@
-var adminControllers = angular.module('adminControllers', []);
+var adminControllers = angular.module('ArticlesControllers', [
+   'AdminUtils'
+]);
 
-
-adminControllers.controller('ManageArticlesCtrl', ['$scope', '$http', '$log', '$timeout','sharedArticle',
-  function ($scope, $http, $log, $timeout, sharedArticle) {
+adminControllers.controller('ManageArticlesCtrl', ['$scope', '$http', '$log', '$timeout', '$sce', '$modal', 'sharedArticle', 'VerifyDeleteActionCtrl', 'articleUtils',
+  function ($scope, $http, $log, $timeout, $sce, $modal, sharedArticle, VerifyDeleteActionCtrl, articleUtils) {
   		$scope.articles = {};
 
   		$http.get('/adminarea/managearticles/articles')
   			.success(function(data, status, headers, config) {
-  				$log.log(data);
 
   				var articles = [];
   				angular.forEach(data.articles, function(value, key){
 			        articles.push(value);
 			    });
-  				$log.log(articles);
+
   				$scope.articles = articles;
 
   				$scope.selected = $scope.articles[0];
@@ -26,57 +26,68 @@ adminControllers.controller('ManageArticlesCtrl', ['$scope', '$http', '$log', '$
 
   			});
 
+
+      $scope.getSelectedBody = function (){
+         if($scope.selected)
+            return $sce.trustAsHtml($scope.selected.body);
+      }
+
 		$scope.keyEvent = function($svent) {
 			if($event.keyCode == 46) {
 				$scope.deleteArticle();
 			}
-		}  			
+		}  		
 
-		$scope.deleteArticle = function() {
-			 $scope.submitted = true;
-			 var selectedid = $scope.selected._id;
-			 $http.delete('managearticles/articles/'+selectedid)
-  			.success(function(data, status, headers, config) {
-  					if(status == 200) {
-  						var oldTitle= $scope.selected.title;
-  						var removedObj = $scope.articles.indexOf($scope.selected);
-  						console.log(removedObj);
-  						if(removedObj != -1) {
-  							$scope.articles.splice(removedObj, 1);
-  						}
-  						if(removedObj == 0) {
-  						   $scope.selected = $scope.articles[removedObj];
-  						} else {
-  						  $scope.selected = $scope.articles[removedObj-1];
-  						}
-  					}
+      $scope.verifyDeleteAction = function() {
+         var modalInstance = $modal.open({
+               templateUrl : 'deleteVerification.html',
+               controller : VerifyDeleteActionCtrl,
+               resolve: {
+                  content: function() {
+                     return {
+                        selectedArticle: $scope.selected,
+                        header: 'Alert - Delete Verification',
+                        body: 'Are you sure to delete the selected article:'
+                     };
+                  }
+               }
+            });
 
-  				 	// Hide the status message which was set above after 3 seconds.
-					$timeout(function() {
-					  $scope.messages = null;
-					}, 3000);
-  			});
-		};
+            modalInstance.result.then(function (deleteArticle) {
+               articleUtils.deleteArticle($scope.selected, function() {
+                  var oldTitle= $scope.articles.title;
+                  var removedObj = $scope.articles.indexOf($scope.selected);
+                  if(removedObj != -1) {
+                    $scope.articles.splice(removedObj, 1);
+                  }
+                  if(removedObj == 0) {
+                     $scope.selected = $scope.articles[removedObj];
+                  } else {
+                    $scope.selected = $scope.articles[removedObj-1];
+                  }
+                  // Hide the status message which was set above after 3 seconds.
+                   $timeout(function() {
+                     $scope.messages = null;
+                   }, 3000);
+                        }); 
+                  }, function () {
+                     
+                  });
+      }	
+
   }]);
 
 
-adminControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$log', '$routeParams', '$location', 'sharedArticle',
-	function ($scope, $http, $timeout, $log, $routeParams, $location, sharedArticle) {
+adminControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$log', '$routeParams', '$location', '$modal', 'sharedArticle', 'articleUtils', 'VerifyDeleteActionCtrl',
+	function ($scope, $http, $timeout, $log, $routeParams, $location, $modal, sharedArticle, articleUtils, VerifyDeleteActionCtrl) {
   	
-
-
   		/* INITIALIZE ALL REQUIRED VARIABLEs */
   		// sitestate = Sub-domain for all variables revoling about the current state inside the article page
   		// article = Contains all variables that will be submitted to the server in order to create update save an article/ draft of an article
 
 		$scope.sitestate = {};
-		$scope.article = {};
-
-
-
   		var sitestate = {};
-  		var article = {};
-
+  		
   		/* FIRST INITIALIZE SITE STATE*/
 		
   		sitestate.articleStatusEnum = [
@@ -85,57 +96,75 @@ adminControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$log
   			];
 
   		sitestate.newstatus = sitestate.articleStatusEnum[0];
+      $scope.sitestate = sitestate;
 
-  		/* SECOND INITIALIZE THE ARTICLE */
+      $scope.article = {};
+      var article = {};
+  		
   		if ($routeParams.articleId != 'newarticle') {
   			if(sharedArticle.getArticle()) {
   			 article = sharedArticle.getArticle();
-          $log.log(article.status);
+          // Copy the initial status for comparision if sth. has changed
+          // This variable should be treated as a final
           article.initstatus = article.status;
   			} else {
   				// THE USER REFRESHED THE PAGE...
   				// TODO: Retrieve the article baser on the :articleId
   			}
 		} else {
-	  		article.config = {};
-	  		article.config.publish_fb = false;
-	  		article.config.enable_comments = false;
-	  		article.meta = {};
-	  		article.meta.favs = 0;
-	  		article.meta.votes = 0;
-
-		}
+         article = articleUtils.generateArticle({});
+      }
 
   		article.newstatus = sitestate.articleStatusEnum[0];
 
 		$scope.article = article;
-		$scope.sitestate = sitestate;
 
+      /* INIT DATEPICKER */
+      $scope.minDate = new Date();
 
 		/* FUNCTIONS */
-
-		$scope.deleteArticle = function(){
-	  		console.log("DELETE CALLED");
-
-
-	  	}
-
-		$scope.saveDraft = function(){
-	  		console.log("SAVE DRAFT CALLED");
-	  	}
-
 		$scope.PreviewArticle = function(){
 	  		console.log("PREVIEW CALLED");
 	  	}
+
+      $scope.openDatePicker = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened = true;
+      };
+
+      $scope.setPublished = function () {
+         $scope.article.published = $scope.dt;
+      };
 
 		$scope.setNewStatus = function(){
 		  	$scope.article.status = $scope.article.newstatus.name;
 		}
 
+     $scope.verifyDeleteAction = function() {
+      var modalInstance = $modal.open({
+            templateUrl : 'deleteVerification.html',
+            controller : VerifyDeleteActionCtrl,
+            resolve: {
+               content: function() {
+                  return {
+                     selectedArticle: $scope.article,
+                     header: 'Alert - Delete Verification',
+                     body: 'Are you sure to delete this article:'
+                  };
+               }
+            }
+         });
+
+         modalInstance.result.then(function (deleteArticle) {
+                     $location.path('/managearticles');
+               });
+      }  
+
 		 $scope.submit = function(form, actionType) {
 			 // Trigger validation flag.
 			 $scope.submitted = true;
-
 
 		  	// If form is invalid, return and let AngularJS show validation errors.
 			if (form.$invalid) {
@@ -158,28 +187,14 @@ adminControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$log
             }
          }
 
-			var article = {
-				title: $scope.article.title,
-				title_short: $scope.article.title_short,
-				author: $scope.article.author,
-				author_edit: $scope.article.author,
-				body:   $scope.article.body,
-				abstract: $scope.article.abstract,
-				comments: [],
-				date: new Date(), // Jul 1, 2012 @ 18:32
-				date_edit: new Date(), // Jul 1, 2012 @ 18:32
-				status: $scope.article.status,
-				visibility: $scope.article.visibility,
-				tags: [],
-				meta: {
-					votes: $scope.article.meta.votes,
-				    favs:  $scope.article.meta.favs
-				},
-				config: {
-					publish_fb: $scope.article.config.publish_fb,
-					enablecomments: $scope.article.config.enable_comments
-				}
-			} 
+
+      if($scope.article.published == undefined) {
+         if(actionType == 'publish') {
+            $scope.article.published = new Date();
+         }
+      }
+
+			var article = articleUtils.generateArticle($scope.article);
 
 			console.log("This article will be send", article);
 			if($scope.isNewArticle()) {
@@ -187,22 +202,16 @@ adminControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$log
 				$http.post('/adminarea/managearticles/articles', article)
 					.success(function(data, status, headers, config) {						
 						if(actionType == 'saveDraft') {
-							if($routeParams.articleId == 'newarticle') {
-								$location.path('/managearticles/'+data._id);
-								sharedArticle.setArticle(data);
-							}
+							$location.path('/managearticles/'+data._id);
+							sharedArticle.setArticle(data);
 							$scope.messages = 'Draft saved successfully!';
 						} else if(actionType == 'publish') {
-							if($routeParams.articleId == 'newarticle') {
-								$location.path('/managearticles/'+data._id);
-								sharedArticle.setArticle(data);
-							}
+							$location.path('/managearticles/'+data._id);
+							sharedArticle.setArticle(data);
 							$scope.messages = 'The article was successfully published!';
 						} else if(actionType == 'update') {
-							if($routeParams.articleId == 'newarticle') {
-								$location.path('/managearticles/'+data._id);
-								sharedArticle.setArticle(data);
-							}
+							$location.path('/managearticles/'+data._id);
+							sharedArticle.setArticle(data);
 							$scope.messages = 'The article was successfully updated!';
 						} else {
 							$scope.messages = 'The action type wasn\'t understood.';
@@ -214,14 +223,20 @@ adminControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$log
             $http.put('/adminarea/managearticles/articles/'+selectedid, article)
                .success(function(data, status, headers, config) {                
                   if(actionType == 'saveDraft') {
+                     $scope.article.initstatus = article.status;
                      $scope.messages = 'Draft saved successfully!';
                   } else if(actionType == 'publish') {
+                     $scope.article.initstatus = article.status;
                      $scope.messages = 'The article was successfully published!';
                   } else if(actionType == 'update') {
+                     $log.log("Article:Status "+article.status)
+                     $scope.article.initstatus = article.status;
                      $scope.messages = 'The article was successfully updated!';
                   } else {
                      $scope.messages = 'The action type wasn\'t understood.';
                   }
+               }).error(function(data, status, headers, config) {
+                  $scope.errmessages = 'The article could not be found in the database... maybe someone deleted the article in parallel';
                });
 			}
 

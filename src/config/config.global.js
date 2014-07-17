@@ -6,7 +6,7 @@ config.env = 'development';
 config.hostname = 'localhost';
 config.port = '3000';
 config.secret_key = 'forumoldbutgold';
-config.logging = 'info'; //info, warn, error, debug
+config.logging = 'debug'; //info, warn, error, debug
 
 config.requiresauthentication = false;
 

@@ -8,6 +8,7 @@ var articleSchema = mongoose.Schema({
 	body:   String,
 	abstract: String,
 	comments: [{ body: String, date: Date }],
+	published: Date,
 	date: { type: Date, default: Date.now },
 	date_edit: Date,
 	status: String,

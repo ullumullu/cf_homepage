@@ -67,3 +67,34 @@
 	max-height: 0px;
 }
 
+.hideEle-add {
+ 	transition: 0s linear all; /* All other modern browsers and IE10+ */
+
+ 	/* The animation preparation code */
+ 	opacity: 1;
+}
+
+
+.hideEle-add-active {
+	-webkit-transition: 0.3s linear all; /* Safari/Chrome */
+ 	transition: 0.3s linear all; /* All other modern browsers and IE10+ */
+
+ 	/* The animation preparation code */
+ 	opacity: 0;
+}
+
+.hideEle-remove {
+ 	transition: 0s linear all; /* All other modern browsers and IE10+ */
+
+ 	/* The animation preparation code */
+ 	opacity: 0;
+}
+
+
+.hideEle-remove-active {
+	-webkit-transition: 0.3s linear all; /* Safari/Chrome */
+ 	transition: 0.3s linear all; /* All other modern browsers and IE10+ */
+
+ 	/* The animation preparation code */
+ 	opacity: 1;
+}
