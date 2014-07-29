@@ -85,7 +85,6 @@
 
 .hideEle-remove {
  	transition: 0s linear all; /* All other modern browsers and IE10+ */
-
  	/* The animation preparation code */
  	opacity: 0;
 }
@@ -98,3 +97,115 @@
  	/* The animation preparation code */
  	opacity: 1;
 }
+
+.navigation-show {
+  line-height:20px;
+  opacity:1;
+  padding:10px;
+  background:white;
+}
+
+.navigation-show.ng-hide-add.ng-hide-add-active,
+.navigation-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+
+  -webkit-transition-delay: 0.5s;
+ 	transition-delay:0.5s;
+
+}
+
+.navigation-show.ng-hide {
+  line-height:0;
+  opacity:0;
+  padding:0 10px;
+}
+
+
+/* ZOOM IN */
+
+@-webkit-keyframes zoomIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+    transform: scale3d(.3, .3, .3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+    -ms-transform: scale3d(.3, .3, .3);
+    transform: scale3d(.3, .3, .3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ZOOM OUT */
+
+@-webkit-keyframes zoomOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+    transform: scale3d(.3, .3, .3);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes zoomOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+    -ms-transform: scale3d(.3, .3, .3);
+    transform: scale3d(.3, .3, .3);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+
+.zoom.ng-enter.ng-active,
+.zoom-add {
+	-webkit-animation:0.5s zoomOut;
+  -moz-animation:0.5s zoomOut;
+  -o-animation:0.5s zoomOut;
+  animation:0.5s zoomOut;
+}
+
+.zoom-add-active {
+	opacity: 0;
+}
+
+.zoom.ng-leave.ng-active,
+.zoom-remove {
+	-webkit-animation:0.5s zoomIn;
+  -moz-animation:0.5s zoomIn;
+  -o-animation:0.5s zoomIn;
+  animation:0.5s zoomIn;
+}
+
+.zoom-remove-active {
+	opacity: 1;
+}
+

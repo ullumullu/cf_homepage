@@ -16,6 +16,10 @@ var cfDB = require('../lib/ForumDB.js');
 * Get all articles
 */
 router.get('/articles', function(request, response) {
+
+  var from = request.query.from;
+  var to = request.query.to;
+    
    var articlesModel =  cfDB.articlesmodel;
    articlesModel.find({})
    .sort({'date': -1})

@@ -12,15 +12,15 @@ adminApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/managehome', {
-        templateUrl: '../partials/managehome.html',
+        templateUrl: '../partials/admin/managehome.html',
         controller: 'ManageHomeCtrl'
       }).
       when('/managearticles', {
-        templateUrl: '../partials/managearticles.html',
+        templateUrl: '../partials/admin/managearticles.html',
         controller: 'ManageArticlesCtrl'
       }).
       when('/managearticles/:articleId', {
-        templateUrl: '../partials/article.html',
+        templateUrl: '../partials/admin/article.html',
         controller: 'ArticleCtrl'
       }).
       otherwise({

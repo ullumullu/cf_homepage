@@ -1,0 +1,386 @@
+/* General Styles */
+
+@font-face {
+    font-family: mamagama;
+    src: url(/fonts/SFOldRepublic.ttf);
+}
+
+h1, h2, h3, h4 {
+  color: white;
+  font-family: arial;
+  font-weight: 400;
+  line-height: 1.5em;
+}
+
+p {
+  color: white;
+  font-family: arial;
+  font-weight: 400;
+  line-height: 1.5em;
+}
+
+body {
+  background-image: url(./../img/home_background2.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment:fixed;
+  background-color: black;
+  overflow: auto;
+}
+
+@media (max-width: 992px) {
+
+  body {
+    overflow: auto;
+  }
+}
+
+.cf-logo {
+  background-image: url(./../img/cflogo.png);
+  background-size: cover;
+  background-position: center center;
+  width: 25vh;
+  height: 25vh;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cf-logo-p1 {
+  font-size: 4vh;
+  margin: 0px;
+  text-align: center;
+}
+
+.cf-logo-p2 {
+  font-size: 3vh;
+  margin: 0px;
+  text-align: center;
+}
+
+.cf-logo-big {
+  background-image: url(./../img/cflogo.png);
+  background-size: cover;
+  background-position: center center;
+  width: 60vh;
+  height: 60vh;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cf-h5 {
+  font-size: 6vh;
+  font-weight: bolder;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  text-align: center;
+}
+
+.cf-h6 {
+  margin-top: 0px;
+  font-size: 5vh;
+  text-align: center;
+}
+
+/* Container Styles */
+
+.content-container {
+  padding-top: 20px;
+  position: relative;
+}
+
+#landingpagecontent{
+  margin-bottom: 5vh;
+}
+
+#container {
+  position: relative;
+  height: 100%;
+}
+
+#main {
+  height: 100vh; 
+}
+
+#news {
+  
+  width: 100%;
+  height: 470px;
+  padding-right: 40px;
+  margin: auto;
+  position: absolute;
+  top:0px;
+  left:0px;
+  right:0px;
+  bottom:0px;
+}
+
+#contentview {
+  overflow: auto!important;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+.footerStyle {
+  text-align: right;
+}
+
+/* Background Styles */
+
+.bgblurred {
+  background-image: url(./../img/home_background2_blurred.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment:fixed;
+
+  z-index: 1;
+  
+  position:absolute;
+  width:100%;
+  height:100%;
+}
+
+.bgblurred_content {
+  z-index: 100;
+  position: relative;
+  width:100%;
+  height:100%;
+  background-color: rgba(255, 255, 255, 0.0);
+}
+
+
+/* Navigation bar styles */
+
+#navigation {
+  background-color: inherit;
+  overflow: auto;
+  position: inherit;
+  height: 100vh;
+}
+
+#navigation > nav {
+  top:20px;
+  padding:10px;
+  float: left;
+  position: relative;
+  width: 300px;
+}
+
+.navigationStyle:hover {
+  color: black;
+  background-color: white;
+}
+
+#navigation nav > ul {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+#navigation nav > ul > li {
+  border-style: solid;
+  border-width: 0;
+  background-color: inherit;
+  display: table-row;
+}
+
+#navigation nav > ul > li > a {
+  text-decoration: none;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  width: 100%;
+}
+
+#navigation nav > ul > li {
+  position: relative;
+  line-height: 40px;
+  border-right-width: 1px;
+  border-color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#navigation nav > ul > li:first-child {
+  padding-top: 10px;
+}
+
+#navigation nav > ul > li:last-child {
+  padding-bottom: 10px;
+}
+
+.navigationStyle {
+  color: white;
+  font-family: arial;
+  font-weight: 400;
+  line-height: 1.5em;
+  font-size: 25px;
+}
+
+.selected {
+  -webkit-transition: 0.3s linear all; /* Safari/Chrome */
+  transition: 0.3s linear all; /* All other modern browsers and IE10+ */
+  font-size: 35px;
+  font-weight: bold;
+  text-transform:uppercase;
+  -webkit-text-transform:uppercase;
+}
+
+/* Navigation landing page */
+
+#homecontent nav {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#homecontent nav ul {
+  width: 100%;
+}
+
+#homecontent nav ul li {
+ display: table-cell;
+ padding-right: 30px;
+}
+
+#homecontent .navigationStyle {
+  font-size: 5vh;
+}
+
+/* News styling */
+
+#newscontainer {
+  width: 100%;
+  margin: 50px auto;
+
+}
+
+
+#newscontainer > div {
+  float: left;
+  overflow: none;
+  width: 33.333%;
+}
+
+#newscontainer article {
+  width: 300px;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#newscontainer article header {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#newscontainer article header h3 {
+  color: white;
+  font-family: 'Ubuntu';
+  font-weight: bold;
+}
+
+#newscontainer article p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 200px;
+}
+
+#newscontainer footer {
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#newscontainer article a {
+  text-decoration: none;
+  color: white;
+}
+
+.newslink {
+ float: right;
+ margin-right: 15px;
+ font-size: 20px;
+ 
+}
+
+.articletime {
+  color: #848484;
+  font-size: 18px;
+}
+
+.orange {
+  background-color: #E74310;
+}
+
+.violett {
+  background-color: #A6177C;
+}
+
+.green {
+  background-color: #51AE32;
+}
+
+.white {
+  background-color: rgba(255,255,255, 0.5);
+}
+.articlewrapper {
+  clear:none;
+  -webkit-transition: 0.3s linear all; /* Safari/Chrome */
+  transition: 0.3s linear all; /* All other modern browsers and IE10+ */
+  height: 280px;
+}
+
+.articlewrapper:hover {
+  -webkit-transition: 0.3s linear all; /* Safari/Chrome */
+  transition: 0.3s linear all; /* All other modern browsers and IE10+ */
+  z-index: 100;
+  height: 0px;
+}
+
+
+.arrow-up {
+  text-align: center;
+  color: white;
+  background-color: rgba(255,255,255, 0.5);
+}
+
+.arrow-down {
+  color: white;
+  text-align: center;
+  background-color: rgba(255,255,255, 0.5);
+}
+
+/* CLEARFIX */
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+ 
+.clearfix {
+    display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+    display: block;
+}
+ 
+* html .clearfix {
+    height: 1%;
+}

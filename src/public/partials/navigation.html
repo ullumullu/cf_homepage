@@ -1,0 +1,18 @@
+<nav>
+  <ul>
+    <li ng-show="navstate.visible">
+      <div style="margin-bottom:8vh">
+        <a  href="" style="text-decoration: none;" click-animate-flash="setSelected('home', '#') | container">
+          <div class="cf-logo"></div>
+            <p class="cf-logo-p1">Club Forum</p>
+            <p class="cf-logo-p2">Böblingen</p>
+        </a>
+      </div>
+    </li>
+    <li ng-repeat="link in templates.navigation">    
+      <a href="" click-animate-flash="setSelected(link.name, link.href) | {{rerender}}">
+        <div class="navigationStyle" ng-class="{selected : isSelected(link.id)}">{{link.name}}</div>
+      </a>
+    </li>
+  </ul>
+</nav>

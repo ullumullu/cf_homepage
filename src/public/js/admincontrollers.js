@@ -1,8 +1,8 @@
-var adminControllers = angular.module('ArticlesControllers', [
+var articlesControllers = angular.module('ArticlesControllers', [
    'AdminUtils'
 ]);
 
-adminControllers.controller('ManageArticlesCtrl', ['$scope', '$http', '$log', '$timeout', '$sce', '$modal', 'sharedArticle', 'VerifyDeleteActionCtrl', 'articleUtils',
+articlesControllers.controller('ManageArticlesCtrl', ['$scope', '$http', '$log', '$timeout', '$sce', '$modal', 'sharedArticle', 'VerifyDeleteActionCtrl', 'articleUtils',
   function ($scope, $http, $log, $timeout, $sce, $modal, sharedArticle, VerifyDeleteActionCtrl, articleUtils) {
   		$scope.articles = {};
 
@@ -78,7 +78,7 @@ adminControllers.controller('ManageArticlesCtrl', ['$scope', '$http', '$log', '$
   }]);
 
 
-adminControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$log', '$routeParams', '$location', '$modal', 'sharedArticle', 'articleUtils', 'VerifyDeleteActionCtrl',
+articlesControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$log', '$routeParams', '$location', '$modal', 'sharedArticle', 'articleUtils', 'VerifyDeleteActionCtrl',
 	function ($scope, $http, $timeout, $log, $routeParams, $location, $modal, sharedArticle, articleUtils, VerifyDeleteActionCtrl) {
   	
   		/* INITIALIZE ALL REQUIRED VARIABLEs */
@@ -258,7 +258,7 @@ adminControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$log
 
  }]);
 
-adminControllers.controller('ManageHomeCtrl',
+articlesControllers.controller('ManageHomeCtrl',
   function ($scope, $http, $timeout, $log) {
 
 	$http.get('/adminarea/homeContent').success(function(data) {	

@@ -1,0 +1,13 @@
+<div class="container-fluid">
+	  <div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
+
+	  <form name="homeForm" novalidate role="form">
+
+	    <div class="form-group">
+	      <label for="welcome_text">Current Welcome Text:</label>
+	      <span class="label label-danger" data-ng-show="submitted && homeForm.welcome_text.$error.required">Required!</span>
+	      <textarea class="form-control" rows="5" name="welcome_text" data-ng-model="welcome_text_new" required></textarea>
+	    </div> 
+	    <button data-ng-disabled="progress.active()" data-ng-click="submit(homeForm)" class="btn btn-default">Submit</button>
+	  </form>
+</div>

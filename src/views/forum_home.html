@@ -1,71 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="siteApp">
 <head>
-	<title>Club Forum Layout Demo</title>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu:400,700' rel='stylesheet' type='text/css' />
+	<title>Club Forum Boeblingen</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu:400,700' rel='stylesheet' type='text/css'/>
 	<!-- build:css css/production.min.css-->
-	<link rel="stylesheet" type="text/css" href="./../css/forum_demo.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="./../css/forum_site.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="./../css/forum_animations.css" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="../../css/libs/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="./../css/forum_gridlayout.css" rel="stylesheet" />
 	<!--  /build  -->
 	<!-- build:js js/production.min.js-->
 	<script src="./../js/libs/jquery-1.11.1.js" type="text/javascript"></script>
 	<script src="../../js/libs/bootstrap.min.js" type="text/javascript"></script>
+	<script src="../../js/libs/angular.js" type="text/javascript"></script>
+	<script src="../../js/libs/angular-route.min.js" type="text/javascript"></script>
+	<script src="../../js/libs/angular-animate.min.js" type="text/javascript"></script>
+	<script src="../../js/libs/angular-sanitize.min.js" type="text/javascript"></script>
+	<script src="../../js/libs/ui-bootstrap-tpls-0.11.0.js" type="text/javascript"></script>
+	<!-- ALL CREEATED ANGULAR FILES SHOULD BE PASSED IN HERE  -->
+	<script src="../../js/siteapp.js" type="text/javascript" ></script>
+	<!-- UNTIL HERE  -->
 	<!--  /build  -->
 </head>
-<body>
-
-<div id="container" class="row" style="margin:0px">
-	<div class="col-md-3" style="height: 92vh; background-color: rgba(248, 248, 248,0.4);">
-		<div id="navigation">
-			<nav>
-				<ul>
-					<li>
-						<a href="/">
-							<div class="navigationStyle selected">Home</div>
-							<div class="arrow-left"></div>
-						</a>
-					</li>
-					<li>
-						<a href="/news">
-							<div class="navigationStyle">News</div>
-						</a>
-					</li>
-					<li>
-						<a href="/forum_events">
-							<div class="navigationStyle">Events</div>
-						</a>
-					</li>
-					<li>
-						<a href="/forum_events">
-							<div class="navigationStyle">Vermietung</div>
-						</a>
-					</li>
-					<li>
-						<a href="/forum_events">
-							<div class="navigationStyle">Mitglieder</div>
-						</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
-	<div class="col-md-8" style="min-height: 92vh; margin-bottom: 5px;">
-		<div class="search-container">
-			<div class="bgblurred"></div>
-			<div class="bgblurred_content">
-				<div id="welcome_div"> 
-					<p class="wellcome_quote">{{{welcome_text}}}</p>
+<body ng-controller="siteController">
+<div id="container">
+	<div ng-class="{bgblurred : navstate.visible}"></div>
+	<div class="bgblurred_content">
+		<div class="row" style="margin:0px">
+			
+			<!-- Navigation Bar -->
+			<div id="navigation" class="col-md-3" ng-show="navstate.visible" navigation="false" rerender="main"></div>
+			
+			<!-- Main Content -->
+			<div id="main" class="content-container" ng-class="{'col-md-9' : navstate.visible, 'col-md-12': !navstate.visible}">
+				<div id="contentview" ng-view></div>
+				<div id="footer" style="clear: both;">
+					<p class="footerStyle">&copy; Club Forum 2014. All rights reserved.</p>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </div>
-
-<div id="footer">
-	<p class="footerStyle">&copy; Club Forum 2014. All rights reserved.</p>
-</div>
-
 <!-- build:remove:build -->
 <script src="//localhost:35729/livereload.js"></script>
 <!--  /build  -->

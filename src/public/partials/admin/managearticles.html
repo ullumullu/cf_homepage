@@ -1,0 +1,141 @@
+<div class="container-fluid fullscreen">
+	
+	<!-- Error Messages for this page -->
+	<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
+	<div id="errmessages" class="alert alert-danger alert-dismissable" data-ng-show="errmessages">
+		<button type="button" class="close" ng-click="errmessages = undefined">&times;</button>
+		<span data-ng-bind="errmessages"></span>
+	</div>
+
+	<!-- Content Container -->
+ 	<div>
+ 		<!-- List with all articles -->
+ 		<div id="listOfArticles" class="col-md-4">
+ 			<div class="shadow">
+ 				<div class="sectionheading" style="margin:0px">
+					<h4 class="inline-block">Articles</h4>
+ 					<div class="container-right">
+	 					<a href="#managearticles/newarticle" class="iconlink">
+	 					<button>
+	 		 				<span class="glyphicon glyphicon-plus white"> </span>		
+	 		 			</button>
+	 		 			</a>
+	 		 			<a class="iconlink">
+	 		 			<button ng-click="verifyDeleteAction()">
+	 		 				<span class="glyphicon glyphicon-minus white"> </span>
+	 		 			</button>
+	 		 			</a>
+	 				</div>
+				</div>
+				<div class="sectioncontent" style="padding:0px; overflow:none; height: 77vh; margin-top:0px;">
+				  	<div class="actionarea">
+					  	<div class="input-group-admin">
+					      <input type="text" class="form-control input-admin"  name="s" placeholder="Search" value="" ng-model="searchText">
+					      <span class="input-addon-right">
+					        <button type="button" class="btn btn-default searchbtn"><span class="glyphicon glyphicon-search white"></span></button>
+					      </span>
+					     </div>
+				  	</div>
+					<div class="list-group jscrollpane" style="margin:0px;">
+					  <a class="list-group-item from-bottom-to-top listelement" ng-repeat="article in articles | listOfArticlesFilter:searchText" click-animate-flash="select(article) | selectedArticleContent" 
+					  ng-class="{active: article == selected}"  >
+					    <h4 class="list-group-item-heading">{{article.title}}{{article.status=='Draft' ? ' - Draft' : ''}}</h4>
+					    <p style="clear:both" class="list-group-item-text">{{article.date | date:'medium' }}</p>
+					    <p class="list-group-item-text">{{article.author}}</p>
+					    <div class="container-right" style="position:absolute; right:5px; bottom:5px;">
+					    	<span class="glyphicon glyphicon-bullhorn grey" ng-show="article.config.publish_fb"></span>
+					    	<span class="glyphicon glyphicon-comment grey" ng-show="article.config.enablecomments">{{article.comments.length}}</span>
+					    	<span class="glyphicon glyphicon-thumbs-up grey">{{article.meta.favs}}</span>
+					    </div>
+					  </a>
+					</div>
+				</div>
+ 			</div>
+ 		</div>
+ 		<!-- SELECTED ARTICLE CONTENT IS SHOWN HERE-->
+ 		<div id="selectedArticleContent" class="col-md-8" style="padding:0; margin:0;">
+ 			<div class="shadow">
+ 				<div class="sectionheading" style="margin:0px">
+ 					<h4 class="inline-block">{{selected.title}}</h4>
+ 					<div class="container-right">
+	 					<a href="#managearticles/{{selected._id}}" class="iconlink">
+	 					<button>
+	 		 				<span class="glyphicon glyphicon-pencil white"></span>		
+	 		 			</button>
+	 		 			</a>
+	 		 			<a class="iconlink">
+	 					<button ng-init="statsCollapsed = true" ng-click="statsCollapsed = !statsCollapsed">
+	 		 				<span class="glyphicon glyphicon-stats white" ></span>	
+	 		 			</button>
+	 		 			</a>
+	 				</div>
+				</div>
+	 				<div collapse="statsCollapsed" class="greyContainer">
+	 					<table id="statsTable">
+	 						<tbody>
+		 						<tr>
+		 							<td>
+		 									<span class="stats-title">Short title</span>
+		 							</td>
+		 							<td>
+		 								<span class="stats-content">{{selected.title_short}}</span>
+		 							</td>
+		 							<td>
+		 									<span class="stats-title">Published</span>
+		 							</td>
+		 							<td>
+		 								  <span class="stats-content">{{selected.published | date:'medium'}}</span>
+		 							</td>
+		 						</tr>
+		 						<tr>
+		 								<td>
+		 									<span class="stats-title">Author</span>
+		 								</td>
+		 								<td>
+		 									<span class="stats-content">{{selected.author}}</span>
+		 								</td>
+										<td>							
+		 									<span class="stats-title">Created</span>
+										</td>
+										<td>
+											<span class="stats-content">{{selected.date | date:'medium'}}</span>
+										</td>
+		 						</tr>
+		 						<tr>
+		 							<td><span class="stats-title">Edited by</span></td>
+		 							<td><span class="stats-content">{{selected.author_edit}}</span></td>
+		 							<td><span class="stats-title">Edited</span></td>
+		 							<td><span class="stats-content">{{selected.date_edit | date:'medium'}}</span></td>
+		 						</tr>
+	 						</tbody>
+	 					</table>
+				</div>
+				<div class="panel-body jscrollpane sectioncontent" style="padding:0px; overflow:hidden; height: 77vh; background-color:rgba(255,255,255,0.5);color:white;margin:0px; margin-top:2px;" >
+					<p ng-bind-html="getSelectedBody()"> </p> 
+				</div>
+ 			</div>
+ 		</div>
+ 	</div>	
+</div>
+
+<!-- Initialize fancy scrolling -->
+<script>
+	$(function() {
+		$('.jscrollpane').jScrollPane({autoReinitialise: true});
+	});
+</script>
+
+<!-- Template has to be moved on the first page at some point in time -->
+<script type="text/ng-template" id="deleteVerification.html">
+	<div class="modal-header">
+		<h3 class="modal-title">{{header}}</h3>
+	</div>
+	<div class="modal-body">
+		<p>{{content}}</br> 
+		{{selected.title}}{{selected.status=='Draft' ? ' - Draft' : ''}}</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="deleteArticle()">OK</button>
+		<button class="btn btn-warning" ng-click="cancelDeleteAction()">Cancel</button>
+	</div>
+</script>
