@@ -29,15 +29,29 @@ router.get('/', function(request, response) {
 /* GET news page. */
 router.get('/newsarticles', function(request, response) {
 
+	var articles_before = request.query.date || new Date();
+	var newerArticles = request.query.newer === "true";
+
+	var querySymb = (newerArticles) ? '$gt' : '$lt';
+
+	var action = {};
+	action[querySymb] = articles_before;
+	action['$lte'] = new Date();
+
+	if(config.logging === 'debug') {
+	   console.log('DEBUG: '+querySymb);
+	} 
+
 	var Articles =  cfDB.articlesmodel;
 	Articles
-	.find({})
-	.sort({'date': -1})
-	.limit(12)
+	.find({ published: action, status: 'Published'} )
+	.sort({'published': -1})
+	.limit(3)
+	.lean()
 	.exec(function (err, articles) {
 			if(articles) {
-				console.log("Found articles", articles);
-				 routesutil.sendJson(request, response, {articles: articles});			  
+				console.log("Found articles");
+				 response.json(articles);			  
 			} else {
 				console.log('Nothing found for Articles!');
 

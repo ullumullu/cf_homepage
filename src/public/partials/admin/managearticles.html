@@ -39,7 +39,11 @@
 					<div class="list-group jscrollpane" style="margin:0px;">
 					  <a class="list-group-item from-bottom-to-top listelement" ng-repeat="article in articles | listOfArticlesFilter:searchText" click-animate-flash="select(article) | selectedArticleContent" 
 					  ng-class="{active: article == selected}"  >
-					    <h4 class="list-group-item-heading">{{article.title}}{{article.status=='Draft' ? ' - Draft' : ''}}</h4>
+					    <h4 class="list-group-item-heading">
+					    		{{article.title}}
+					    		<span class="label-danger sectionheading-error">{{article.status=='Draft' ? ' - Draft' : ''}}</span>
+									<span class="label-success sectionheading-ok">{{(isPublished(article.published, article.status))  ? ' - Published' : ''}}</span>
+					    </h4>
 					    <p style="clear:both" class="list-group-item-text">{{article.date | date:'medium' }}</p>
 					    <p class="list-group-item-text">{{article.author}}</p>
 					    <div class="container-right" style="position:absolute; right:5px; bottom:5px;">
@@ -127,14 +131,14 @@
 
 <!-- Template has to be moved on the first page at some point in time -->
 <script type="text/ng-template" id="deleteVerification.html">
-	<div class="modal-header">
-		<h3 class="modal-title">{{header}}</h3>
+	<div class="modal-header cf-modal-header ">
+		<h3 class="modal-title cf-modal-title">{{header}}</h3>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body cf-modal-body">
 		<p>{{content}}</br> 
 		{{selected.title}}{{selected.status=='Draft' ? ' - Draft' : ''}}</p>
 	</div>
-	<div class="modal-footer">
+	<div class="modal-footer cf-modal-footer">
 		<button class="btn btn-primary" ng-click="deleteArticle()">OK</button>
 		<button class="btn btn-warning" ng-click="cancelDeleteAction()">Cancel</button>
 	</div>

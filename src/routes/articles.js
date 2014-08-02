@@ -38,7 +38,7 @@ router.get('/articles', function(request, response) {
                   status: "Ups... something bad happened...",
                   err: err
                });
-         }
+         } 
       });
 });
 
@@ -49,7 +49,7 @@ router.post('/articles', function(request, response) {
    var body = request.body;
    // Ceate the new document
    var articlesModel =  cfDB.articlesmodel;
-   var newArticle = new articlesModel(body);
+   var newArticle = new articlesModel(body.article);
    // And store it into the DB
    newArticle.save(function(err, newArticle) {
       if(!err) {
@@ -81,11 +81,16 @@ router.post('/articles', function(request, response) {
 */
 router.put('/articles/:articleID', function(request, response) {
    var body = request.body;
-   console.log(body);
    var id = request.params.articleID;
 
+   var base64Data = body.image.replace(/^data:image\/png;base64,/, "");
+    var filePath = './src/public/img/articles/'+id+'.png';
+    require('fs').writeFile(filePath, base64Data , 'base64', function(err) {
+      console.log(err); // writes out file without error, but it's not a valid image
+    });
+
    var articlesmodel =  cfDB.articlesmodel;
-   articlesmodel.findByIdAndUpdate(id, body, function (err, updatedArticle) {
+   articlesmodel.findByIdAndUpdate(id, body.article, function (err, updatedArticle) {
       if(updatedArticle) {
           response.status(200);
                 response.set({

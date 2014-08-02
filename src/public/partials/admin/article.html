@@ -15,7 +15,7 @@
 				<form enctype="application/x-www-form-urlencoded" name="articleform">
 					<div class="shadow">
 							<h4 class="sectionheading">Title
-								<span class="label label-danger sectionheading-error" data-ng-show="submitted && articleform.title.$error.required"> - Required</span>
+								<span class="label label-danger sectionheading-error pad-5-10 size20" data-ng-show="submitted && articleform.title.$error.required"> - Required</span>
 							</h4>
 							<div class="sectioncontent">
 								<input type="text" class="form-control input-admin" placeholder="Enter title here" name="title" data-ng-model="article.title" required/>
@@ -126,6 +126,15 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="shadow">
+						<div class="sectionheading"><h4>Image</h4></div>
+						<div class="sectioncontent">
+							<input type="file" nv-file-select="" uploader="uploader" />
+            	<div thumb="file"></div>
+		        </div>
+					</div>
+
 					<div class="shadow">
 						<div class="sectionheading"><h4>Meta</h4></div>
 						<div class="sectioncontent">

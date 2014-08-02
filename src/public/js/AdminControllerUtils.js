@@ -2,7 +2,7 @@ var adminUtils = angular.module('AdminUtils', []);
 
 /* SERVICES AND FACTORIES FOR THE ARTICLES SECTION */
 
-adminUtils.service('articleUtils', function($http) {
+adminUtils.service('articleUtils', function($http, $q) {
    
    this.generateArticle = function (article) {
       return {
@@ -29,6 +29,43 @@ adminUtils.service('articleUtils', function($http) {
                }
             }
    }
+
+   this.generateImage = function(file) {
+    var deferred = $q.defer();
+      
+    var reader = new FileReader();
+    reader.onload = onLoadFile;
+    reader.onerror = onErrorLoadFile;
+    reader.readAsDataURL(file);
+
+    function onLoadFile(event) {
+      resizeBase64Img(event.target.result, 300, 300).then(function(newImg) {
+       deferred.resolve(newImg);
+      });
+    }
+
+    function onErrorLoadFile(err) {
+      deferred.reject(err);
+    }
+
+    function resizeBase64Img(base64, width, height) {
+      var canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      var context = canvas.getContext("2d");
+      var deferred = $q.defer();
+      $("<img/>").attr("src", base64).load(function() {
+          context.scale(width/this.width,  height/this.height);
+          context.drawImage(this, 0, 0); 
+          deferred.resolve(canvas.toDataURL());               
+      });
+      return deferred.promise;    
+    }
+
+    return deferred.promise;
+   }
+
+
 
    this.deleteArticle = function(article, callback) {
       if(article && callback) {

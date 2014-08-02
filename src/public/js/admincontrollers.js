@@ -36,7 +36,15 @@ articlesControllers.controller('ManageArticlesCtrl', ['$scope', '$http', '$log',
 			if($event.keyCode == 46) {
 				$scope.deleteArticle();
 			}
-		}  		
+		}  	
+
+    $scope.isPublished = function(value, status) {
+      var date = new Date(value);
+      var now = new Date();
+      var dateComp =  (+date <= +now);
+      var statusComp = (status.indexOf('Published') > -1);
+      return dateComp && statusComp;
+    }	
 
       $scope.verifyDeleteAction = function() {
          var modalInstance = $modal.open({
@@ -78,9 +86,45 @@ articlesControllers.controller('ManageArticlesCtrl', ['$scope', '$http', '$log',
   }]);
 
 
-articlesControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$log', '$routeParams', '$location', '$modal', 'sharedArticle', 'articleUtils', 'VerifyDeleteActionCtrl',
-	function ($scope, $http, $timeout, $log, $routeParams, $location, $modal, sharedArticle, articleUtils, VerifyDeleteActionCtrl) {
-  	
+articlesControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$log', '$routeParams', '$location', '$modal', 'sharedArticle', 'articleUtils', 'VerifyDeleteActionCtrl', 'FileUploader',
+	function ($scope, $http, $timeout, $log, $routeParams, $location, $modal, sharedArticle, articleUtils, VerifyDeleteActionCtrl, FileUploader) {
+  	 
+     /* File Upload */
+     
+     $scope.file = { 
+        file: undefined,
+        width: 200,
+        height: 200
+      };
+     
+
+     var uploader = new FileUploader({
+        queueLimit : 1
+     });
+
+      // FILTERS
+
+      uploader.filters.push({
+          name: 'imageFilter',
+          fn: function(item /*{File|FileLikeObject}*/, options) {
+              var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+              return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+          }
+      });
+
+      // Events
+
+      uploader.onAfterAddingFile = function(fileItem) {
+        $scope.file = { 
+          file: fileItem._file,
+          width: 200,
+          height: 200
+        };
+        uploader.clearQueue();
+      };
+
+      $scope.uploader = uploader;
+
   		/* INITIALIZE ALL REQUIRED VARIABLEs */
   		// sitestate = Sub-domain for all variables revoling about the current state inside the article page
   		// article = Contains all variables that will be submitted to the server in order to create update save an article/ draft of an article
@@ -194,56 +238,64 @@ articlesControllers.controller('ArticleCtrl', ['$scope', '$http', '$timeout', '$
          }
       }
 
+      var imagepromise = articleUtils.generateImage($scope.file.file);
 			var article = articleUtils.generateArticle($scope.article);
 
-			console.log("This article will be send", article);
-			if($scope.isNewArticle()) {
-				// Use POST to insert a new draft or published article
-				$http.post('/adminarea/managearticles/articles', article)
-					.success(function(data, status, headers, config) {						
-						if(actionType == 'saveDraft') {
-							$location.path('/managearticles/'+data._id);
-							sharedArticle.setArticle(data);
-							$scope.messages = 'Draft saved successfully!';
-						} else if(actionType == 'publish') {
-							$location.path('/managearticles/'+data._id);
-							sharedArticle.setArticle(data);
-							$scope.messages = 'The article was successfully published!';
-						} else if(actionType == 'update') {
-							$location.path('/managearticles/'+data._id);
-							sharedArticle.setArticle(data);
-							$scope.messages = 'The article was successfully updated!';
-						} else {
-							$scope.messages = 'The action type wasn\'t understood.';
-						}
-					});
-			} else {
-            var selectedid = $scope.article._id;
-            // Use PUT to update an article
-            $http.put('/adminarea/managearticles/articles/'+selectedid, article)
-               .success(function(data, status, headers, config) {                
-                  if(actionType == 'saveDraft') {
-                     $scope.article.initstatus = article.status;
-                     $scope.messages = 'Draft saved successfully!';
-                  } else if(actionType == 'publish') {
-                     $scope.article.initstatus = article.status;
-                     $scope.messages = 'The article was successfully published!';
-                  } else if(actionType == 'update') {
-                     $log.log("Article:Status "+article.status)
-                     $scope.article.initstatus = article.status;
-                     $scope.messages = 'The article was successfully updated!';
-                  } else {
-                     $scope.messages = 'The action type wasn\'t understood.';
-                  }
-               }).error(function(data, status, headers, config) {
-                  $scope.errmessages = 'The article could not be found in the database... maybe someone deleted the article in parallel';
-               });
-			}
+      imagepromise.then(function(image) {
+        var message = {
+          "article" : article,
+          "image": image
+        }
 
-		  	// Hide the status message which was set above after 3 seconds.
-			$timeout(function() {
-			  $scope.messages = null;
-			}, 3000);
+        if($scope.isNewArticle()) {
+          // Use POST to insert a new draft or published article
+          $http.post('/adminarea/managearticles/articles', message)
+            .success(function(data, status, headers, config) {            
+              if(actionType == 'saveDraft') {
+                $location.path('/managearticles/'+data._id);
+                sharedArticle.setArticle(data);
+                $scope.messages = 'Draft saved successfully!';
+              } else if(actionType == 'publish') {
+                $location.path('/managearticles/'+data._id);
+                sharedArticle.setArticle(data);
+                $scope.messages = 'The article was successfully published!';
+              } else if(actionType == 'update') {
+                $location.path('/managearticles/'+data._id);
+                sharedArticle.setArticle(data);
+                $scope.messages = 'The article was successfully updated!';
+              } else {
+                $scope.messages = 'The action type wasn\'t understood.';
+              }
+            });
+        } else {
+              var selectedid = $scope.article._id;
+              // Use PUT to update an article
+              $http.put('/adminarea/managearticles/articles/'+selectedid, message)
+                 .success(function(data, status, headers, config) {                
+                    if(actionType == 'saveDraft') {
+                       $scope.article.initstatus = article.status;
+                       $scope.messages = 'Draft saved successfully!';
+                    } else if(actionType == 'publish') {
+                       $scope.article.initstatus = article.status;
+                       $scope.messages = 'The article was successfully published!';
+                    } else if(actionType == 'update') {
+                       $log.log("Article:Status "+article.status)
+                       $scope.article.initstatus = article.status;
+                       $scope.messages = 'The article was successfully updated!';
+                    } else {
+                       $scope.messages = 'The action type wasn\'t understood.';
+                    }
+                 }).error(function(data, status, headers, config) {
+                    $scope.errmessages = 'The article could not be found in the database... maybe someone deleted the article in parallel';
+                 });
+        }
+
+          // Hide the status message which was set above after 3 seconds.
+        $timeout(function() {
+          $scope.messages = null;
+        }, 3000);
+        });
+
 		 	};
 
 		 	/* HELPER METHODS */

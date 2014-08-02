@@ -7,14 +7,14 @@
 
 h1, h2, h3, h4 {
   color: white;
-  font-family: arial;
+  font-family: Impact;
   font-weight: 400;
   line-height: 1.5em;
 }
 
 p {
   color: white;
-  font-family: arial;
+  font-family: Arial;
   font-weight: 400;
   line-height: 1.5em;
 }
@@ -48,15 +48,17 @@ body {
 }
 
 .cf-logo-p1 {
-  font-size: 4vh;
+  font-size: 4.5vh;
   margin: 0px;
   text-align: center;
+  font-family: Impact;
 }
 
 .cf-logo-p2 {
   font-size: 3vh;
   margin: 0px;
   text-align: center;
+  font-family: Impact;
 }
 
 .cf-logo-big {
@@ -71,17 +73,19 @@ body {
 }
 
 .cf-h5 {
-  font-size: 6vh;
-  font-weight: bolder;
+  font-size: 7vh;
+  font-weight: 400;
   margin-bottom: 0px;
   padding-bottom: 0px;
   text-align: center;
+  font-family: Impact;
 }
 
 .cf-h6 {
   margin-top: 0px;
   font-size: 5vh;
   text-align: center;
+  font-family: Impact;
 }
 
 /* Container Styles */
@@ -105,9 +109,8 @@ body {
 }
 
 #news {
-  
   width: 100%;
-  height: 470px;
+  height: 525px;
   padding-right: 40px;
   margin: auto;
   position: absolute;
@@ -166,11 +169,11 @@ body {
 }
 
 #navigation > nav {
-  top:20px;
+  top:5px;
   padding:10px;
   float: left;
   position: relative;
-  width: 300px;
+  width: 100%;
 }
 
 .navigationStyle:hover {
@@ -221,16 +224,16 @@ body {
 
 .navigationStyle {
   color: white;
-  font-family: arial;
+  font-family: Arial;
   font-weight: 400;
   line-height: 1.5em;
-  font-size: 25px;
+  font-size: 30px;
 }
 
 .selected {
   -webkit-transition: 0.3s linear all; /* Safari/Chrome */
   transition: 0.3s linear all; /* All other modern browsers and IE10+ */
-  font-size: 35px;
+  font-size:40px;
   font-weight: bold;
   text-transform:uppercase;
   -webkit-text-transform:uppercase;
@@ -261,8 +264,7 @@ body {
 
 #newscontainer {
   width: 100%;
-  margin: 50px auto;
-
+  margin: 20px auto;
 }
 
 
@@ -277,25 +279,48 @@ body {
   height: 300px;
   margin-left: auto;
   margin-right: auto;
+  border-radius: 10px;
+  position: relative;
 }
 
 #newscontainer article header {
+  position: relative;
+  padding: 10px;
+}
+
+#newscontainer article header h3 {
+  color: white;
+  font-family: 'Ubuntu', Impact;
+  font-weight: bold;
+  font-size: 25px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
-#newscontainer article header h3 {
-  color: white;
-  font-family: 'Ubuntu';
-  font-weight: bold;
-}
-
 #newscontainer article p {
   text-overflow: ellipsis;
   overflow: hidden;
-  height: 200px;
+  font-size: 15px;
+  height: 180px;
+  padding: 10px;
+  padding-bottom: 0px;
+  margin: 0px;
+  text-align: justify;
 }
+
+.bg-contrast-black {
+  position: relative;
+  z-index: 99999;
+  background-color: rgba(0,0,0,0.5);
+}
+
+#newscontainer article:hover .bg-contrast-black {
+  -webkit-transition: 0.3s linear all; /* Safari/Chrome */
+  transition: 0.3s linear all; /* All other modern browsers and IE10+ */
+  background-color: rgba(0,0,0,0.0);
+}
+
 
 #newscontainer footer {
   width: 300px;
@@ -306,60 +331,115 @@ body {
 #newscontainer article a {
   text-decoration: none;
   color: white;
+  position: relative;
 }
 
 .newslink {
  float: right;
  margin-right: 15px;
  font-size: 20px;
- 
 }
 
 .articletime {
   color: #848484;
-  font-size: 18px;
+  font-size: 20px;
+  font-family: Arial;
 }
 
 .orange {
   background-color: #E74310;
+  color: #E74310;
 }
 
 .violett {
   background-color: #A6177C;
+  color: #A6177C;
 }
 
 .green {
-  background-color: #51AE32;
+  background-color: #2DB54D;
+  color: #2DB54D;
 }
 
-.white {
-  background-color: rgba(255,255,255, 0.5);
+.test {
+  background-position: center;
+  background-size: cover;
 }
+
+.container2 {
+  width: 300px;
+  height: 45px;
+}
+
 .articlewrapper {
   clear:none;
-  -webkit-transition: 0.3s linear all; /* Safari/Chrome */
-  transition: 0.3s linear all; /* All other modern browsers and IE10+ */
-  height: 280px;
+  -webkit-transition: 0.4s linear all; /* Safari/Chrome */
+  transition: 0.4s linear all; /* All other modern browsers and IE10+ */
+  height: 300px;
+  width: 300px;
+  z-index: 1000;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 5px;
 }
 
-.articlewrapper:hover {
-  -webkit-transition: 0.3s linear all; /* Safari/Chrome */
-  transition: 0.3s linear all; /* All other modern browsers and IE10+ */
+.articlewrapper h1 {
+  margin-top: 0px;
+  font-size: 65px;
+  font-weight: 400;
+  border-radius: 5px;
+  font-family: Impact;
+  padding: 15px;
+  background-color: rgba(84,84,84, 0.0);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.newsarticle:hover > .articlewrapper {
+  -webkit-transition: 0.4s linear all; /* Safari/Chrome */
+  transition: 0.4s linear all; /* All other modern browsers and IE10+ */
   z-index: 100;
   height: 0px;
+  opacity: 0;
 }
 
 
 .arrow-up {
-  text-align: center;
-  color: white;
-  background-color: rgba(255,255,255, 0.5);
+  background-image: url(./../img/arrow_up_white.png);
+  background-size: cover;
+  background-position: center center;
+  height: 75px;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .arrow-down {
-  color: white;
-  text-align: center;
+  background-image: url(./../img/arrow_down_white.png);
+  background-size: cover;
+  background-position: center center;
+  height: 75px;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.aligncentered {
+  width: 100%;
+}
+
+.newspaginator:hover {
+   -webkit-transition: 0.5s linear all; /* Safari/Chrome */
+  transition: 0.5s linear all; /* All other modern browsers and IE10+ */
+
+  border-radius: 10px;
   background-color: rgba(255,255,255, 0.5);
+  cursor: pointer;
+}
+
+.overflowhidden {
+    overflow: hidden;
 }
 
 /* CLEARFIX */

@@ -6,6 +6,7 @@ var compression = require('compression');
 var path = require('path');
 var fs = require('fs');
 var hbs = require('hbs');
+var busboy = require('connect-busboy');
 
 var app = express();
 
@@ -33,8 +34,14 @@ app.use(compression());
 app.use(cookieParser());
 app.use(session(sess));
 
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb'}));
+app.use(busboy({
+  highWaterMark: 2 * 1024 * 1024,
+  limits: {
+    fileSize: 10 * 1024 * 1024
+  }
+}));
+app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.urlencoded({limit: '5mb'}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', home);

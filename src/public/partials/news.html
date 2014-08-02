@@ -1,57 +1,36 @@
-<div id="news" class="clearfix">
-    <div class="arrow-up">GOUP</div>
-    <div id="newscontainer" class="clearfix">
-      <div class="clearfix">
-        <article class="newsarticle orange">
-        <div class="articlewrapper white">
-          <header>
-            <h3>HEADER</h3>
-          </header>
-          <p class="articlecontent">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum tempore recusandae, nemo consequuntur rem pariatur ducimus dolorem aperiam nesciunt dolore, ratione aut, corporis laborum? Numquam ad magnam consectetur labore quam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas voluptates magnam, odit quae aut vel accusantium. Alias pariatur quidem, minus eaque officiis, sed ea repellendus tenetur ipsa inventore est earum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolores officiis, ducimus veritatis voluptatibus alias quos, magnam sed non quo hic mollitia perferendis nostrum? Commodi reprehenderit nesciunt saepe, libero et.
-          </p>
-          <a href="" class="newslink">Mehr </a>
-          </div>
-        </article>
-        <footer>
-           <span class="articletime"> FOOTER</span>
-        </footer>
-      </div>
 
-      <div class="clearfix">
-        <article class="newsarticle violett">
-        <div class="articlewrapper white">
-          <header>
-            <h3>HEADER</h3>
-          </header>
-          <p class="articlecontent">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum tempore recusandae, nemo consequuntur rem pariatur ducimus dolorem aperiam nesciunt dolore, ratione aut, corporis laborum? Numquam ad magnam consectetur labore quam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas voluptates magnam, odit quae aut vel accusantium. Alias pariatur quidem, minus eaque officiis, sed ea repellendus tenetur ipsa inventore est earum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolores officiis, ducimus veritatis voluptatibus alias quos, magnam sed non quo hic mollitia perferendis nostrum? Commodi reprehenderit nesciunt saepe, libero et.
-          </p>
-          <a href="" class="newslink">Mehr </a>
-          </div>
-        </article>
-        <footer>
-           <span class="articletime"> FOOTER</span>
-        </footer>
-      </div>
-
-      <div class="clearfix">
-        <article class="newsarticle green">
-        <div class="articlewrapper white">
-          <header>
-            <h3>HEADER</h3>
-          </header>
-          <p class="articlecontent">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum tempore recusandae, nemo consequuntur rem pariatur ducimus dolorem aperiam nesciunt dolore, ratione aut, corporis laborum? Numquam ad magnam consectetur labore quam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas voluptates magnam, odit quae aut vel accusantium. Alias pariatur quidem, minus eaque officiis, sed ea repellendus tenetur ipsa inventore est earum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolores officiis, ducimus veritatis voluptatibus alias quos, magnam sed non quo hic mollitia perferendis nostrum? Commodi reprehenderit nesciunt saepe, libero et.
-          </p>
-          <a href="" class="newslink">Mehr </a>
-          </div>
-        </article>
-        <footer>
-           <span class="articletime"> FOOTER</span>
-        </footer>
-      </div>
-      
+<div id="news" class="clearfix" ng-controller="NewsController">
+    <div class="aligncentered clearfix newspaginator" click-animate-flash="newerArticles() | newscontainer | moveup">
+      <div class="arrow-up"></div>
     </div>
-    <div class="arrow-down">GODOWN</div>
+    <div class="overflowhidden">
+    <div id="newscontainer" class="clearfix"
+>      <div ng-repeat="article in articles">
+        <article class="newsarticle" ng-class="{orange: $first, green: $middle, violett: $last}">
+          <header class="">   <!-- bg-contrast-black -->
+            <h3>{{article.title_short}}</h3>
+          </header>
+          <p class="articlecontent">  <!-- bg-contrast-black -->
+            {{article.abstract}}
+          </p>
+          <div class="container2 clearfix"> <!-- bg-contrast-black -->
+            <a href="" class="newslink">Mehr </a>
+          </div>
+          <div class="articlewrapper test" style="background-image: url(./../img/articles/{{article._id}}.png)"> 
+            <div style="background-color: rgba(84,84,84, 0.6); height:100%;">
+              <h1 ng-class="{orange: $first, green: $middle, violett: $last}">{{article.title_short}}</h1>
+            </div>
+          </div>
+        </article>
+        <footer>
+           <span class="articletime"> {{article.published | date:'dd.MM.yyyy'}}</span>
+        </footer>
+      </div>
+ 
+    </div>
+    </div>
+    <div class="aligncentered clearfix newspaginator" click-animate-flash="olderArticles() | newscontainer | movedown">
+      <div class="arrow-down"></div>
+    </div>
 </div>
+

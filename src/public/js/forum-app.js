@@ -1,12 +1,14 @@
-var siteApp = angular.module('siteApp', [
+var forumApp = angular.module('forumApp', [
   'ngRoute',
   'ngAnimate',
   'ngSanitize',
-  'ui.bootstrap'
+  'ngResource',
+  'ui.bootstrap',
+  'ForumControllers'
 ]);
 
 /* CONFIGURATION TASKS */
-siteApp.config(['$routeProvider', 
+forumApp.config(['$routeProvider', 
   function($routeProvider) {
     $routeProvider.
      when('/', {
@@ -44,7 +46,7 @@ siteApp.config(['$routeProvider',
           });
 }]);   
 
-siteApp.factory('Navigationstate', [function(){
+forumApp.factory('Navigationstate', [function(){
   var state = {};
 
   state.selectedTab = '';
@@ -57,24 +59,11 @@ siteApp.factory('Navigationstate', [function(){
           state.visible=value;
       }
   };
-}]);
-
-siteApp.controller('siteController', ['$scope', '$rootScope', 'Navigationstate', function($scope, $rootscope, navState){
-  $scope.templates = {};
-  
-  $scope.templates.footer = "../partials/footer.html";
-
-  $scope.navstate = navState.getState();
-}]);
-
-siteApp.controller('NewsController', ['$scope', function($scope){
-  
-}])
-         
+}]);         
 
 /* DIRECTIVES */
 
-siteApp.directive('navigation', function() {
+forumApp.directive('navigation', function() {
     return {
       templateUrl: '../partials/navigation.html',
       scope: {
@@ -114,7 +103,7 @@ siteApp.directive('navigation', function() {
     };
   });
 
-siteApp.directive('clickAnimateFlash', function($animate, $parse) {
+forumApp.directive('clickAnimateFlash', function($animate, $parse) {
   return {
     restrict: 'A',
     scope:true,
@@ -123,10 +112,11 @@ siteApp.directive('clickAnimateFlash', function($animate, $parse) {
       var clickFn = $parse(pipeChain[0]);
       if(pipeChain[1]) {
         var animationEleID = pipeChain[1].trim();
+        var animationClass = pipeChain[2] || 'zoom';
         elm.on('click', function (event){
           var animationele = $('#'+animationEleID);
-          $animate.addClass(animationele, 'zoom', function() {
-              $animate.removeClass(animationele, 'zoom', scope.$apply(clickFn));
+          $animate.addClass(animationele, animationClass, function() {
+              $animate.removeClass(animationele, animationClass, scope.$apply(clickFn));
           });
         });
       }

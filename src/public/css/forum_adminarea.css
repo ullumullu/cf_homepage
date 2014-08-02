@@ -4,7 +4,7 @@
 }
 
 body {
-	background-color: #373737;
+	background-color: white;
 }
 
 h1, h2, h3, h4 {
@@ -344,11 +344,25 @@ html[xmlns] .clearfix {
 	color: white;
 }
 
-.sectionheading-error {
+.pad-5-10 {
 	padding: 5px 10px;
+}
+
+.size20 {
 	font-size: 20px;
+}
+
+.sectionheading-error {
+	font-size: 18px;
 	font-weight: bold;
 	color: rgb(148, 93, 85);
+	background-color: inherit;
+}
+
+.sectionheading-ok {
+	font-size: 18px;
+	font-weight: bold;
+	color: #5BC763;
 	background-color: inherit;
 }
 
@@ -396,10 +410,8 @@ html[xmlns] .clearfix {
 	box-shadow:         7px 7px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.shadow:hover {
-	-webkit-box-shadow: 7px 7px 5px 0px rgba(255, 255, 255, 0.75);
-	-moz-box-shadow:    7px 7px 5px 0px rgba(255, 255, 255, 0.75);		
-	box-shadow:         7px 7px 5px 0px rgba(255, 255, 255, 0.75);
+.shadow:hover .sectionheading {
+	background-color: rgba(255,255,255, 0.5);
 }
 
 .actionarea {
@@ -451,4 +463,23 @@ html[xmlns] .clearfix {
 
 .listelement:hover span {
 	color: black!important;
+}
+
+
+.cf-modal-header {
+	color: black;
+}
+
+.cf-modal-body {
+	color: black;
+	font-size: 18px;
+}
+
+.cf-modal-title {
+	color: black;
+	font-size: 30px;
+}
+
+.cf-modal-footer {
+	color: black;
 }
