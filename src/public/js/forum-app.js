@@ -8,20 +8,25 @@ var forumApp = angular.module('forumApp', [
 ]);
 
 /* CONFIGURATION TASKS */
-forumApp.config(['$routeProvider', 
-  function($routeProvider) {
+forumApp.config(['$routeProvider', '$locationProvider', 
+  function($routeProvider, $locationProvider) {
     $routeProvider.
      when('/', {
         templateUrl: '../partials/home.html'
       }).
       when('/news', {
         templateUrl: '../partials/news.html',
-      }).      
+        controller:'NewsController'
+      }).
+       when('/news/:articleId', {
+        templateUrl: '../partials/news_article.html',
+        controller:'NewsArticleController'
+      }).
       when('/events', {
         templateUrl: '../partials/events.html'
       }).
       when('/rent', {
-        templateUrl: '../partials/news.html'
+        templateUrl: '../partials/impressum.html'
       }).
       when('/history', {
         templateUrl: '../partials/news.html'
@@ -32,6 +37,8 @@ forumApp.config(['$routeProvider',
       otherwise({
         redirectTo: '/'
       });
+
+      $locationProvider.hashPrefix('!');
   }]).run(['$rootScope', '$location', 'Navigationstate', function($rootScope, $location, navState){
           var path = function() { return $location.path();};
         
@@ -86,14 +93,12 @@ forumApp.directive('navigation', function() {
           if(name === 'home') {
             navState.setVisible(false);
           } else {
-              navState.setVisible(true);
+            navState.setVisible(true);
           }
           $location.path(path);
         };
 
         $scope.isSelected = function(name) {
-/*          console.log("navstate ", navState.getState().selectedTab);
-          console.log("name ", name);*/
           return navState.getState().selectedTab === name;
         }
       }],
@@ -103,7 +108,7 @@ forumApp.directive('navigation', function() {
     };
   });
 
-forumApp.directive('clickAnimateFlash', function($animate, $parse) {
+forumApp.directive('clickAnimateFlash', ['$animate', '$parse', function($animate, $parse) {
   return {
     restrict: 'A',
     scope:true,
@@ -122,7 +127,62 @@ forumApp.directive('clickAnimateFlash', function($animate, $parse) {
       }
     }
   };
-});
+}]);
+
+forumApp.directive('disqus', ['$window', '$location', function($window, $location){
+  // Runs during compile
+  return {
+    scope: {
+      disqus_shortname: '@disqusShortname',
+      disqus_identifier: '@disqusIdentifier',
+      disqus_title: '@disqusTitle',
+      disqus_url: '@disqusUrl',
+      disqus_category_id: '@disqusCategoryId',
+      disqus_disable_mobile: '@disqusDisableMobile',
+      readyToBind: "@"
+    },
+    controller: function($scope, $element, $attrs, $transclude) {
+
+    },
+    restrict: 'E',
+    templateUrl: '../partials/templates/disqus.html',
+    link: function(scope, iElm, iAttrs, controller) {
+
+      scope.$watch("readyToBind", function(isReady) {
+                    // If the directive has been called without the 'ready-to-bind' attribute, we
+                    // set the default to "true" so that Disqus will be loaded straight away.
+                    if ( !angular.isDefined( isReady ) ) {
+                        isReady = "true";
+                    }
+                    if (scope.$eval(isReady)) {
+                        // put the config variables into separate global vars so that the Disqus script can see them
+                        $window.disqus_shortname = scope.disqus_shortname;
+                        $window.disqus_identifier = scope.disqus_identifier;
+                        $window.disqus_title = scope.disqus_title;
+                        $window.disqus_url = 'http://clubforum.de:3000/#!'+$location.path();
+                        $window.disqus_category_id = scope.disqus_category_id;
+                        $window.disqus_disable_mobile = scope.disqus_disable_mobile;
+
+                        // get the remote Disqus script and insert it into the DOM, but only if it not already loaded (as that will cause warnings)
+                        if (!$window.DISQUS) {
+                            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                            dsq.src = '//' + scope.disqus_shortname + '.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        } else {
+                            $window.DISQUS.reset({
+                                reload: true,
+                                config: function () {
+                                    this.page.identifier = scope.disqus_identifier;
+                                    this.page.url = scope.disqus_url;
+                                    this.page.title = scope.disqus_title;
+                                }
+                            });
+                        }
+                    }
+                });
+    }
+  };
+}]);
 
 /* FILTER */
 

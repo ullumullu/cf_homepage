@@ -4,7 +4,7 @@
 }
 
 body {
-	background-color: white;
+		background-color: rgba(0,0,0, 0.75);
 }
 
 h1, h2, h3, h4 {
@@ -21,17 +21,6 @@ h4 {
 
 div {
 	display: block;
-}
-
-
-.bgblurred {
-	background-color: rgba(0,0,0, 0.75);
-
-	z-index: -2;
-	
-	position:fixed;
-	width: 1170px;
-	height:100%;
 }
 
 .section {
@@ -154,7 +143,7 @@ publish_popup {
 
 .jscrollpane {
 	width: 100%;
-	height: 72.3vh;
+	height: 70.3vh;
 	overflow: hidden;
 }
 
@@ -230,6 +219,10 @@ html[xmlns] .clearfix {
 
 .float-left {
 	float:left;
+}
+
+.float-right {
+	float: right;
 }
 
 .greyContainer {
@@ -442,7 +435,7 @@ html[xmlns] .clearfix {
 }
 
 .listelement {
-	background-color: rgba(255,255,255, 0.2);
+	background-color: inherit;
 }
 
 .listelement h4 {
@@ -483,3 +476,44 @@ html[xmlns] .clearfix {
 .cf-modal-footer {
 	color: black;
 }
+
+.cf-button {
+	color: black;
+	background-color: #ebebeb;
+	border-color: #adadad;
+}
+
+.centered {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#articleimage-prev {
+	position: relative;
+}
+
+#articleimage-btns {
+	width: 100%;
+	padding: 10px;
+}
+
+/* MANAGE ARTICLES ONLY */
+
+#selectedArticleContent {
+
+}
+
+#selectedArticleContent-body{ 
+	overflow:hidden; 
+	height: 77vh;
+	color:white;
+	background-color: rgba(255,255,255,0.0);
+	margin:0px;
+	margin-top:2px;
+}
+
+.articleContent {
+	margin: 10px;
+	text-align: justify;
+}
+

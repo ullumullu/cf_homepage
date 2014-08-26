@@ -276,3 +276,19 @@
   transform: translate3d(0, -150%, 0);
 	opacity: 0;
 }
+
+.showarticle-animation {
+  opacity: 0;
+}
+
+.showarticle-animation-remove-active {
+  -webkit-transition:all linear 0.4s;
+  transition:all linear 0.4s;
+  opacity: 1;
+}
+
+.showarticle-animation-add-active {
+  -webkit-transition:all linear 0.4s;
+  transition:all linear 0.4s;
+  opacity: 0;
+}

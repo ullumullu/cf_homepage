@@ -10,29 +10,54 @@ forumCtrls.controller('SiteController', ['$scope', '$rootScope', 'Navigationstat
   $scope.navstate = navState.getState();
 }]);
 
-forumCtrls.controller('NewsController', ['$scope', 'Article', function($scope, Article){
-    $scope.loadArticles = function(date, newer) {
+forumCtrls.controller('NewsController', ['$scope', '$filter', '$location','Article', 'NewsSession', function($scope, $filter, $location, Article, NewsSession){
+    function loadArticles (date, newer) {
             $scope.isLoading = true;
             var articles = Article.query({date:date, newer: newer}).$promise.then(function(articles) {
               if(articles.length > 0) {
-                $scope.articles = articles;
+                $scope.articles =  $filter('orderBy')(articles, 'published', true);
               }
             });
         };
 
-    $scope.loadArticles();
+    if(NewsSession.articles) {
+      $scope.articles = NewsSession.articles;
+    } else {
+      loadArticles();
+    }
 
 
     $scope.newerArticles = function() {
        var newerArticles = $scope.articles[0];
-       $scope.loadArticles(newerArticles.published, true);
+       loadArticles(newerArticles.published, true);
     };
 
 
     $scope.olderArticles = function() {
        var oldestArticlePos = $scope.articles.length-1;
        var olderArticle = $scope.articles[oldestArticlePos];
-       console.log(olderArticle.date);
-       $scope.loadArticles(olderArticle.published, false);
+       loadArticles(olderArticle.published, false);
     };
-}])
+
+    $scope.setSelectedArticle = function(article) {
+      NewsSession.selectedArticle = article;
+      NewsSession.articles = $scope.articles;
+      $location.path('/news/'+article._id);
+    };
+
+}]);
+
+
+forumCtrls.controller('NewsArticleController', ['$scope', '$filter', '$location', '$routeParams', '$sce', 'Article', 'NewsSession', function($scope, $filter, $location, $routeParams, $sce, Article, NewsSession){
+    
+  $scope.article = NewsSession.selectedArticle || Article.get({articleId: $routeParams.articleId});
+
+  $scope.getArticleBody = function (){
+        return $sce.trustAsHtml($scope.article.body);
+  }
+
+  $scope.goBack = function () {
+    $location.path("/news");
+  }
+    
+}]);

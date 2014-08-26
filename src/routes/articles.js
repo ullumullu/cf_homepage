@@ -46,13 +46,22 @@ router.get('/articles', function(request, response) {
 * Place a new article into the DB
 */
 router.post('/articles', function(request, response) {
-   var body = request.body;
-   // Ceate the new document
-   var articlesModel =  cfDB.articlesmodel;
-   var newArticle = new articlesModel(body.article);
-   // And store it into the DB
+  var body = request.body;
+
+  // Ceate the new document
+  var articlesModel =  cfDB.articlesmodel;
+  var newArticle = new articlesModel(body.article); 
+  
+  // And store it into the DB
    newArticle.save(function(err, newArticle) {
       if(!err) {
+          var id = newArticle._id;
+          var image = body.image;
+          
+          if(image) {
+            storeImage(id, image);  
+          }
+
          response.status(200);
           response.set({
                'Content-Type': 'application/json',
@@ -75,19 +84,17 @@ router.post('/articles', function(request, response) {
    });
 });
 
-
 /**
 * And this is an update 
 */
 router.put('/articles/:articleID', function(request, response) {
    var body = request.body;
    var id = request.params.articleID;
-
-   var base64Data = body.image.replace(/^data:image\/png;base64,/, "");
-    var filePath = './src/public/img/articles/'+id+'.png';
-    require('fs').writeFile(filePath, base64Data , 'base64', function(err) {
-      console.log(err); // writes out file without error, but it's not a valid image
-    });
+   var image = body.image;
+   
+   if(image) {
+    storeImage(id, image);  
+   }
 
    var articlesmodel =  cfDB.articlesmodel;
    articlesmodel.findByIdAndUpdate(id, body.article, function (err, updatedArticle) {
@@ -110,28 +117,59 @@ router.put('/articles/:articleID', function(request, response) {
 });
 
 router.delete('/articles/:articleID', function(request, response) {
-    console.log("ID " + request.params.articleID);
-   
+  var id = request.params.articleID;
+  var filePath = './src/public/img/articles/'+id+'.png';
+  var fs = require('fs');
 
-    var articlesModel =  cfDB.articlesmodel;
-   articlesModel.remove({ _id: request.params.articleID}, function (err) {
-      if(!err) {
-         response.status(200);
-          response.set({
-            'Status': 'OK'
-          });
-          response.send();
-      } else {
-         response.status(404);
-          response.set({
-            'Status': 'File not found yo!'
-          });
-          response.send();
-      }
+  if(config.logging === 'debug') {
+     console.log('DEBUG: Delete ID '+ id);
+  } 
+  
+  var articlesModel =  cfDB.articlesmodel;
+  articlesModel.remove({ _id: request.params.articleID}, function (err) {
+    if(!err) {
 
-   });
+      fs.unlink(filePath, function(err) {
+        if(config.logging === 'debug') {
+           console.log('DEBUG: '+ err);
+        } 
+      });
+
+       response.status(200);
+        response.set({
+          'Status': 'OK'
+        });
+        response.send();
+    } else {
+       response.status(404);
+        response.set({
+          'Status': 'File not found yo!'
+        });
+        response.send();
+    }
+  });
 
 });
+
+/*==========  Helper Methods  ==========*/
+
+function storeImage(id, image) {
+  var filePath = './src/public/img/articles/'+id+'.png';
+  var fs = require('fs');
+  
+  if(image == 'clear') {
+    fs.unlink(filePath, function(err) {
+      if(config.logging === 'debug') {
+         console.log('DEBUG: '+ err);
+      } 
+    });
+  } else if(image.indexOf('data:image')>-1) {
+    var base64Data = image.replace(/^data:image\/png;base64,/, "");
+    fs.writeFile(filePath, base64Data , 'base64', function(err) {
+      console.log(err); // writes out file without error, but it's not a valid image
+    });
+  }
+}
 
 module.exports = router;
 /*-----  End of Articles API  ------*/

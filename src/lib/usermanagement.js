@@ -46,6 +46,7 @@ var updatePW = function(loginName, password, callback) {
 };
 
 var authenticate = function(loginName, password, callback){	
+	console.log("LOGINNAME ", loginName);
 	var users = cfDB.usermodule;
 	users.find({loginname: loginName}, function (err, user) {
 		if(user[0]) {

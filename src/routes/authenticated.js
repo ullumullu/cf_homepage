@@ -79,7 +79,6 @@ router.get("/login",  function(request, response) {
 router.post("/login",  function(request, response) {
 	var loginname = request.param('loginName', null);
 	var password = request.param('password', null);
-
 	usermgmt.authenticate(loginname, password, function(isAuthenticated) {
 		if(isAuthenticated) {
 			if(config.logging === 'debug') {

@@ -1,0 +1,24 @@
+<div id="newsarticlecontainer" class="orange" >
+    <article>
+    <header>
+      <div class="activity_rounded" style="float:left;">
+        <img ng-src="./../img/articles/{{article._id}}.png" width="150" height="150"></img>
+      </div>
+      <div class="centered-wrapper" style="min-width:380px;">
+        <div class="centered">
+          <h1>{{article.title}}</h1>
+          <h3>von <span class="orange-text">{{article.author | uppercase}}</span> <span style="font-size: 15px">am {{article.published | date:'dd MMM yyyy'}}</span></h3> 
+        </div>
+      </div>
+    </header>
+      <div class="articleContent" ng-bind-html="getArticleBody()"> </div>
+      <div id="articleinteractions">
+        <button class="orange articleinteraction articleinteractions-left" click-animate-flash="goBack() | main | showarticle-animation"><span class="glyphicon glyphicon-chevron-left"></span>Back</button>
+        <a ng-href="mailto:?subject=Check out this article on clubforum.de: {{article.title}}&amp;body=Check out this article on clubforum.de. {{article.title}}">Email</a>
+      </div>
+      <hr class="orange" style="clear:both" />
+    <footer>
+        <disqus ng-show="article.config.enablecomments" disqus-shortname="clubforum" disqus-identifier="{{article._id}}" disqus-title="{{ article.title }}"></disqus>
+    </footer>
+  </article>
+</div>

@@ -21,7 +21,8 @@ var articleSchema = mongoose.Schema({
 	config: {
 		publish_fb: Boolean,
 		enablecomments: Boolean
-	}
+	},
+	hasImg: { type: Boolean, default: false }
 
 });
 

@@ -11,7 +11,7 @@
  	<div>
  		<!-- List with all articles -->
  		<div id="listOfArticles" class="col-md-4">
- 			<div class="shadow">
+ 			<div>
  				<div class="sectionheading" style="margin:0px">
 					<h4 class="inline-block">Articles</h4>
  					<div class="container-right">
@@ -58,7 +58,7 @@
  		</div>
  		<!-- SELECTED ARTICLE CONTENT IS SHOWN HERE-->
  		<div id="selectedArticleContent" class="col-md-8" style="padding:0; margin:0;">
- 			<div class="shadow">
+ 			<div>
  				<div class="sectionheading" style="margin:0px">
  					<h4 class="inline-block">{{selected.title}}</h4>
  					<div class="container-right">
@@ -114,8 +114,8 @@
 	 						</tbody>
 	 					</table>
 				</div>
-				<div class="panel-body jscrollpane sectioncontent" style="padding:0px; overflow:hidden; height: 77vh; background-color:rgba(255,255,255,0.5);color:white;margin:0px; margin-top:2px;" >
-					<p ng-bind-html="getSelectedBody()"> </p> 
+				<div id="selectedArticleContent-body" class="panel-body jscrollpane sectioncontent">
+					<p class="articleContent" ng-bind-html="getSelectedBody()"> </p> 
 				</div>
  			</div>
  		</div>

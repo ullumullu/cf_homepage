@@ -1,9 +1,15 @@
-/* General Styles */
+/**
+* GENERAL STYLES 
+*/
+
+/* Fonts */
 
 @font-face {
-    font-family: mamagama;
+    font-family: SFOldRepublic;
     src: url(/fonts/SFOldRepublic.ttf);
 }
+
+/* Tag Styles */
 
 h1, h2, h3, h4 {
   color: white;
@@ -30,11 +36,19 @@ body {
 }
 
 @media (max-width: 992px) {
-
   body {
     overflow: auto;
   }
 }
+
+/* General Classes */
+.bold {
+  font-weight: bold;
+}
+
+/**
+* CF Logo
+*/
 
 .cf-logo {
   background-image: url(./../img/cflogo.png);
@@ -105,7 +119,8 @@ body {
 }
 
 #main {
-  height: 100vh; 
+  height: 100vh;
+  padding: 0px; 
 }
 
 #news {
@@ -127,11 +142,22 @@ body {
 #footer {
   position: absolute;
   bottom: 0px;
-  right: 0px;
+  right: 20px;
+  background-color: rgba(0,0,0, 0.3);
+  height: 30px;
+  margin: 0px;
 }
 
 .footerStyle {
+  color: white;
+  float: left;
   text-align: right;
+  line-height: 30px;
+  margin: 0px 10px;
+}
+
+.footerStyle:first-child {
+  margin-left: 50px;
 }
 
 /* Background Styles */
@@ -222,6 +248,24 @@ body {
   padding-bottom: 10px;
 }
 
+#navigation #adress {
+  position: relative;
+  padding: 10px 0px;
+  margin-top: 5vh;
+}
+
+#navigation #adress p {
+  width: 100%;
+  color: rgba(255,255,255, 1);
+  font-family: 'Ubuntu', Arial;
+  opacity: 0.8;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+
 .navigationStyle {
   color: white;
   font-family: Arial;
@@ -307,6 +351,7 @@ body {
   padding-bottom: 0px;
   margin: 0px;
   text-align: justify;
+
 }
 
 .bg-contrast-black {
@@ -329,15 +374,28 @@ body {
 }
 
 #newscontainer article a {
-  text-decoration: none;
   color: white;
   position: relative;
+  text-decoration: none;
 }
 
 .newslink {
  float: right;
  margin-right: 15px;
  font-size: 20px;
+}
+
+.newslink:hover {
+  -webkit-transition: 0.3s linear all; /* Safari/Chrome */
+  transition: 0.3s linear all; /* All other modern browsers and IE10+ */
+  background-color: white;
+  color: black!important;
+}
+
+.newslink:hover span {
+  -webkit-transition: 0.5s linear all; /* Safari/Chrome */
+  transition: 0.5s linear all; /* All other modern browsers and IE10+ */
+  margin-left: 10%;
 }
 
 .articletime {
@@ -348,6 +406,10 @@ body {
 
 .orange {
   background-color: #E74310;
+  color: #E74310;
+}
+
+.orange-text {
   color: #E74310;
 }
 
@@ -415,8 +477,29 @@ body {
   margin-right: auto;
 }
 
+.arrow-up-black {
+  background-image: url(./../img/arrow_up.png);
+  background-size: cover;
+  background-position: center center;
+  height: 75px;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
 .arrow-down {
   background-image: url(./../img/arrow_down_white.png);
+  background-size: cover;
+  background-position: center center;
+  height: 75px;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.arrow-down-black {
+  background-image: url(./../img/arrow_down.png);
   background-size: cover;
   background-position: center center;
   height: 75px;
@@ -430,16 +513,197 @@ body {
 }
 
 .newspaginator:hover {
-   -webkit-transition: 0.5s linear all; /* Safari/Chrome */
+  -webkit-transition: 0.5s linear all; /* Safari/Chrome */
   transition: 0.5s linear all; /* All other modern browsers and IE10+ */
-
   border-radius: 10px;
   background-color: rgba(255,255,255, 0.5);
   cursor: pointer;
 }
 
+.articlenavigation:hover {
+  -webkit-transition: 0.5s linear all; /* Safari/Chrome */
+  transition: 0.5s linear all; /* All other modern browsers and IE10+ */
+  border-radius: 10px;
+  background-color: rgba(0,0,0, 0.3);
+  cursor: pointer;
+}
+
 .overflowhidden {
     overflow: hidden;
+}
+
+/* News Article html */
+#newsarticlecontainer {
+  height: 100vh;
+  padding-top: 31px;
+  background-color: rgba(245,245,245,0.88);
+  border: 0px;
+  border-left: 10px;
+  border-style: solid;
+  overflow: auto;
+}
+
+#newsarticlecontainer article {
+  color: black;
+  margin: 0px 15px;
+  padding: 0% 10%;
+  margin-bottom: 80px;
+}
+
+#newsarticlecontainer article h1 {
+  margin: 0px;
+  font-family: 'Ubuntu', Impact;
+  font-size: 40px;
+  font-weight: bold;
+  word-wrap: break-word;
+}
+
+#newsarticlecontainer article h3 {
+  font-size: 20px;
+  margin: 5px 10px;
+  font-family: Impact;
+  color: grey;
+  position: absolute;
+}
+
+#newsarticlecontainer article p {
+  background-color: inherit;
+  color: black;
+  font-family: 'Ubuntu', Arial;
+  font-size: 18px;
+  text-align: justify;
+}
+
+.articleContent {
+  height: 100%;
+  margin-top: 20px;
+  margin-left: 80px;
+  margin-right: 80px;
+  clear: both;
+}
+
+#newsarticlecontainer hr {
+  border-style: solid;
+  border-bottom-width: 4px;
+  position: relative;
+}
+
+#newsarticlecontainer footer {
+  position: relative;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+#newsarticlecontainer #articleinteractions {
+  margin: 5px 0px;
+  padding-bottom: 40px;
+  position: relative;
+}
+
+#newsarticlecontainer .articleinteraction {
+  position: relative;
+  
+  width: 130px;
+  height: 30px;
+  font-family: Impact;
+  font-size: 20px;
+  font-weight: normal;
+  color: white;
+  border: none;
+  border-top-width: 1px;
+  border-top-style: solid;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  border-radius: 8px;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+#newsarticlecontainer .articleinteraction span {
+  padding-right: 20px;
+  position: absolute;
+  top: 7px;
+  left: 23px;
+  font-size: 19px;
+}
+
+
+#newsarticlecontainer .articleinteractions-left {
+  float: left;
+  margin-left: 10%;
+  margin-right: 2%;
+} 
+
+#newsarticlecontainer .articleinteractions-right {
+  float: right;
+  margin-left: 2%;
+  margin-right: 10%;
+}
+
+#newsarticlecontainer .articleinteraction:hover {
+  background-color: white;
+  color: #E74310;
+  border: 1px solid #E74310;
+}
+
+.centered-wrapper {
+  display: table;
+  height: 150px;
+}
+
+.centered {
+  display:table-cell; 
+  vertical-align:middle;
+  padding: 0% 1%;
+  position: relative;
+}
+
+.activity_rounded {
+    display: inline-block;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -khtml-border-radius: 50%;
+    border: 5px solid #E74310;
+    border-color: #E74310;
+}
+
+.activity_rounded img  {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -khtml-border-radius: 50%;
+    vertical-align: middle;
+}
+
+/* Impressum */
+
+.popover {
+  background-color: rgba(255,255,255, 0.9)!important;
+  max-width: 400px!important;
+}
+
+#cf-impressum {
+  background-color: inherit;
+}
+
+#cf-impressum .header {
+
+}
+
+
+#cf-impressum h1 {
+  margin-top: 0px;
+  font-size: 20px;
+  color: black;
+  font-family: Impact;
+}
+
+#cf-impressum p {
+  font-size: 13px;
+  color: black;
+  font-family: 'Ubuntu', Arial;
 }
 
 /* CLEARFIX */

@@ -1,4 +1,4 @@
-	<script type="text/javascript" src="../../js/libs/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="/js/libs/ckeditor/ckeditor.js"></script>
 	<div class="container-fluid contentarea">
 		<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
 		<div id="errmessages" class="alert alert-danger alert-dismissable" data-ng-show="errmessages">
@@ -12,6 +12,8 @@
 				{{ isNewArticle() ? "Add New Article" : "Edit Article" }}
 			</h1>
 			<div class="col-md-9">
+						<button ng-click="fblogin()">FB Login</button>
+						<button ng-click="fbtest()">FB Test</button>
 				<form enctype="application/x-www-form-urlencoded" name="articleform">
 					<div class="shadow">
 							<h4 class="sectionheading">Title
@@ -41,8 +43,10 @@
 					<h4 class="sectionheading">Content
 						<span class="label label-danger sectionheading-error" data-ng-show="submitted && articleform.body.$error.required">- Required!</span>
 					</h4>
-					<textarea ck-editor ng-model="article.body" name="body" class="form-control" id="body-editor" value="{{body}}" required>{{body}}</textarea>
-						</div>
+					<div class="sectioncontent">
+						<textarea ck-editor ng-model="article.body" name="body" class="form-control" id="body-editor" value="{{body}}" required>{{body}}</textarea>
+					</div>
+					</div>
 					<div class="shadow">
 					<h4 class="sectionheading" >Author
 						<span class="label label-danger sectionheading-error" data-ng-show="submitted && articleform.author.$error.required">- Required!</span>
@@ -60,7 +64,7 @@
 						<div class="checkbox" style="margin-left:10px;">
 							<label class="input-admin"><input type="checkbox" name="enable_comments" data-ng-model="article.config.enable_comments"> Enable Comments </label>
 						</div>
-						</div>
+					</div>
 					</div>
 				</div>
 				<!-- build:remove:build -->
@@ -130,8 +134,20 @@
 					<div class="shadow">
 						<div class="sectionheading"><h4>Image</h4></div>
 						<div class="sectioncontent">
-							<input type="file" nv-file-select="" uploader="uploader" />
-            	<div thumb="file"></div>
+							
+            	<div id="articleimage-prev" class="centered" style="width: 220px;">
+	            	<div ng-show="file.uploaded" thumb="file"></div>
+	            	<img ng-show="!file.uploaded && !file.clear" width="220px" height="220px" ng-src="/img/articles/{{article._id}}.png">
+            	</div>
+            	<div id="articleimage-btns" class="clearfix centered">
+            		<button class="btn-publish float-left" onclick="document.getElementById('upfile').click()">Upload Image</button>
+								<button class="btn-publish float-right" ng-show="file.uploaded" ng-click="revertFileUpload()">Revert</button>
+								<button class="btn-publish float-right" ng-show="!file.uploaded" ng-click="clearFile()">Clear</button>
+								<!-- This input field has to be hidden... styling is IMPOSSIBLE! :( -->
+								<div style="height: 0px;width: 0px; overflow:hidden;">
+									<input id="upfile" type="file" nv-file-select uploader="uploader" />
+	            	</div>
+            	</div>
 		        </div>
 					</div>
 
@@ -157,15 +173,17 @@
 		</div>
 	</div>
 
+
+<!-- Template has to be moved on the first page at some point in time -->
 <script type="text/ng-template" id="deleteVerification.html">
-	<div class="modal-header">
-		<h3 class="modal-title">{{header}}</h3>
+	<div class="modal-header cf-modal-header ">
+		<h3 class="modal-title cf-modal-title">{{header}}</h3>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body cf-modal-body">
 		<p>{{content}}</br> 
 		{{selected.title}}{{selected.status=='Draft' ? ' - Draft' : ''}}</p>
 	</div>
-	<div class="modal-footer">
+	<div class="modal-footer cf-modal-footer">
 		<button class="btn btn-primary" ng-click="deleteArticle()">OK</button>
 		<button class="btn btn-warning" ng-click="cancelDeleteAction()">Cancel</button>
 	</div>

@@ -1,5 +1,5 @@
 var express = require('express');
-var bodyParser = require('body-Parser');
+var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var compression = require('compression');
@@ -22,7 +22,9 @@ app.engine('html', hbs.__express);
 var sess = { 
     secret: 'keyboard cat', // 
     cookie: { secure: true, maxAge: 3600000 },
-    rolling: true 
+    rolling: true ,
+    resave: true,
+    saveUninitialized: true
 };
 // in devlopment mode disable security
 if (app.get('env') === 'development') {
@@ -41,7 +43,7 @@ app.use(busboy({
   }
 }));
 app.use(bodyParser.json({limit: '5mb'}));
-app.use(bodyParser.urlencoded({limit: '5mb'}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', home);

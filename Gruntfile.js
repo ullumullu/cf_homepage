@@ -39,14 +39,22 @@ module.exports = function(grunt) {
       scripts: {
         expand: true,
         cwd: '<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>',
-        src: [ 'js/**/*.js', '!js/production.min.js' ]
+        src: [ 'js/**/*.js', '!js/production.min.js', '!js/production.libs.min.js','!js/libs/ckeditor/**/*.js', '!js/libs/angular/*.min.js', '!js/libs/jquery/*.js', '!js/admin/*.js', '!js/services/*.js'  ]
       }
     },
 
     concat: {
+      options: {
+        separator: ';',
+        soureMap: true
+      },
       js: {
-        src : ['<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/**/*.js'],
+        src : ['<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/*.js'],
         dest: '<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/production.js'
+      },
+      libs: {
+        src : ['<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/libs/*.js'],
+        dest: '<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/production.libs.js'
       }
     },
 
@@ -168,7 +176,8 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          '<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/production.min.js': ['<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/production.js']
+          '<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/production.min.js': ['<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/production.js'],
+          '<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/production.libs.min.js': ['<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/production.libs.js']
         }
       }
     },
@@ -253,7 +262,7 @@ module.exports = function(grunt) {
   grunt.registerTask(
     'scripts', 
     'Compiles the JavaScript files.', 
-    [ 'concat:js', 'uglify', 'clean:scripts' ]
+    [ 'concat:js','concat:libs', 'uglify', 'clean:scripts' ]
   );
 
   // Image task(s) 
