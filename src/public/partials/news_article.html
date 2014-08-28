@@ -1,24 +1,35 @@
-<div id="newsarticlecontainer" class="orange" >
+<div id="newsarticlecontainer" ng-class="currentTheme.class.block" >
     <article>
+    <div style="position:relative;">
+    <button  ng-class="currentTheme.class.inline" id="articleclose" click-animate-flash="goBack() | main | showarticle-animation" >X</button>
+    </div> 
     <header>
-      <div class="activity_rounded" style="float:left;">
-        <img ng-src="./../img/articles/{{article._id}}.png" width="150" height="150"></img>
+      <div class="activity_rounded" ng-class="currentTheme.class.block" style="float:left;">
+        <img ng-src="./../img/articles/{{article._id}}.png" width="150" height="150" ng-show="article.hasImg"></img>
+         <img ng-src="./../img/articles/default1.jpg" width="150" height="150" ng-show="!article.hasImg"></img>
       </div>
-      <div class="centered-wrapper" style="min-width:380px;">
+      <div class="centered-wrapper" style="min-width:380px;padding-right:3%;">
         <div class="centered">
           <h1>{{article.title}}</h1>
-          <h3>von <span class="orange-text">{{article.author | uppercase}}</span> <span style="font-size: 15px">am {{article.published | date:'dd MMM yyyy'}}</span></h3> 
+          <h3>von <span ng-class="currentTheme.class.inline">{{article.author | uppercase}}</span> <span style="font-size: 15px">am {{article.published | date:'dd MMM yyyy'}}</span></h3> 
         </div>
       </div>
     </header>
       <div class="articleContent" ng-bind-html="getArticleBody()"> </div>
       <div id="articleinteractions">
-        <button class="orange articleinteraction articleinteractions-left" click-animate-flash="goBack() | main | showarticle-animation"><span class="glyphicon glyphicon-chevron-left"></span>Back</button>
-        <a ng-href="mailto:?subject=Check out this article on clubforum.de: {{article.title}}&amp;body=Check out this article on clubforum.de. {{article.title}}">Email</a>
+        <button ng-class="currentTheme.class.block" class="articleinteraction articleinteractions-left" click-animate-flash="goBack() | main | showarticle-animation"><span class="glyphicon glyphicon-chevron-left"></span>Back</button>
+        
+        <mailto class="articleinteractions-right"
+        messagesubject="Check out this article on clubforum.de: {{article.title}}"
+        messagebody="Check out this article on clubforum.de. \n {{articleUrl}} "
+        >
+        <span ng-class="currentTheme.class.inline" class="glyphicon glyphicon-envelope cf-link large-icon"></span>
+        </mailto>
       </div>
-      <hr class="orange" style="clear:both" />
+      <hr ng-class="currentTheme.class.block" style="clear:both" ng-click="test()"/>
     <footer>
         <disqus ng-show="article.config.enablecomments" disqus-shortname="clubforum" disqus-identifier="{{article._id}}" disqus-title="{{ article.title }}"></disqus>
+        <p ng-show="!article.config.enablecomments">No comments allowed for this article!</p>
     </footer>
   </article>
 </div>

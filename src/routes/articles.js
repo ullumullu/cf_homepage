@@ -91,7 +91,7 @@ router.put('/articles/:articleID', function(request, response) {
    var body = request.body;
    var id = request.params.articleID;
    var image = body.image;
-   
+   console.log(body.article.hasImg);
    if(image) {
     storeImage(id, image);  
    }

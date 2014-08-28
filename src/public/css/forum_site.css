@@ -102,6 +102,10 @@ body {
   font-family: Impact;
 }
 
+.large-icon {
+  font-size: 30px;
+}
+
 /* Container Styles */
 
 .content-container {
@@ -407,6 +411,7 @@ body {
 .orange {
   background-color: #E74310;
   color: #E74310;
+  border-color: #E74310;
 }
 
 .orange-text {
@@ -416,16 +421,30 @@ body {
 .violett {
   background-color: #A6177C;
   color: #A6177C;
+  border-color: #A6177C;
+}
+
+.violett-text {
+ color: #A6177C;
 }
 
 .green {
   background-color: #2DB54D;
   color: #2DB54D;
+  border-color: #2DB54D;
+}
+
+.green-text {
+ color: #2DB54D
 }
 
 .test {
   background-position: center;
   background-size: cover;
+}
+
+.cf-link:hover {
+  color: #2a6496;
 }
 
 .container2 {
@@ -632,7 +651,7 @@ body {
 #newsarticlecontainer .articleinteractions-left {
   float: left;
   margin-left: 10%;
-  margin-right: 2%;
+  margin-right: 2%; 
 } 
 
 #newsarticlecontainer .articleinteractions-right {
@@ -641,10 +660,22 @@ body {
   margin-right: 10%;
 }
 
-#newsarticlecontainer .articleinteraction:hover {
+#newsarticlecontainer .articleinteraction.orange:hover  {
   background-color: white;
   color: #E74310;
   border: 1px solid #E74310;
+}
+
+#newsarticlecontainer .articleinteraction.green:hover  {
+  background-color: white;
+  color: #2DB54D;
+  border: 1px solid #2DB54D;
+}
+
+#newsarticlecontainer .articleinteraction.violett:hover  {
+  background-color: white;
+  color: #A6177C;
+  border: 1px solid #A6177C;
 }
 
 .centered-wrapper {
@@ -665,8 +696,8 @@ body {
     -moz-border-radius: 50%;
     border-radius: 50%;
     -khtml-border-radius: 50%;
-    border: 5px solid #E74310;
-    border-color: #E74310;
+    border-width: 5px;
+    border-style: solid;
 }
 
 .activity_rounded img  {
@@ -675,6 +706,17 @@ body {
     border-radius: 50%;
     -khtml-border-radius: 50%;
     vertical-align: middle;
+}
+
+#articleclose {
+  position: absolute;
+  margin-top: 0%;
+  right: 0%;
+  font-size: 50px;
+  background-color: inherit;
+  border: none;
+  font-weight: normal;
+  font-family: 'Ubuntu', Arial;
 }
 
 /* Impressum */

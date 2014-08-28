@@ -296,16 +296,23 @@ articlesControllers.controller('ArticleCtrl', ['$scope', '$timeout', '$log', '$r
       imagepromise.then(function(image) {
          var message = {};
          if(image) {
+          if(file2Up.uploaded) {
+            article.hasImg = true;
+          }
           message = {
             "article" : article,
             "image": (file2Up.uploaded) ? image : 'none'
           }
          } else {
+           if(file2Up.clear) {
+            article.hasImg = false;
+           }
             message = {
               "article" : article,
               "image": (file2Up.clear) ? 'clear' : 'none'
             }
          }
+         console.log(message.article.hasImg);
         articleUtils.sendArticle(message, isNew, articleId, actionType).then(
           function(resp) {
 
