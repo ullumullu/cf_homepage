@@ -4,22 +4,35 @@
 
 // App configuration files
 var env = process.env.NODE_ENV || 'development',
-    config = require('../config/config.'+env+'.js');
-// Init express and the router
-var express = require('express');
-var router = express.Router();
+    config = require('../config/config.'+env+'.js'),
+    logging = require('../config/logging.js').getLogger('home.js');
+
+// External dependencies
+var express = require('express'),
+    router = express.Router();
+
 // Dependencies to libs
 var routesutil = require('./routesutil.js');
 var cfDB = require('../lib/ForumDB.js');
+
+/*==========  Landing page  ==========*/
 
 /* GET home page. */
 router.get('/', function (request, response) {
 	response.render('forum_home');
 });
 
+/**
+ * Used for facebookintegration. Provides the corresponding controller
+ * with the required UserAccesstToken.
+ * @param  {Object} request  Request object
+ * @param  {Object} response Response object
+ */
 router.get('/oauthcallback', function (request, response) {
 	response.render('oauthcallback');
 })
+
+/*==========  Newsarticles API  ==========*/
 
 /* GET news page. */
 router.get('/newsarticles', function (request, response) {
@@ -80,6 +93,29 @@ router.get('/newsarticles/:articleID', function (request, response) {
 		});
 });
 
+/*==========  Members API  ==========*/
+
+router.get('/members', function (request, response) {
+	 var membersModel =  cfDB.membersmodel;
+   membersModel.find({visible: true})
+   .exec(function (err, members) {
+         if(!err) {
+            if(members) {
+                routesutil.sendJson(request, response, {members: members});
+            } else {
+               response.status(404);
+               routesutil.sendJson(request, response, {members: members});
+            }
+         } else {
+            response.status(500);
+            routesutil.sendJson(request, response, 
+               {
+                  status: "Ups... something bad happened...",
+                  err: err
+               });
+         } 
+      });
+});
 
 module.exports = router;
 /*-----  End of Routes for Public Page  ------*/

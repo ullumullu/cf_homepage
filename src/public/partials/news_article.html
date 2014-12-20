@@ -1,7 +1,9 @@
 <div id="newsarticlecontainer" ng-class="currentTheme.class.block" >
     <article>
     <div style="position:relative;">
-    <button  ng-class="currentTheme.class.inline" id="articleclose" click-animate-flash="goBack() | main | showarticle-animation" >X</button>
+    <button  ng-class="currentTheme.class.inline" id="articleclose" click-animate-flash="goBack() | main | showarticle-animation">
+      <img src="/img/cross.png" width="90px" height="90px"></span>
+    </button>
     </div> 
     <header>
       <div class="activity_rounded" ng-class="currentTheme.class.block" style="float:left;">
@@ -25,7 +27,8 @@
         >
         <span ng-class="currentTheme.class.inline" class="glyphicon glyphicon-envelope cf-link large-icon"></span>
         </mailto>
-      </div>
+        <div class="articleinteractions-right" fb-like="{{articleUrl}}"></div>
+      </div>foru
       <hr ng-class="currentTheme.class.block" style="clear:both" ng-click="test()"/>
     <footer>
         <disqus ng-show="article.config.enablecomments" disqus-shortname="clubforum" disqus-identifier="{{article._id}}" disqus-title="{{ article.title }}"></disqus>

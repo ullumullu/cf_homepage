@@ -2,10 +2,14 @@ var adminApp = angular.module('adminApp', [
   'ngRoute',
   'ngAnimate',
   'ngSanitize',
+  'ngResource',
   'ArticlesControllers',
+  'ManageMembersController',
   'ui.bootstrap',
   'angularFileUpload',
-  'CFfacebook'
+  'CFfacebook',
+  'CF-Fileupload',
+  'ckEdit'
 ]);
 
 
@@ -14,16 +18,20 @@ adminApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/managehome', {
-        templateUrl: '../partials/admin/managehome.html',
+        templateUrl: '../partials/admin/manage-home.html',
         controller: 'ManageHomeCtrl'
       }).
       when('/managearticles', {
-        templateUrl: '../partials/admin/managearticles.html',
+        templateUrl: '../partials/admin/manage-articles.html',
         controller: 'ManageArticlesCtrl'
       }).
       when('/managearticles/:articleId', {
-        templateUrl: '../partials/admin/article.html',
+        templateUrl: '../partials/admin/manage-article.html',
         controller: 'ArticleCtrl'
+      }).
+      when('/managemembers', {
+        templateUrl: '../partials/admin/manage-members.html',
+        controller: 'ManageMembersCtrl'
       }).
       otherwise({
         redirectTo: '/'
@@ -39,40 +47,6 @@ adminApp.config(['$routeProvider',
 }]);                  
 
 /* DIRECTIVES */
-
-/**
-  ckEditor directive, inits the div with a running ckEditor. This is 
-  necessary in order to add specific event listeners that update changes
-  into the scope object.
-*/
-adminApp.directive('ckEditor', function() {
-  return {
-    require: '?ngModel',
-    link: function(scope, elm, attr, ngModel) {
-      var ck = CKEDITOR.replace(elm[0]);
-
-      if (!ngModel) return;
-
-      ck.on('instanceReady', function() {
-        ck.setData(ngModel.$viewValue);
-      });
-
-      function updateModel() {
-          scope.$apply(function() {
-              ngModel.$setViewValue(ck.getData());
-          });
-      }
-
-      ck.on('change', updateModel);
-      ck.on('key', updateModel);
-      ck.on('dataReady', updateModel);
-
-      ngModel.$render = function(value) {
-        ck.setData(ngModel.$viewValue);
-      };
-    }
-  };
-});
 
 adminApp.directive('clickAnimateFlash', function($animate, $parse) {
   return {
@@ -109,14 +83,17 @@ adminApp.directive('thumb', ['$window', function($window) {
         return {
             restrict: 'A',
             template: '<div style="position:absolute; width:100%; height:100%; z-index:-1"><p style="color:white; text-align:center; width:100%; height:220px; padding-top: 70px;">loading...</p></div><canvas/>',
+            scope: {
+              fileData : '='
+            },
             link: function(scope, element, attributes) {
-     
-               scope.$watch(function() {return scope.file}, function(val) {
+              //Currently this is linked directly to the controller, has to be changed
+               scope.$watch(function() {return scope.fileData}, function(val) {
                 element.find('p').show();
 
                 if (!helper.support) return;
 
-                var params = scope.$eval(attributes.thumb);
+                var params = scope.fileData;
 
                 if (!helper.isFile(params.file)) return;
                 if (!helper.isImage(params.file)) return;

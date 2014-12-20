@@ -12,8 +12,6 @@
 				{{ isNewArticle() ? "Add New Article" : "Edit Article" }}
 			</h1>
 			<div class="col-md-9">
-						<button ng-click="fblogin()">FB Login</button>
-						<button ng-click="fbtest()">FB Test</button>
 				<form enctype="application/x-www-form-urlencoded" name="articleform">
 					<div class="shadow">
 							<h4 class="sectionheading">Title
@@ -78,8 +76,8 @@
 						<div class="sectionheading"><h4>Publish</h4></div>
 						<div id="publish_pnl_body" class="panel-body box sectioncontent">
 							<div id="minor-publish-actions" class="section_buttons clearfix">
-								<button id="savedraft_btn" data-ng-disabled="progress.active()" data-ng-click="submit(articleform, 'saveDraft')" class="btn btn-default btn-publish" ng-hide="article.status == 'Published' || article.initstatus == 'Published' ">Safe Draft</button>
-								<button id="preview_btn" data-ng-disabled="progress.active()" class="btn btn-default btn-publish ">Preview</button>
+								<button data-ng-disabled="progress.active()" data-ng-click="submit(articleform, 'saveDraft')" class="btn btn-default btn-publish float-left" ng-hide="article.status == 'Published' || article.initstatus == 'Published' ">Safe Draft</button>
+								<button data-ng-disabled="progress.active()" class="btn btn-default btn-publish float-right">Preview</button>
 							</div>
 							<div id="article-status" class="section section_spacer">
 								<label class="publish_font">Status</label>	
@@ -136,7 +134,7 @@
 						<div class="sectioncontent">
 							
             	<div id="articleimage-prev" class="centered" style="width: 220px;">
-	            	<div ng-show="file.uploaded" thumb="file"></div>
+	            	<div ng-show="file.uploaded" thumb file-data="file"></div>
 	            	<img ng-show="!file.uploaded && !file.clear" width="220px" height="220px" ng-src="/img/articles/{{article._id}}.png">
             	</div>
             	<div id="articleimage-btns" class="clearfix centered">

@@ -100,6 +100,24 @@ module.exports = function(grunt) {
       }
     },
 
+    less: {
+     dev: {
+         options: {
+         },
+         files: {
+          "<%= globalConfig.src %>/<%= globalConfig.staticfiles %>/css/forum_site_less.css": "<%= globalConfig.src %>/<%= globalConfig.staticfiles %>/less/forum_site.less",
+          "<%= globalConfig.src %>/<%= globalConfig.staticfiles %>/css/forum_adminarea_less.css": "<%= globalConfig.src %>/<%= globalConfig.staticfiles %>/less/forum_adminarea.less"
+        }
+     },
+     production: {
+         options: {
+             paths: ['<%= globalConfig.src %>/<%= globalConfig.staticfiles %>'],
+             cleancss: true
+         },
+         files: {"css/forum_site_less.css": "less/forum_site.less"}
+     }
+    },
+
     nodemon: {
       dev: {
         script: '<%= globalConfig.src %>/bin/www',
@@ -184,6 +202,11 @@ module.exports = function(grunt) {
 
     watch: {
 
+      less: {
+        files: "<%= globalConfig.src %>/<%= globalConfig.staticfiles %>/less/*",
+        tasks: ["less:dev"]
+      },
+
       css: {
           files: ['<%= globalConfig.src %>/public/css/**/*.css'],
           options: {
@@ -214,6 +237,9 @@ module.exports = function(grunt) {
 
   // Load the plugin that provides the "concat" task.
   grunt.loadNpmTasks('grunt-contrib-concat');
+
+  // Load the plugin that provides the "less" task.
+  grunt.loadNpmTasks('grunt-contrib-less');
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');

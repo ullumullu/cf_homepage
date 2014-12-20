@@ -1,0 +1,5 @@
+<ul>
+  <li ng-repeat="action in globalActions">
+    <button ng-click="action.onclick()" ng-blur="action.onblur()" title="{{action.description}}"><span ng-class="action.icon"></span></button>
+  </li>
+</ul>

@@ -6,14 +6,17 @@
 
 // App configuration files
 var env = process.env.NODE_ENV || 'development',
-    config = require('../config/config.'+env+'.js');
-// Init express and the router
-var express = require('express');
-var router = express.Router();
+    config = require('../config/config.'+env+'.js'),
+    logging = require('../config/logging.js').getLogger('authenticated.js');
+
+// External dependencies
+var express = require('express'),
+		router = express.Router();
+
 // Dependencies to libs
-var routesutil = require('./routesutil.js');
-var cfDB = require('../lib/ForumDB.js');
-var usermgmt = require('../lib/usermanagement.js');
+var routesutil = require('./routesutil.js'),
+		cfDB = require('../lib/ForumDB.js'),
+		usermgmt = require('../lib/usermanagement.js');
 
 /*==========  HTTPS Configuration  ==========*/
 
@@ -22,6 +25,10 @@ var usermgmt = require('../lib/usermanagement.js');
  * over https.
  */
 var requirehttps = function(request, response, next) {
+	
+  var _METHOD = "requirehttps(request, response, next)";
+  logging.debug("Entering " + _METHOD);
+
 	if(request.protocol === 'https') {
 	   if(config.logging === 'debug') {
 	      console.log('DEBUG: function requirehttps: HTTPS is used.');
@@ -41,6 +48,7 @@ var requirehttps = function(request, response, next) {
 
 // If https is enforced this has to be set in the config file
 if(config.ssl.enabled) {
+	logging.debug("SSL enabled")
 	router.all('*', requirehttps);
 }
 
@@ -53,7 +61,11 @@ if(config.ssl.enabled) {
  * login page.
  */
 router.get("/",  function(request, response) {
-   	if(request.session.authenticated) {
+  
+  var _METHOD = "GET /";
+  logging.debug("Entering " + _METHOD);
+
+  if(request.session.authenticated) {
 		response.redirect('/adminarea/area', 302);
 	} else {
 		response.render('adminarea/login_adminarea');
@@ -65,6 +77,10 @@ router.get("/",  function(request, response) {
  * O.w. show login page.
  */
 router.get("/login",  function(request, response) {
+
+  var _METHOD = "GET /login";
+  logging.debug("Entering " + _METHOD);
+
 	if(request.session.authenticated) {
 		response.redirect('/adminarea/area', 302);
 	} else {
@@ -77,6 +93,10 @@ router.get("/login",  function(request, response) {
  * exist set a matching session cookie.
  */
 router.post("/login",  function(request, response) {
+
+  var _METHOD = "POST /login";
+  logging.debug("Entering " + _METHOD);
+
 	var loginname = request.param('loginName', null);
 	var password = request.param('password', null);
 	usermgmt.authenticate(loginname, password, function(isAuthenticated) {
@@ -106,6 +126,10 @@ router.post("/login",  function(request, response) {
  * invoke the method.
  */
 var requireAuthentication = function(request, response, next) {
+
+  var _METHOD = "requireAuthentication(request, response, next)";
+  logging.debug("Entering " + _METHOD);
+
 	if(request.session.authenticated) {
 		next();	
 	} else {
@@ -118,6 +142,7 @@ var requireAuthentication = function(request, response, next) {
 // If authentication is enforced to access the adminarea. Has to
 // be set in the configuration.
 if(config.requiresauthentication) {
+	logging.debug("Authentication enabled");
   router.all('*', requireAuthentication);	
 }
 
@@ -174,8 +199,12 @@ router.post('/homeContent', function(request, response) {
 
 
 /*==========  Articles Methods  ==========*/
-var articles = require('./articles.js');
+var articles = require('./articles-api.js');
 router.use('/managearticles', articles);
+
+/*==========  Members Methods  ==========*/
+var members = require('./members-api.js');
+router.use('/managemembers', members);
 
 module.exports = router;
 

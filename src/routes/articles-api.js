@@ -2,50 +2,74 @@
 =            Articles API                    =
 =============================================*/
 
+/**
+ * Admin site api thats used to manage all articles written for
+ * the club forum page. Allows to insert, update and delete an 
+ * article.
+ *
+ * :TODO: Maybe it would be nice to interact with multiple articles 
+ * at a time. 
+ */
+
 // App configuration files
 var env = process.env.NODE_ENV || 'development',
-    config = require('../config/config.'+env+'.js');
-// Init express and the router
-var express = require('express');
-var router = express.Router();
+    config = require('../config/config.'+env+'.js'),
+    logging = require('../config/logging.js').getLogger('articles-api.js');
+
+// External dependencies
+var express = require('express'),
+    router = express.Router();
+
 // Dependencies to libs
-var routesutil = require('./routesutil.js');
-var cfDB = require('../lib/ForumDB.js');
+var routesutil = require('./routesutil.js'),
+    cfDB = require('../lib/ForumDB.js');
+
+// Private variables
+var _articleimglocation = config.paths.articles;
+
 
 /**
-* Get all articles
-*/
+ * Get method which retrieves all articles stored. The default
+ * ordering is from the newest to the oldest created article.
+ * 
+ * @param  {Object} request
+ * @param  {Object} response
+ */
 router.get('/articles', function(request, response) {
-
-  var from = request.query.from;
-  var to = request.query.to;
-    
-   var articlesModel =  cfDB.articlesmodel;
-   articlesModel.find({})
-   .sort({'date': -1})
-   .exec(function (err, articles) {
-         if(!err) {
-            if(articles) {
-                routesutil.sendJson(request, response, {articles: articles});
-            } else {
-               response.status(404);
-               routesutil.sendJson(request, response, {articles: articles});
-            }
-         } else {
-            response.status(500);
-            routesutil.sendJson(request, response, 
-               {
-                  status: "Ups... something bad happened...",
-                  err: err
-               });
-         } 
-      });
+ 
+  var _METHOD = "GET /articles";
+  logging.debug("Entering " + _METHOD);
+ 
+  var articlesModel =  cfDB.articlesmodel;
+  articlesModel.find({})
+  .sort({'date': -1})
+  .exec(function (err, articles) {
+    if(!err) {
+      if(articles) {
+        routesutil.sendJson(request, response, {articles: articles});
+      } else {
+        response.status(404);
+        routesutil.sendJson(request, response, {articles: articles});
+      }
+   } else {
+      response.status(500);
+      routesutil.sendJson(request, response, 
+        {
+          status: "Ups... something bad happened...",
+          err: err
+        });
+    } 
+  });
 });
 
 /**
 * Place a new article into the DB
 */
 router.post('/articles', function(request, response) {
+
+  var _METHOD = "POST /articles";
+  logging.debug("Entering " + _METHOD);
+
   var body = request.body;
 
   // Ceate the new document
@@ -59,7 +83,7 @@ router.post('/articles', function(request, response) {
           var image = body.image;
           
           if(image) {
-            storeImage(id, image);  
+            routesutil.storeImage(id, image, _articleimglocation);  
           }
 
          response.status(200);
@@ -84,21 +108,26 @@ router.post('/articles', function(request, response) {
    });
 });
 
-/**
+/*
 * And this is an update 
 */
 router.put('/articles/:articleID', function(request, response) {
-   var body = request.body;
-   var id = request.params.articleID;
-   var image = body.image;
-   console.log(body.article.hasImg);
-   if(image) {
-    storeImage(id, image);  
-   }
+  
+  var _METHOD = "PUT /articles/:articleID";
+  logging.debug("Entering " + _METHOD);
+  
+  var body = request.body;
+  var id = request.params.articleID;
+  var image = body.image;
 
-   var articlesmodel =  cfDB.articlesmodel;
-   articlesmodel.findByIdAndUpdate(id, body.article, function (err, updatedArticle) {
-      if(updatedArticle) {
+  if(image == 'clear' ) {
+    routesutil.deleteImage(id, _articleimglocation);
+  }else if(image) {
+    routesutil.storeImage(id, image, _articleimglocation);  
+  }
+
+  var articlesmodel =  cfDB.articlesmodel;
+  articlesmodel.findByIdAndUpdate(id, body.article, function (err, updatedArticle) {      if(updatedArticle) {
           response.status(200);
                 response.set({
                      'Content-Type': 'application/json',
@@ -117,23 +146,19 @@ router.put('/articles/:articleID', function(request, response) {
 });
 
 router.delete('/articles/:articleID', function(request, response) {
-  var id = request.params.articleID;
-  var filePath = './src/public/img/articles/'+id+'.png';
-  var fs = require('fs');
+  
+  var _METHOD = "DELETE /articles/:articleID";
+  logging.debug("Entering " + _METHOD);
 
-  if(config.logging === 'debug') {
-     console.log('DEBUG: Delete ID '+ id);
-  } 
+  var id = request.params.articleID;
+  logger.debug('%s: Delted article with Id %s', _METHOD, id);
   
   var articlesModel =  cfDB.articlesmodel;
   articlesModel.remove({ _id: request.params.articleID}, function (err) {
     if(!err) {
 
-      fs.unlink(filePath, function(err) {
-        if(config.logging === 'debug') {
-           console.log('DEBUG: '+ err);
-        } 
-      });
+      // Delete the image if there is one
+      routesutil.deleteImage(id, _articleimglocation);
 
        response.status(200);
         response.set({
@@ -150,26 +175,6 @@ router.delete('/articles/:articleID', function(request, response) {
   });
 
 });
-
-/*==========  Helper Methods  ==========*/
-
-function storeImage(id, image) {
-  var filePath = './src/public/img/articles/'+id+'.png';
-  var fs = require('fs');
-  
-  if(image == 'clear') {
-    fs.unlink(filePath, function(err) {
-      if(config.logging === 'debug') {
-         console.log('DEBUG: '+ err);
-      } 
-    });
-  } else if(image.indexOf('data:image')>-1) {
-    var base64Data = image.replace(/^data:image\/png;base64,/, "");
-    fs.writeFile(filePath, base64Data , 'base64', function(err) {
-      console.log(err); // writes out file without error, but it's not a valid image
-    });
-  }
-}
 
 module.exports = router;
 /*-----  End of Articles API  ------*/

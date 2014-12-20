@@ -1,5 +1,8 @@
-var mongoose = require('mongoose');
+/*===================================
+=            User Schema            =
+===================================*/
 
+var mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
        loginname: String,

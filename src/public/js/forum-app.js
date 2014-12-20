@@ -4,15 +4,17 @@ var forumApp = angular.module('forumApp', [
   'ngSanitize',
   'ngResource',
   'ui.bootstrap',
-  'ForumControllers'
+  'ForumControllers',
+  'MemberControllerUtils',
+  'GlobalAction'
 ]);
-
 /* CONFIGURATION TASKS */
 forumApp.config(['$routeProvider', '$locationProvider', 
   function($routeProvider, $locationProvider) {
     $routeProvider.
      when('/', {
-        templateUrl: '../partials/home.html'
+        templateUrl: '../partials/home.html',
+        controller:'HomeController'
       }).
       when('/news', {
         templateUrl: '../partials/news.html',
@@ -26,13 +28,14 @@ forumApp.config(['$routeProvider', '$locationProvider',
         templateUrl: '../partials/events.html'
       }).
       when('/rent', {
-        templateUrl: '../partials/impressum.html'
+        templateUrl: '../partials/rent.html',
+        controller:'RentController'
       }).
-      when('/history', {
+      when('/history', {  
         templateUrl: '../partials/news.html'
       }).
       when('/members', {
-        templateUrl: '../partials/news.html'
+        templateUrl: '../partials/members.html'
       }).
       otherwise({
         redirectTo: '/'
@@ -42,6 +45,8 @@ forumApp.config(['$routeProvider', '$locationProvider',
   }]).run(['$rootScope', '$location', 'Navigationstate', function($rootScope, $location, navState){
           var path = function() { return $location.path();};
         
+          $rootScope.facebookAppId = '508276955969316';
+
           $rootScope.$watch(path, function(newVal, oldVal){
             $rootScope.activetab = newVal.split('/')[1];
             navState.getState().selectedTab = $rootScope.activetab;
@@ -264,6 +269,42 @@ forumApp.directive('mailto', ['$location', '$compile', function($location, $comp
   }
 }]);
 
+forumApp.directive('fbLike', [
+  '$window', '$rootScope', function ($window, $rootScope) {
+  return {
+      restrict: 'A',
+      scope: {fbLike: '@'},
+      link: function (scope, element, attrs) {
+          renderLikeButton();
+
+          function renderLikeButton() {
+              if (!!attrs.fbLike && !scope.fbLike) {
+                  // wait for data if it hasn't loaded yet
+                  scope.$watch('fbLike', function () {
+                      renderLikeButton();
+                  });
+                  return;
+              } else {
+                  element.html('<a class="share-on-link share-on-facebook" ' + (!!scope.fbLike ? ' href="https://www.facebook.com/dialog/share?app_id='+$rootScope.facebookAppId+'&display=popup&action_type=og.likes&href='+encodeURIComponent(scope.fbLike)+'&redirect_uri='+encodeURIComponent(scope.fbLike)+'"' : '') + '>Facebook</a>');
+              }
+          }
+      }
+  }
+}]);
+
 /* FILTER */
 
 
+
+/* WORKAROUND */
+
+forumApp.directive('disableAnimation', function($animate){
+    return {
+        restrict: 'A',
+        link: function($scope, $element, $attrs){
+            $attrs.$observe('disableAnimation', function(value){
+                $animate.enabled(!value, $element);
+            });
+        }
+    }
+});

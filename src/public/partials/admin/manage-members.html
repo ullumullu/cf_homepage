@@ -1,0 +1,188 @@
+<div id="manageMembers" class="container-fluid" ng-controller="ManageMembersCtrl">
+    <div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
+    <div id="errmessages" class="alert alert-danger alert-dismissable" data-ng-show="errmessages">
+      <button type="button" class="close" ng-click="errmessages = undefined">&times;</button>
+      <span data-ng-bind="errmessages"></span>
+    </div>
+    <div id="currentMembersList" class="col-md-12">
+      <div>
+        <div class="sectionheading" style="margin:0px">
+          <h4 class="inline-block">Members</h4>
+          <div class="container-right">
+            <a class="iconlink">
+            <button ng-init="isAddNewMemberCollapsed = true" ng-click="isAddNewMemberCollapsed = !isAddNewMemberCollapsed">
+              <span class="glyphicon glyphicon-plus white"> </span>
+            </button>
+            </a>
+            <a class="iconlink">
+            <button>
+              <span class="glyphicon glyphicon-minus white"> </span>
+            </button>
+            </a>
+            <a class="iconlink">
+            <button ng-init="isViewMode = true" ng-click="isViewMode = !isViewMode">
+              <span class="glyphicon glyphicon-pencil white"></span>
+            </button>
+            </a>
+          </div>
+        </div>
+        <div id="manageMembersContent" class="sectioncontent">
+          <div id="addNewMember" class="container-fluid" collapse="isAddNewMemberCollapsed">
+            <form enctype="application/x-www-form-urlencoded" name="memberform">
+            <div class="row contentarea clearfix">
+              <div class="float-left" >
+                <div style="width:150px; height: 150px;" ng-class="{inputerror : submitted && fileData.file == undefined}">
+                  <div ng-show="fileData.uploaded" thumb file-data="fileData"></div>
+                </div>
+                <div style="margin-top:5px;">
+                  <button class="btn-action btn-sml" onclick="document.getElementById('upfile').click()"><span class="glyphicon glyphicon-plus white"></button>
+                  <button type="button" class="btn-del btn-sml" ng-click="clearFile()"><span class="glyphicon glyphicon-minus white"></button>
+                  <!-- This input field has to be hidden... styling is IMPOSSIBLE! :( -->
+                  <div style="height: 0px;width: 0px; overflow:hidden;">
+                    <input id="upfile" type="file" name="fileup" nv-file-select uploader="uploader" required />
+                  </div>
+                </div>
+              </div>
+              <div style="margin-left:150px">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="">Name:</label>
+                    </div>
+                    <div class="col-md-6">
+                      <input type="text" class="form-control input-admin"  name="name" placeholder="Enter name here" value="" ng-model="newmember.name" required ng-class="{inputerror : submitted && memberform.name.$error.required}"> 
+                    </div>
+                    <div class="col-md-2">
+                      <label class="">Visible:</label>
+                    </div>
+                    <div class="col-md-2">
+                      <input type="checkbox" class="form-control input-admin"  name="visible" ng-model="newmember.visible" ng-checked="true">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label>Status:</label>
+                    </div>
+                    <div class="col-md-6">
+                      <select ng-model="newmember.member_status" name="status" class="form-control input-admin" required ng-class="{inputerror : submitted && memberform.status.$error.required}">
+                        <option value="0">Aktives Mitglied</option>
+                        <option value="1">Ehemaliges Mitglied</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">
+                      <label>Age:</label>
+                    </div>
+                    <div class="col-md-2">
+                      <input type="number" class="form-control input-admin only-numbers"  name="age" ng-model="newmember.age" required ng-class="{inputerror : submitted && memberform.age.$error.required}" min="0" max="99">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="">About:</label>
+                    </div>
+                    <div class="col-md-10">
+                      <input type="text" class="form-control input-admin"  name="description" placeholder="Enter text here" value="" ng-model="newmember.description" required ng-class="{inputerror : submitted && memberform.description.$error.required}">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button type="button" class="btn-del float-right" ng-click="isAddNewMemberCollapsed = !isAddNewMemberCollapsed">Cancel</button>
+                      <button type="button" class="btn-action float-right space-right-10" ng-click="addNewMember(memberform)">Add</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </form>
+          </div>
+          <div class="actionarea">
+            <div class="input-group-admin">
+              <input type="text" class="form-control input-admin"  name="s" placeholder="Search" value="" ng-model="searchText">
+              <span class="input-addon-right">
+                <button type="button" class="btn btn-default searchbtn"><span class="glyphicon glyphicon-search white"></span></button>
+              </span>
+             </div>
+          </div>
+          <div id="membersList" class="list-group jscrollpane" style="margin:0px;">
+            <ul style="padding:0px;">
+              <li class="list-group-item from-bottom-to-top listelement" ng-repeat="member in members">
+                <div class="container-fluid">
+                  <div class="row contentarea clearfix">
+                    <div class="float-left" >
+                      <div>
+                        <img src="/img/members/{{member._id}}.png" width="100px" height="120px"></img>
+                      </div>
+                      <div style="margin-top:5px;" collapse="isViewMode">
+                        <button onclick="$(this).find('input')[0].click()" class="btn-action btn-sml"><span class="glyphicon glyphicon-plus white">
+                         <div style="height: 0px;width: 0px; overflow:hidden;">
+                          <input id="upfile_{{$index}}" type="file" file="member.img" />
+                        </div>
+                        </button>
+                        <button class="btn-del btn-sml"><span class="glyphicon glyphicon-minus white"></button>
+                      </div>
+                    </div>
+                    <div style="margin-left:120px">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label class="">Name:</label>
+                          </div>
+                          <div class="col-md-6">
+                            <input type="text" class="form-control input-admin"  name="name" ng-model="member.name" ng-readonly="isViewMode">
+                          </div>
+                          <div class="col-md-2">
+                            <label class="">Visible:</label>
+                          </div>
+                          <div class="col-md-2">
+                            <input type="checkbox" class="form-control input-admin"  name="visible" ng-model="member.visible" ng-disabled="isViewMode">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label>Status:</label>
+                          </div>
+                          <div class="col-md-6">
+                            <select ng-model="member.member_status" class="form-control input-admin" ng-disabled="isViewMode">
+                              <option value="0">Aktives Mitglied</option>
+                              <option value="1">Ehemaliges Mitglied</option>
+                            </select>
+                          </div>
+                          <div class="col-md-2">
+                            <label>Age:</label>
+                          </div>
+                          <div class="col-md-2">
+                            <input type="text" class="form-control input-admin only-numbers"  name="name" value="22" ng-model="member.age" ng-readonly="isViewMode">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label class="">About:</label>
+                          </div>
+                          <div class="col-md-10">
+                            <input type="text" class="form-control input-admin"  name="description" ng-model="member.description" ng-readonly="isViewMode">
+                          </div>
+                        </div>
+                        <div class="row" collapse="isViewMode">
+                          <div class="col-md-12">
+                            <button type="button" class="btn-del float-right" ng-click="deleteMember(member._id, $index)">Delete</button>
+                            <button type="button" class="btn-action float-right space-right-10" ng-click="editMember(member)">Change</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Initialize fancy scrolling -->
+<script>
+  $(function() {
+    $('.jscrollpane').jScrollPane({autoReinitialise: true});
+  });
+</script>

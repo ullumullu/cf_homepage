@@ -292,3 +292,22 @@
   transition:all linear 0.4s;
   opacity: 0;
 }
+
+/**
+ * A simple animation to show and hide
+ * elements. Can be used with ng-show.
+ */
+
+.flash {
+ opacity: 1;
+}
+
+.flash.ng-hide-add.ng-hide-add-active,
+.flash.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.flash.ng-hide {
+  opacity: 0;
+}

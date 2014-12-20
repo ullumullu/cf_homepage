@@ -1,0 +1,34 @@
+<!-- This partial represents the landing page of the club forum homepage -->
+<div id="rentcontent" class="container-fluid">
+  
+  <div class="col-md-6">
+    <div id="cf-slideshow" class="">
+      <div style="height: 405px">
+        <carousel interval="myInterval" disable-animation="true">
+          <slide ng-repeat="slide in slides" >
+            <img ng-src="{{slide.image}}" style="margin:auto;">
+            <div class="carousel-caption">
+              <h4>Slide {{$index}}</h4>
+              <p>{{slide.text}}</p>
+            </div>
+          </slide>
+        </carousel>
+      </div>
+    </div>
+    <div id="cf-information" class="">
+      <p>Information Text</p>
+      <p>Diese Katzen können Sie exklusiv für nur 150€ mieten!</p>
+    </div>    
+  </div>
+  <div class="col-md-6" style="background-color:green">
+    <div id="calendar" class="">
+      <h1>Kalender:</h1>
+    </div>
+    <div id="calendar-details" class="">
+      <p>Calendar-details</p>
+    </div>    
+    <div id="rentrequest" class="">
+      <p>Rent Request</p>
+    </div>
+  </div>
+</div>

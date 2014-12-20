@@ -1,0 +1,148 @@
+<div id="members" ng-controller="MembersController">
+  <div id="members_block" ng-class="{block : !asList, list: asList}">
+  <div class="helpbox help-highlight flash" ng-show="help">
+    <p>
+      Hier finden sie eine Übersicht über alle aktiven und ehemaligen Mitglieder des Club Forums.
+    </p>
+    <p>
+      Für Details zu einzelnen Personen bewegen Sie die Maus auf eines der Bilder.
+    </p>
+  </div>
+    <ul ng-class="{'offset-full' : !asList}" class="overflow-left relative">
+      <li class="violett">
+        <img ng-src="/img/members/{{getMember(12)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(12).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(12).age}}</p>
+          <p>{{getMember(12).description}}</p>
+        </div>
+      </li>
+      <li class="violett">
+        <img ng-src="/img/members/{{getMember(13)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(13).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(13).age}}</p>
+          <p>{{getMember(13).description}}</p>
+        </div>
+      </li>
+    </ul>
+    <ul ng-class="{'offset-half' : !asList}">
+      <li class="orange">
+        <img ng-src="/img/members/{{getMember(7)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(7).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(7).age}}</p>
+          <p>{{getMember(7).description}}</p>
+        </div>
+      </li>
+      <li class="orange" >
+        <img ng-src="/img/members/{{getMember(8)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(8).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(8).age}}</p>
+          <p>{{getMember(8).description}}</p>
+        </div>
+      </li>
+      <li class="orange" >
+        <img ng-src="/img/members/{{getMember(9)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(9).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(9).age}}</p>
+          <p>{{getMember(9).description}}</p>
+        </div>
+      </li>
+    </ul>
+    <ul>
+      <li class="green">
+        <img ng-src="/img/members/{{getMember(0)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(0).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(0).age}}</p>
+          <p>{{getMember(0).description}}</p>
+        </div>
+      </li>
+      <li class="green">
+        <img ng-src="/img/members/{{getMember(1)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(1).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(1).age}}</p>
+          <p>{{getMember(1).description}}</p>
+        </div>
+      </li>
+      <li class="green">
+        <img ng-src="/img/members/{{getMember(2)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(2).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(2).age}}</p>
+          <p>{{getMember(2).description}}</p>
+        </div>
+      </li>
+      <li class="green">
+        <img ng-src="/img/members/{{getMember(3)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(3).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(3).age}}</p>
+          <p>{{getMember(3).description}}</p>
+        </div>
+      </li>
+    </ul>
+    <ul ng-class="{'offset-half' : !asList}">
+      <li class="orange" >
+        <img ng-src="/img/members/{{getMember(4)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(4).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(4).age}}</p>
+          <p>{{getMember(4).description}}</p>
+        </div>
+      </li>
+      <li class="orange" >
+        <img ng-src="/img/members/{{getMember(5)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(5).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(5).age}}</p>
+          <p>{{getMember(5).description}}</p>
+        </div>
+      </li>
+      <li class="orange" >
+        <img ng-src="/img/members/{{getMember(6)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(6).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(6).age}}</p>
+          <p>{{getMember(6).description}}</p>
+        </div>
+      </li>
+    </ul>
+    <ul ng-class="{'offset-full' : !asList}" class="overflow-right">
+      <li class="violett">
+        <img ng-src="/img/members/{{getMember(10)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(10).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(10).age}}</p>
+          <p>{{getMember(10).description}}</p>
+        </div>
+      </li>
+      <li class="violett">
+        <img ng-src="/img/members/{{getMember(11)._id}}.png" width="200" height="200" />
+        <div>
+          <h3>{{getMember(11).name}}</h3>
+          <p>Aktives Mitglied</p>
+          <p>Alter: {{getMember(11).age}}</p>
+          <p>{{getMember(11).description}}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -135,6 +135,9 @@ var cfFB = angular.module('CFfacebook', []);
             return api({method: 'GET', path: path, params: params});
         }
 
+        function del(path, params) {
+            return api({method: 'DELETE', path: path, params: params});
+        }
 
         function parseQueryString(queryString) {
             var qs = decodeURIComponent(queryString),

@@ -237,16 +237,6 @@ articlesControllers.controller('ArticleCtrl', ['$scope', '$timeout', '$log', '$r
          });
       } 
 
-      $scope.fblogin = function() {
-        Facebook.login('manage_pages,publish_actions').then(
-          function () {
-              alert('FB login success');
-          },
-          function () {
-              alert('FB login failed');
-          });
-      }
-
       $scope.fbtest = function() {
         // 153097184732527
         Facebook.post("/me/feed", {}, {message:'THIS IS A TEST MESSAGE', link:'http://clubforum.de:3000/#news'});
@@ -312,15 +302,39 @@ articlesControllers.controller('ArticleCtrl', ['$scope', '$timeout', '$log', '$r
               "image": (file2Up.clear) ? 'clear' : 'none'
             }
          }
-         console.log(message.article.hasImg);
+        
         articleUtils.sendArticle(message, isNew, articleId, actionType).then(
           function(resp) {
+
+           var articleId = (resp.articledata) ? resp.articledata._id : $scope.article._id;
+           if($scope.article.status == $scope.sitestate.articleStatusEnum[0].name && $scope.article.config.publish_fb) {
+              Facebook.login('manage_pages,publish_actions').then(
+                function () {
+                  Facebook.post("/me/feed", {},
+                   {
+                    message:$scope.article.abstract,
+                    link:'http://clubforum.de:3000/#!/news/'+ articleId,
+                    place:'153097184732527',
+                    name: $scope.article.title_short,
+                    caption: $scope.article.title,
+                    picture: 'http://clubforum.de:3000/img/articles/'+articleId+'.png' 
+                   }
+                  ).success(function(resp) {
+                      alert('Sucessfully postet to FB');
+                      console.log(resp.id);
+                    });
+                },
+                function (resp) {
+                  console.log("Fail");
+                  alert('FB login failed');
+                });
+            }
 
             if(resp.articledata) {
               $location.path('/managearticles/'+resp.articledata._id);
               sharedArticle.setArticle(resp.articledata);
             }
-            
+
             $scope.article.initstatus = $scope.article.status;
             
             $scope.messages = resp.msg;
@@ -400,3 +414,7 @@ articlesControllers.controller('ManageHomeCtrl',
 		  }, 3000);
 		};
   });
+
+articlesControllers.controller('ManageMembersCtrl', [function(){
+    
+}]);

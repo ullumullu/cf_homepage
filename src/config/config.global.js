@@ -2,13 +2,19 @@ var config = {};
 
 // Environment configuration
 config.appname = "Club Forum Homepage";
-config.env = 'development';
-config.hostname = 'localhost';
+config.env = 'development'; // production, environment
+config.hostname = 'clubforum.de';
 config.port = '3000';
 config.secret_key = 'forumoldbutgold';
-config.logging = 'debug'; //info, warn, error, debug
-
 config.requiresauthentication = false;
+
+// File paths
+config.paths = {};
+config.paths.articles = './src/public/img/articles/';
+config.paths.members = './src/public/img/members/';
+
+// Logging
+config.logging = 'debug'; //info, warn, error, debug
 
 // SSL configuration - for https conection
 config.ssl = {};
