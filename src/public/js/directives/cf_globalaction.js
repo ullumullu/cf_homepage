@@ -1,4 +1,4 @@
-var globalAction = angular.module('GlobalAction', []);
+var globalAction = angular.module('CF-GlobalAction', []);
 
 globalAction.directive('globalActions', ['$window', '$rootScope', 
   function($window, $rootScope){

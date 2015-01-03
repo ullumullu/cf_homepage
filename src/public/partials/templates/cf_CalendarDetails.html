@@ -1,0 +1,10 @@
+<pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
+<h4>Details:</h4>
+<form>
+  <label class="input-admin"><input type="radio" name="tarif" value="0"/>Vergünstigter Tarif</label>
+  <label class="input-admin"><input type="radio" name="tarif" value="1"/>Normaltarif</label>
+  <input type="text" class="form-control input-admin"  name="name" placeholder="Name" value="" ng-model="newmember.name" required>
+  <input type="text" class="form-control input-admin"  name="name" placeholder="E-Mail Adresse" value="" ng-model="newmember.name" required>
+  <textarea class="form-control input-admin"  name="name" placeholder="Anfrage" value="" ng-model="newmember.name" required></textarea>
+  <button>Rent Request</button>
+</form>

@@ -1,7 +1,7 @@
 <!-- This partial represents the landing page of the club forum homepage -->
 <div id="rentcontent" class="container-fluid">
   
-  <div class="col-md-6">
+  <div class="col-md-6 col-lg-7">
     <div id="cf-slideshow" class="">
       <div style="height: 405px">
         <carousel interval="myInterval" disable-animation="true">
@@ -15,20 +15,21 @@
         </carousel>
       </div>
     </div>
-    <div id="cf-information" class="">
-      <p>Information Text</p>
-      <p>Diese Katzen können Sie exklusiv für nur 150€ mieten!</p>
+    <div id="cf-information" class="orange">
+      <p>Seit ihr noch auf der Suche nach einer geeigneten Location für eure Party? Die Räumlichkeiten des Club Forums könnt ihr an allen (freien) Wochenenden mieten. Bitte achtet hierbei auf die verfügbaren Daten die ihr dem Kalender oben rechts entnehmen könnt. 
+      </p>
+      <p>Hierbei gelten die folgenden Tarife:
+        <ul style="color:white">
+          <li>150€ pro Tag für Jugendliche, Studenten und Auszubildende</li>
+          <li>250€ pro Tag für Erwachsene</li>
+          <li>Zusätzlich kommen 150€ Kaution hinzu</li>
+        </ul>
+      </p>
     </div>    
   </div>
-  <div class="col-md-6" style="background-color:green">
-    <div id="calendar" class="">
-      <h1>Kalender:</h1>
-    </div>
-    <div id="calendar-details" class="">
-      <p>Calendar-details</p>
-    </div>    
-    <div id="rentrequest" class="">
-      <p>Rent Request</p>
-    </div>
+  <div class="col-md-6 col-lg-5" style="background-color:rgba(0,0,0,0.3)" cf-calendar-manager>
+    <h3>Anfrage</h3>
+    <div cf-calendar id="calendar" class=""></div>
+    <div cf-calendar-details id="calendar-details" class=""></div>
   </div>
 </div>

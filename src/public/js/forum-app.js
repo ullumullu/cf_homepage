@@ -6,7 +6,8 @@ var forumApp = angular.module('forumApp', [
   'ui.bootstrap',
   'ForumControllers',
   'MemberControllerUtils',
-  'GlobalAction'
+  'CF-GlobalAction',
+  'CF-Calendar'
 ]);
 /* CONFIGURATION TASKS */
 forumApp.config(['$routeProvider', '$locationProvider', 
