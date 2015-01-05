@@ -29,4 +29,10 @@ config.db.hostname='mongodb://localhost/clubForum';
 config.db.username="";
 config.db.password="";
 
+// Google Calendar configuration
+config.gcal = {};
+config.gcal.email = "YOUREMAIL@PROVIDER.com";
+config.gcal.keyFile = "PATHTOYOURKEYFILE";
+config.gcal.calendarId = "CALENDARID";
+
 module.exports = config;

@@ -1,3 +1,9 @@
+// App configuration files
+var env = process.env.NODE_ENV || 'development',
+    config = require('./config/config.'+env+'.js'),
+    logging = require('./config/logging.js').getLogger('home.js');
+
+// Ext. Dependencies
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -7,12 +13,14 @@ var path = require('path');
 var fs = require('fs');
 var hbs = require('hbs');
 var busboy = require('connect-busboy');
+/* USED FOR GOOGLE CALENDAR INTEGRATION */
+var gcal     = require('google-calendar');
 
 var app = express();
 
-
-var home = require('./routes/home');
-var authenticated = require('./routes/authenticated');
+// Routes
+var home = require('./routes/home'),
+    authenticated = require('./routes/authenticated');
 
 app.set('views', path.join(__dirname, 'views'));
 
