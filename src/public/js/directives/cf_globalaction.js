@@ -1,6 +1,6 @@
-var globalAction = angular.module('CF-GlobalAction', []);
+var cfGlobalAction = angular.module('CF-GlobalAction', []);
 
-globalAction.directive('globalActions', ['$window', '$rootScope', 
+cfGlobalAction.directive('globalActions', ['$window', '$rootScope', 
   function($window, $rootScope){
     // Runs during compile
   return {
@@ -17,7 +17,6 @@ globalAction.directive('globalActions', ['$window', '$rootScope',
     transclude: false,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller, transcludeFn) {
-    
       $rootScope.$watch('globalActions', function(newVal, oldVal){
         $scope.globalActions = newVal;
       });

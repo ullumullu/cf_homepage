@@ -65,8 +65,8 @@ router.get("/",  function(request, response) {
   var _METHOD = "GET /";
   logging.debug("Entering " + _METHOD);
 
-  if(request.session.authenticated) {
-		response.redirect('/adminarea/area', 302);
+  if(request.session.authenticated) {		
+		response.redirect(302, '/adminarea/area');
 	} else {
 		response.render('adminarea/login_adminarea');
 	}
@@ -82,7 +82,7 @@ router.get("/login",  function(request, response) {
   logging.debug("Entering " + _METHOD);
 
 	if(request.session.authenticated) {
-		response.redirect('/adminarea/area', 302);
+		response.redirect(302, '/adminarea/area');
 	} else {
 		response.render('adminarea/login_adminarea');
 	}
@@ -106,7 +106,7 @@ router.post("/login",  function(request, response) {
 			} 
 			request.session.authenticated = true;
 			request.session.loginname =  loginname;
-			response.redirect('area', 302);
+			response.redirect(302, '/adminarea/area');
 		} else {
 			if(config.logging === 'debug') {
 			   console.log('DEBUG: POST: /login: User is not authenticated');
@@ -148,14 +148,19 @@ if(config.requiresauthentication) {
 
 /* GET new article page. */
 router.get('/area', function(request, response) {
+	var _METHOD = "GET /area";
+  logging.debug("Entering " + _METHOD);
 	// NOTE: if session configures cookies as secure then they aren't passed if http is used!
-  	response.render('adminarea/adminarea', {loginname: request.session.loginname});
+  response.render('adminarea/area', {loginname: request.session.loginname});
 });
 
 /*==========  HomeContent Methods  ==========*/
 
 
 router.get('/homeContent', function(request, response) {
+	var _METHOD = "GET /homeContent";
+  logging.debug("Entering " + _METHOD);
+	
 	var homeModel =  cfDB.homemodel;
 	homeModel.find({}, function (err, home) {
 		if(home[0]) {
@@ -172,7 +177,9 @@ router.get('/homeContent', function(request, response) {
 });
 
 router.post('/homeContent', function(request, response) {
-	console.log(request.body);
+	var _METHOD = "POST /homeContent";
+  logging.debug("Entering " + _METHOD);
+
 	var body = request.body;
 	var id = body._id;
 	var welcome_text = { welcome_text: body.welcome_text_new };

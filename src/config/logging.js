@@ -17,37 +17,6 @@ var env = process.env.NODE_ENV || 'development',
 var winston = require('winston');
 
 /**
- * Configure the logger for development
- * @type {Logger}
- */
-winston.loggers.add('development', {
-  console: {
-    level: config.logging,
-    colorize: 'true',
-    label: 'dasdas',
-    timestamp: 'true'
-  },
-  file: {
-    filename: './src/logs/development.log'
-  }
-});
-
-/**
- * Configure the logger for production
- * @type {Logger}
- */
-winston.loggers.add('production', {
-  console: {
-    level: config.logging,
-    colorize: 'true',
-    label: 'production'
-  },
-  file: {
-    filename: './src/logs/production.log'
-  }
-});
-
-/**
  * Helper method to retrive the correct logger and set the classname
  * as description.
  * @param  {String} classname
@@ -56,13 +25,33 @@ winston.loggers.add('production', {
  */
 function getLogger(classname, level) {
   var _level = level || config.logging;
-  var _logger; 
+  var _logger;
   if(env == 'production') {
-    _logger = winston.loggers.get('production');
+    winston.loggers.add(classname, {
+      console: {
+        level: config.logging,
+        colorize: 'true',
+        label: classname
+      },
+      file: {
+        filename: './src/logs/production.log'
+      }
+    });
+    _logger = winston.loggers.get(classname);
   } else {
-    _logger = winston.loggers.get('development');
+    winston.loggers.add(classname, {
+      console: {
+        level: config.logging,
+        colorize: 'true',
+        label: classname,
+        timestamp: 'true'
+      },
+      file: {
+        filename: './src/logs/development.log'
+      }
+    });
+     _logger = winston.loggers.get(classname);
   }
-  _logger.transports.console.label = classname;
   return _logger;
 }
 

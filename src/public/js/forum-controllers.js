@@ -59,8 +59,8 @@ forumCtrls.controller('NewsController', ['$scope', '$rootScope', '$filter', '$lo
     globalActions[0] = {
       description : "Info",
       icon        : "glyphicon glyphicon-question-sign",
-      onclick     : function() {$scope.help = !$scope.help},
-      onblur      : function() {$scope.help = false;}
+      onclick     : function(e) {console.log(e);$scope.help = !$scope.help},
+      onblur      : function(e) {console.log(e);$scope.help = false;}
     }
 
     $rootScope.globalActions = globalActions;
@@ -175,4 +175,4 @@ forumCtrls.controller('RentController', ['$scope', function($scope){
   for (var i=0; i<6; i++) {
     $scope.addSlide();
   }
-}])
+}]);

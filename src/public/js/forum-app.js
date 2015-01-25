@@ -188,9 +188,6 @@ forumApp.directive('disqus', ['$window', '$location', function($window, $locatio
       disqus_disable_mobile: '@disqusDisableMobile',
       readyToBind: "@"
     },
-    controller: function($scope, $element, $attrs, $transclude) {
-
-    },
     restrict: 'E',
     templateUrl: '../partials/templates/disqus.html',
     link: function(scope, iElm, iAttrs, controller) {
@@ -299,7 +296,7 @@ forumApp.directive('fbLike', [
 
 /* WORKAROUND */
 
-forumApp.directive('disableAnimation', function($animate){
+forumApp.directive('disableAnimation', ['$animate', function($animate){
     return {
         restrict: 'A',
         link: function($scope, $element, $attrs){
@@ -308,4 +305,4 @@ forumApp.directive('disableAnimation', function($animate){
             });
         }
     }
-});
+}]);

@@ -1,25 +1,23 @@
-var cfCalendar = angular.module('CF-Calendar', []);
+var cfCal = angular.module('CF-Calendar', []);
 
-cfCalendar.directive('cfCalendarManager', ['$window', function($window){
+cfCal.directive('cfCalendarManager', function(){
   // Runs during compile
   return {
-    controller: function($scope) {
-        this.scope = $scope;
-    }
+    scope: {},
+    controller: ['$scope', function($scope) {
+        this.mgrscope = $scope;
+    }]
   };
-}]);
+});
 
-
-cfCalendar.directive('cfCalendar', ['$window', function($window){
+cfCal.directive('cfCalendar', function(){
   // Runs during compile
   return {
     require: '^cfCalendarManager', // Array = multiple requires, ? = optional, ^ = check parent elements
     restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     templateUrl: '../partials/templates/cf_Calendar.html',
-    scope: {
-
-    },
-    controller: function($scope, $element, $attrs, $transclude) {
+    scope: {},
+    controller: ['$scope', function($scope) {
       $scope.today = function() {
         $scope.dt = new Date();
       };
@@ -39,35 +37,30 @@ cfCalendar.directive('cfCalendar', ['$window', function($window){
       };
       $scope.toggleMin();
 
-    },
-    link: function($scope, iElm, iAttrs, cfCalendarManager, transcludeFn) { 
+    }],
+    link: function($scope, iElm, iAttrs, cfCalendarManager) { 
       $scope.$watch(function($scope) { return $scope.dt}, function(newValue) {
         console.log('DEBUG: ', newValue);
-        cfCalendarManager.scope.dt = $scope.dt;
+        cfCalendarManager.mgrscope.dt = $scope.dt;
       });
     }
   };
-}]);
+});
 
-cfCalendar.directive('cfCalendarDetails', ['$window', '$compile', function($window, $compile){
+cfCal.directive('cfCalendarDetails', function(){
   // Runs during compile
   return {
     require: '^cfCalendarManager', // Array = multiple requires, ? = optional, ^ = check parent elements
     restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     templateUrl: '../partials/templates/cf_CalendarDetails.html',
-    scope: {
-
-    },
-    controller: function($scope, $element, $attrs, $transclude) {
-
-    },
-    link: function($scope, iElm, iAttrs, cfCalendarManager, transcludeFn) {
-      cfCalendarManager.scope.$watch("dt", function(newValue) {
+    scope: {},
+    link: function($scope, iElm, iAttrs, cfCalendarManager) {
+      cfCalendarManager.mgrscope.$watch("dt", function(newValue) {
         console.log("TEST ", newValue);
         $scope.dt = newValue;
       });
 
-      $scope.cfmanager = cfCalendarManager.scope;
+      $scope.cfmanager = cfCalendarManager.mgrscope;
     }
   };
-}]);
+});

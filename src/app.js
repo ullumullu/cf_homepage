@@ -1,7 +1,7 @@
 // App configuration files
 var env = process.env.NODE_ENV || 'development',
     config = require('./config/config.'+env+'.js'),
-    logging = require('./config/logging.js').getLogger('home.js');
+    logging = require('./config/logging.js').getLogger('app.js');
 
 // Ext. Dependencies
 var express = require('express');
@@ -21,13 +21,13 @@ var app = express();
 // Routes
 var home = require('./routes/home'),
     authenticated = require('./routes/authenticated');
-
+logging.info("Starting Server in mode: " + env);
 app.set('views', path.join(__dirname, 'views'));
 
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
 
-var sess = { 
+var sess = {
     secret: 'keyboard cat', // 
     cookie: { secure: true, maxAge: 3600000 },
     rolling: true ,

@@ -49,7 +49,7 @@ module.exports = function(grunt) {
         soureMap: true
       },
       js: {
-        src : ['<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/*.js'],
+        src : ['<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/directives/*.js', '<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/*.js'],
         dest: '<%= globalConfig.dest %>/<%= globalConfig.staticfiles %>/js/production.js'
       },
       libs: {

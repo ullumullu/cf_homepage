@@ -1,3 +1,4 @@
+var logging = require('../../config/logging.js').getLogger('home.js');
 var googleAuth = require('google-oauth-jwt');
 var gcal = require('google-calendar');
 var dateFormat = require('dateformat');
@@ -13,13 +14,17 @@ GoogleCalendar.prototype.getCalendar = function (anonymized, callback) {
   authenticate.call(self, function (err, token) {
     gcal(token).events.list(self.calendarId,
       function(err, data) {
-        var returnData;
-        if(anonymized) {
-          returnData = convertData(data.items);
+        if(err) {
+          logging.error("Error retrieving the calendar ", self.calendarId, err);
         } else {
-          returnData = data.items;
+          var returnData;
+          if(anonymized) {
+            returnData = convertData(data.items);
+          } else {
+            returnData = data.items;
+          }
+          callback(err, returnData);
         }
-        callback(err, returnData);
       });
   }); 
 };

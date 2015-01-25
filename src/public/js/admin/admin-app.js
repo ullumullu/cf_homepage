@@ -12,10 +12,10 @@ var adminApp = angular.module('adminApp', [
   'ckEdit'
 ]);
 
-
 /* CONFIGURATION TASKS */
 adminApp.config(['$routeProvider',
   function($routeProvider) {
+    console.log("Starting Routes Config...");
     $routeProvider.
       when('/managehome', {
         templateUrl: '../partials/admin/manage-home.html',
@@ -37,7 +37,7 @@ adminApp.config(['$routeProvider',
         redirectTo: '/'
       })
   }]).run(['$rootScope', '$location', 'Facebook', function($rootScope, $location, Facebook){
-          
+          console.log("Run config...");
           Facebook.init('508276955969316', '153097184732527', 'http://clubforum.de:3000/oauthcallback');
 
           var path = function() { return $location.path();};

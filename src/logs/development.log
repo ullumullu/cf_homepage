@@ -64,3 +64,25 @@
 {"error":null,"level":"error","message":"storeImage(id, image): Error deleting the file 53dd57af912bb3342aef7ec5.png from path ./src/public/img/articles/53dd57af912bb3342aef7ec5.png","timestamp":"2014-11-01T17:14:53.059Z"}
 {"error":null,"level":"error","message":"storeImage(id, image): Error deleting the file 53dd57af912bb3342aef7ec5.png from path ./src/public/img/articles/53dd57af912bb3342aef7ec5.png","timestamp":"2014-11-01T17:15:18.308Z"}
 {"error":null,"level":"error","message":"storeImage(id, image): Error deleting the file 54567d4415ac95681c2d95fd.png from path ./src/public/img/articles/54567d4415ac95681c2d95fd.png","timestamp":"2014-11-02T18:51:48.493Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T18:11:02.198Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T18:11:18.973Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T18:12:21.263Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T18:18:43.591Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T18:19:09.329Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T18:20:55.167Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T18:23:49.244Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T18:55:02.142Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:04:29.368Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:04:38.008Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:04:44.805Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:05:04.336Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:07:34.098Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:07:55.568Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:08:21.257Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:09:22.346Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:09:39.647Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:10:47.630Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:14:17.130Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:14:28.036Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:15:37.746Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-01-25T19:15:52.608Z"}

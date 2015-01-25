@@ -2,11 +2,11 @@ var config = {};
 
 // Environment configuration
 config.appname = "Club Forum Homepage";
-config.env = 'development'; // production, environment
-config.hostname = 'clubforum.de';
+config.env = 'production'; // production, environment
+config.hostname = 'clubforumbb.de';
 config.port = '3000';
 config.secret_key = 'forumoldbutgold';
-config.requiresauthentication = false;
+config.requiresauthentication = true;
 
 // File paths
 config.paths = {};
@@ -18,7 +18,7 @@ config.logging = 'debug'; //info, warn, error, debug
 
 // SSL configuration - for https conection
 config.ssl = {};
-config.ssl.enabled = false;
+config.ssl.enabled = true;
 config.ssl.key = 'certificates/key.pem';
 config.ssl.cert = 'certificates/cert.pem';
 config.ssl.port = '4000';
