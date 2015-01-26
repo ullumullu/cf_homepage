@@ -26,7 +26,7 @@ newsCtrlUtil.factory('Article', ['$resource', 'CFSiteTheming', function($resourc
         }
     });
 
-        return Article;
+    return Article;
 }]);
 
 newsCtrlUtil.value('NewsSession', {selectedArticle: undefined, articles: undefined});

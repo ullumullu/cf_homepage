@@ -129,8 +129,8 @@ router.get('/calendar', function (req, res) {
   });
 });
 
-router.post('/rent', function (request, res) {
-  var _METHOD = "POST /rent";
+router.post('/calendar', function (request, res) {
+  var _METHOD = "POST /calendar";
   logging.debug("Entering " + _METHOD);
 
 

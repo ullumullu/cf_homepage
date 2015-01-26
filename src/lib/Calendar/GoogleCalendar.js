@@ -1,4 +1,4 @@
-var logging = require('../../config/logging.js').getLogger('home.js');
+var logging = require('../../config/logging.js').getLogger('GoogleCalendar.js');
 var googleAuth = require('google-oauth-jwt');
 var gcal = require('google-calendar');
 var dateFormat = require('dateformat');
@@ -12,20 +12,24 @@ var GoogleCalendar = function(email, keyFile, calendarId) {
 GoogleCalendar.prototype.getCalendar = function (anonymized, callback) {
   var self = this;
   authenticate.call(self, function (err, token) {
-    gcal(token).events.list(self.calendarId,
-      function(err, data) {
-        if(err) {
-          logging.error("Error retrieving the calendar ", self.calendarId, err);
-        } else {
-          var returnData;
-          if(anonymized) {
-            returnData = convertData(data.items);
+    if(err) {
+      // See authenticate
+    } else {
+      gcal(token).events.list(self.calendarId,
+        function(err, data) {
+          if(err) {
+            logging.error("Error retrieving the calendar ", self.calendarId, err);
           } else {
-            returnData = data.items;
+            var returnData;
+            if(anonymized) {
+              returnData = convertData(data.items);
+            } else {
+              returnData = data.items;
+            }
+            callback(err, returnData);
           }
-          callback(err, returnData);
-        }
-      });
+        });
+    }
   }); 
 };
 
@@ -50,6 +54,9 @@ function authenticate(callback) {
     // specify the scopes you which to access
     scopes: ['https://www.googleapis.com/auth/calendar']
   }, function (err, token) {
+    if(err) {
+      logging.error("Error during authentication ", err);
+    }
     callback(err, token);
   });
 }
@@ -63,8 +70,8 @@ function convertData(items) {
 
       var newEvent = {
         id: event.id,
-        start: event.end.date,
-        end: event.start.date,
+        start: event.start.date,
+        end: event.end.date,
         summary: event.summary
       };
 

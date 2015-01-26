@@ -175,4 +175,6 @@ forumCtrls.controller('RentController', ['$scope', function($scope){
   for (var i=0; i<6; i++) {
     $scope.addSlide();
   }
+
 }]);
+
