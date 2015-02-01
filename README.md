@@ -24,6 +24,7 @@ npm install
 >TODO
 - Setup grunt
 - Create certificates for SSL
+- Insert certificate for google calendar
 - Configure node-gyp
 - Update the config file
 
