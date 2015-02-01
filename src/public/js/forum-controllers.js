@@ -162,12 +162,15 @@ forumCtrls.controller('HomeController', ['$rootScope',
 }]);
 
 forumCtrls.controller('RentController', ['$scope', function($scope){
+  
+  /*==========  Slideshow  ==========*/
+  
   $scope.myInterval = 10000;
   var slides = $scope.slides = [];
   $scope.addSlide = function() {
-    var newWidth = 600 + slides.length;
+    var newWidth = 500 + slides.length;
     slides.push({
-      image: 'http://placekitten.com/g/' + newWidth + '/400',
+      image: 'http://placekitten.com/g/' + newWidth + '/300',
       text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
         ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
     });

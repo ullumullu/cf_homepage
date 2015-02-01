@@ -35,4 +35,10 @@ config.gcal.email = "YOUREMAIL@PROVIDER.com";
 config.gcal.keyFile = "PATHTOYOURKEYFILE";
 config.gcal.calendarId = "CALENDARID";
 
+// Mailing Configuration
+config.email = {};
+config.email.enabled = true;
+config.email.user = 'YOUREMAIL@PROVIDER.com'
+config.email.pw = 'EMAILPW'
+
 module.exports = config;

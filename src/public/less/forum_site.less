@@ -5,11 +5,17 @@
 @text-color: white;
 @font-weight: 400;
 
-@font-familiy-heading: Impact;
+@font-familiy-heading: 'Helvetica Neue';
 
 @font-familiy-text: Arial;
 
 @font-familiy-navigation: 'Ubuntu', Impact; 
+
+/*SITE COLORS*/
+@orange: rgb(231, 67, 16);
+@green: #2DB54D;
+@violett: #A6177C;
+@red:  #945d55;
 
 h1, h2, h3, h4 {
   color: @text-color;
@@ -24,6 +30,10 @@ p {
   font-weight: @font-weight;
   line-height: 1.5em;
   font-size: 16px;
+}
+
+label {
+  color:white;
 }
 
 body {
@@ -58,10 +68,6 @@ body {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-
-
-
-@orange: rgb(231, 67, 16);
 
 .orange(@transparancy : 100%) {
   background-color: fade(@orange, @transparancy);
@@ -117,6 +123,31 @@ body {
 
 .help-highlight {
   border: solid 5px darken(@orange, 20%);
+}
+
+.input-margin {
+  margin: 5px 0px;
+}
+
+.submitbutton(@color) {
+  background-color: inherit;
+  color: white;
+  font-size: 11pt;
+  border-color: contrast(@color, black, white);
+  border-radius: 10%;
+  border-width: 3px;
+}
+
+.submitbtn-violett {
+  .submitbutton(@violett);
+}
+
+.float-right {
+  float: right;
+}
+
+.cf-content-container {
+
 }
 
 /* Colors */
@@ -524,9 +555,9 @@ body {
 }
 
 .green {
-  background-color: #2DB54D;
-  color: #2DB54D;
-  border-color: #2DB54D;
+  background-color: @green;
+  color: @green;
+  border-color: @green;
 }
 
 .green-text {
@@ -1056,12 +1087,64 @@ body {
   }
 }
 
+.cf-section(@color, @alpha) {
+  border-width: 3px;
+  border-style: solid;
+  border-color: @color;
+  background: fade(@color, @alpha);
+  padding: 0px 10px;
+  margin: 10px 0px;
+  border-radius: 2%;
+}
+
 /**
  * Rent.html
  */
 #rentcontent {
-
+  zoom:1.1;
   padding: 70px 0px;
   padding-right: 100px;
+  
+  @rentcontent-alpha: 90%;
 
+  #cf-information {
+    .cf-section(@orange, @rentcontent-alpha);
+  }
+
+  #calendar {
+    .cf-section(@green, @rentcontent-alpha);
+
+    /* MANIPULATION OF DATEPICKER */
+    #rent_datepicker {
+      margin: auto;
+      div:first-child{
+        background-color: inherit;
+        border: none;
+        margin: 0 auto;
+        padding: 0;
+      }
+
+      th {
+        color: white;
+        font-size: 12pt;
+      }
+      
+      button {
+        color: darken(@green, 20%);
+        border-color: @green;
+        font-size: 11pt;
+      }
+
+      [aria-disabled=true] {
+        background-color: fade(@red, 80%);
+      }
+
+    }
+
+  }
+
+  #calendar-details {
+    .cf-section(@violett, @rentcontent-alpha);
+  }
+  
 }

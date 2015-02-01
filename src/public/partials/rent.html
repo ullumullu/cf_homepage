@@ -3,7 +3,7 @@
   
   <div class="col-md-6 col-lg-7">
     <div id="cf-slideshow" class="">
-      <div style="height: 405px">
+      <div style="height: 305px">
         <carousel interval="myInterval" disable-animation="true">
           <slide ng-repeat="slide in slides" >
             <img ng-src="{{slide.image}}" style="margin:auto;">
@@ -15,9 +15,9 @@
         </carousel>
       </div>
     </div>
+
     <div id="cf-information" class="orange">
-      <p>Seit ihr noch auf der Suche nach einer geeigneten Location für eure Party? Die Räumlichkeiten des Club Forums könnt ihr an allen (freien) Wochenenden mieten. Bitte achtet hierbei auf die verfügbaren Daten die ihr dem Kalender oben rechts entnehmen könnt. 
-      </p>
+      <p>Ihr kommt aus Böblingen und seid noch auf der Suche nach einem Ort an dem ihr eure Party schmeißten könnt? Das Club Forum bietet seine Räumlichkeiten genau zu diesem Zwecke an! Interesse? Dann schickt uns einfach eine Anfrage, indem du einfach oben Rechts einen für dich geeigneten Termin auswählst und im Anschluss ein, zwei Dinge über dich und deine Party ausfüllst... wir melden uns dann auf der angegebenen E-Mail Adresse. </p>
       <p>Hierbei gelten die folgenden Tarife:
         <ul style="color:white">
           <li>150€ pro Tag für Jugendliche, Studenten und Auszubildende</li>
@@ -27,9 +27,9 @@
       </p>
     </div>    
   </div>
-  <div class="col-md-6 col-lg-5" style="background-color:rgba(0,0,0,0.3)" cf-calendar-manager>
-    <h3>Anfrage</h3>
+
+  <div style="min-width:330px; max-width:330px;" class="col-md-4 col-lg-5" cf-calendar-manager class="cf-content-container">
     <div cf-calendar id="calendar" class=""></div>
-    <div cf-calendar-details id="calendar-details" class=""></div>
+    <div cf-calendar-details id="calendar-details" class="clearfix"></div>
   </div>
 </div>

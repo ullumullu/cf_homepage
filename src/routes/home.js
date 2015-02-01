@@ -14,6 +14,8 @@ var express = require('express'),
 // Dependencies to libs
 var routesutil = require('./routesutil.js');
 var cfDB = require('../lib/ForumDB.js');
+var mailUtil = require('../lib/mailing.js');
+
 
 /*==========  Landing page  ==========*/
 
@@ -69,7 +71,7 @@ router.get('/newsarticles', function (req, res) {
 		});
 });
 
-/* GET news page. */
+/* GET article page. */
 router.get('/newsarticles/:articleID', function (req, res) {
 
 	var id = req.params.articleID;
@@ -95,6 +97,7 @@ router.get('/newsarticles/:articleID', function (req, res) {
 
 /*==========  Members API  ==========*/
 
+/* Current members of the CF */
 router.get('/members', function (req, res) {
 	 var membersModel =  cfDB.membersmodel;
    membersModel.find({visible: true})
@@ -129,12 +132,63 @@ router.get('/calendar', function (req, res) {
   });
 });
 
-router.post('/calendar', function (request, res) {
+router.post('/calendar', function (req, res) {
   var _METHOD = "POST /calendar";
   logging.debug("Entering " + _METHOD);
 
+  var body = req.body;
+  var inputIsValid = validateCalendarInput(body);
+  if(inputIsValid) {
+    if(config.email.enabled) {
+      // TODO Refactor into separate file
+      // Send mail to requester
+      mailUtil.sendMail(
+        "club.forum.bb@gmail.com",
+        body.email,
+        "Bestätigung Anfrage für " + body.name + " am " + body.date,
+        "Hallo " +  body.name + ",<br>Deine Anfrage ist bei uns eingegangen, sobald wir deine Anfrage bearbeitet haben melden wir uns bei dir!<br>Dein Club Forum Team!",
+        "<p>Hallo " +  body.name +",</p>"+
+        "<p>Deine Anfrage ist bei uns eingegangen, sobald wir deine Anfrage bearbeitet haben melden wir uns bei dir!</p>"+
+        "<p>Dein Club Forum Team!</p>",
+        []
+        );
+      // Send mail to club forum bb
+      mailUtil.sendMail(
+        body.email,
+        "club.forum.bb@gmail.com",
+        "Anfrage von " + body.name + " für den " + body.date,
+        "Aktiviere HTML Ansicht...",
+        "<p>Anfrage Vermietrung Club Forum für den " +  body.date +"</p>"+
+        "<table><tr><td>Name:</td><td>"+body.name+"</td></tr><tr><td>E-Mail:</td><td>"+body.email+"</td></tr><tr><td>Details:</td><td>"+body.request+"</td></tr></table>",
+        []
+        );
+    }
+    res.status(200);
+    routesutil.sendJson(req, res, 
+     {
+        status: "ok"
+     });
+  } else {
+    res.status(403);
+    routesutil.sendJson(req, res, 
+     {
+        status: "Ups... something bad happened..."
+     });
+  }
 
 });
+
+function validateCalendarInput(body) {
+  var currentDate = new Date();
+  var selectedDate = new Date(body.date);
+  if(config.logging === 'debug') {
+     console.log('DEBUG: '+ "currentDate ", currentDate, " selectedDate " , selectedDate);
+  } 
+  if(+selectedDate >= +currentDate) {
+    return true;
+  }
+  return false;
+}
 
 module.exports = router;
 /*-----  End of Routes for Public Page  ------*/

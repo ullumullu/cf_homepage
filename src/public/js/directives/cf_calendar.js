@@ -70,7 +70,6 @@ cfCal.directive('cfCalendar', function(){
     }],
     link: function($scope, iElm, iAttrs, cfCalendarManager) { 
       $scope.$watch(function($scope) { return $scope.dt}, function(newValue) {
-        console.log('DEBUG: ', newValue);
         cfCalendarManager.mgrscope.dt = $scope.dt;
       });
     }
@@ -82,11 +81,24 @@ cfCal.directive('cfCalendarDetails', function(){
   return {
     require: '^cfCalendarManager', // Array = multiple requires, ? = optional, ^ = check parent elements
     restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+    controller: ['$scope', 'CFCalService', function($scope, CFCalService) {  
+        $scope.rentrequest = {};
+        
+        $scope.submitRent = function() {
+
+          $scope.rentrequest.date = $scope.cfmanager.dt;
+          var newRequest = new CFCalService($scope.rentrequest);
+          newRequest.$save(function(test) {
+            console.log("GTEST ", test);
+          });
+
+        };
+
+      }],
     templateUrl: '../partials/templates/cf_CalendarDetails.html',
     scope: {},
     link: function($scope, iElm, iAttrs, cfCalendarManager) {
       cfCalendarManager.mgrscope.$watch("dt", function(newValue) {
-        console.log("TEST ", newValue);
         $scope.dt = newValue;
       });
 

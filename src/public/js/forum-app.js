@@ -132,7 +132,7 @@ forumApp.directive('navigation', function() {
           {name: "News", href: "/news", id: "news"},
           {name: "Events", href: "/events", id:"events"},
           {name: "Vermietung", href: "/rent", id:"rent"},
-          {name: "Geschichte", href: "/history", id:"history"},
+          // {name: "Geschichte", href: "/history", id:"history"},
           {name: "Mitglieder", href: "/members", id:"members"}
         ];
 
@@ -290,12 +290,14 @@ forumApp.directive('fbLike', [
   }
 }]);
 
-/* FILTER */
-
-
-
 /* WORKAROUND */
 
+/**
+ * Workaround used for the UI-Animation slider to stop propagation.
+ * Otherwise the selection buttons doesn't work.
+ * @param  {[Object]} $animate [ng-animate]
+ * @return {[Object]}          [directive]
+ */
 forumApp.directive('disableAnimation', ['$animate', function($animate){
     return {
         restrict: 'A',

@@ -1,12 +1,13 @@
 /**
  * General Styles
  */
+/*SITE COLORS*/
 h1,
 h2,
 h3,
 h4 {
   color: #ffffff;
-  font-family: Impact;
+  font-family: 'Helvetica Neue';
   font-weight: 400;
   line-height: 1.5em;
 }
@@ -16,6 +17,9 @@ p {
   font-weight: 400;
   line-height: 1.5em;
   font-size: 16px;
+}
+label {
+  color: white;
 }
 body {
   background-image: url(../img/home_background2.jpg);
@@ -49,6 +53,20 @@ body {
 }
 .help-highlight {
   border: solid 5px #882709;
+}
+.input-margin {
+  margin: 5px 0px;
+}
+.submitbtn-violett {
+  background-color: inherit;
+  color: white;
+  font-size: 11pt;
+  border-color: #ffffff;
+  border-radius: 10%;
+  border-width: 3px;
+}
+.float-right {
+  float: right;
 }
 /* Colors */
 .orange {
@@ -117,13 +135,13 @@ body {
   margin-bottom: 0px;
   padding-bottom: 0px;
   text-align: center;
-  font-family: Impact;
+  font-family: 'Helvetica Neue';
 }
 #landingpagecontent .cf-clubforum {
   font-size: 5vh;
   margin-top: 0px;
   text-align: center;
-  font-family: Impact;
+  font-family: 'Helvetica Neue';
 }
 /* Container Styles */
 .content-container {
@@ -392,9 +410,9 @@ body {
   color: #A6177C;
 }
 .green {
-  background-color: #2DB54D;
-  color: #2DB54D;
-  border-color: #2DB54D;
+  background-color: #2db54d;
+  color: #2db54d;
+  border-color: #2db54d;
 }
 .green-text {
   color: #2db54d;
@@ -858,6 +876,56 @@ html[xmlns] .clearfix {
  * Rent.html
  */
 #rentcontent {
+  zoom: 1.1;
   padding: 70px 0px;
   padding-right: 100px;
+}
+#rentcontent #cf-information {
+  border-width: 3px;
+  border-style: solid;
+  border-color: #e74310;
+  background: rgba(231, 67, 16, 0.9);
+  padding: 0px 10px;
+  margin: 10px 0px;
+  border-radius: 2%;
+}
+#rentcontent #calendar {
+  border-width: 3px;
+  border-style: solid;
+  border-color: #2db54d;
+  background: rgba(45, 181, 77, 0.9);
+  padding: 0px 10px;
+  margin: 10px 0px;
+  border-radius: 2%;
+  /* MANIPULATION OF DATEPICKER */
+}
+#rentcontent #calendar #rent_datepicker {
+  margin: auto;
+}
+#rentcontent #calendar #rent_datepicker div:first-child {
+  background-color: inherit;
+  border: none;
+  margin: 0 auto;
+  padding: 0;
+}
+#rentcontent #calendar #rent_datepicker th {
+  color: white;
+  font-size: 12pt;
+}
+#rentcontent #calendar #rent_datepicker button {
+  color: #19632a;
+  border-color: #2db54d;
+  font-size: 11pt;
+}
+#rentcontent #calendar #rent_datepicker [aria-disabled=true] {
+  background-color: rgba(148, 93, 85, 0.8);
+}
+#rentcontent #calendar-details {
+  border-width: 3px;
+  border-style: solid;
+  border-color: #a6177c;
+  background: rgba(166, 23, 124, 0.9);
+  padding: 0px 10px;
+  margin: 10px 0px;
+  border-radius: 2%;
 }
