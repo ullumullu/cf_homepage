@@ -213,6 +213,10 @@ router.use('/managearticles', articles);
 var members = require('./members-api.js');
 router.use('/managemembers', members);
 
+/*==========  Rent Methods  ==========*/
+var rent = require('./rent-api.js');
+router.use('/managerent', rent);
+
 module.exports = router;
 
 /*-----  End of HTTP Server Side Request Methods - Authenticated  ------*/

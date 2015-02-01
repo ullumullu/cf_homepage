@@ -30,9 +30,9 @@ function sendMail(fromInput, toInput, subjectInput, textInput, htmltextInput, at
   // send mail with defined transport object
   transporter.sendMail(mailOptions, function(error, info){
       if(error){
-          console.log(error);
+          logging.error(error);
       }else{
-          console.log('Message sent: ' + info.response);
+          logging.debug('Message sent: ' + info.response);
       }
   });
 };

@@ -21,17 +21,20 @@ var schemaLocation = './schema/';
 var homeSchema    = require(schemaLocation + 'home_schema.js'),
     userSchema    = require(schemaLocation + 'user_schema.js'),
     articleSchema = require(schemaLocation + 'article_schema.js'),
-    memberSchema  = require(schemaLocation + 'member_schema.js');
+    memberSchema  = require(schemaLocation + 'member_schema.js'),
+    rentSchema    = require(schemaLocation + 'rent_schema.js');
 
 var db = mongoose.connect(config.db.hostname);
 // Access to the single schemas
-var Home = db.model('Home', homeSchema),
-    User = db.model('User', userSchema),
+var Home     = db.model('Home', homeSchema),
+    User     = db.model('User', userSchema),
     Articles = db.model('Articles', articleSchema),
-    Members = db.model('Members', memberSchema);
+    Members  = db.model('Members', memberSchema),
+    Rent     = db.model('Rent', rentSchema);
 
 // Export methods for further use
-exports.homemodel = Home;
-exports.usermodule = User;
+exports.homemodel     = Home;
+exports.usermodule    = User;
 exports.articlesmodel = Articles;
-exports.membersmodel = Members;
+exports.membersmodel  = Members;
+exports.rentmodel     = Rent;

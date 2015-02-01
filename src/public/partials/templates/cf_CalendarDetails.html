@@ -1,7 +1,7 @@
 <h3 style="margin-top:5px; margin-bottom:0px">Details</h3>
 <form enctype="application/x-www-form-urlencoded" name="rentrequestform">
-  <label class="input-admin"><input type="radio" name="tarif" value="0" required/>Schüler, Stundet, o.ä.</label>
-  <label class="input-admin"><input type="radio" name="tarif" value="1" required/>bereits Berufstätig</label>
+  <label class="input-admin"><input type="radio" name="tarif" value="0" required ng-model="rentrequest.type" />Schüler, Stundet, o.ä.</label>
+  <label class="input-admin"><input type="radio" name="tarif" value="1" ng-model="rentrequest.type" required/>bereits Berufstätig</label>
   <input type="text" class="form-control input-margin"  name="name" placeholder="Name" value="" ng-model="rentrequest.name" required>
   <input type="email" class="form-control input-margin"  name="name" placeholder="E-Mail Adresse" value="" ng-model="rentrequest.email" required>
   <textarea class="form-control input-margin"  name="name" placeholder="Wieso willst du das Forum mieten?" value="" ng-model="rentrequest.request" required></textarea>

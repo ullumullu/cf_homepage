@@ -163,11 +163,29 @@ router.post('/calendar', function (req, res) {
         []
         );
     }
-    res.status(200);
-    routesutil.sendJson(req, res, 
-     {
-        status: "ok"
-     });
+
+    // Ceate the new document
+    var rentModel =  cfDB.rentmodel;
+    var newRent = new rentModel(body); 
+    
+    // And store it into the DB
+    newRent.save(function(err, newRent) {
+      if(!err) {
+        res.status(200);
+        routesutil.sendJson(req, res, 
+         {
+            status: "ok"
+         });
+      } else {
+        logging.error("Failed to store rent request. Error: ", err);
+        res.status(500);
+        routesutil.sendJson(req, res, 
+         {
+            status: "Ups... something bad happened...",
+            err: err
+         });
+      }
+    });
   } else {
     res.status(403);
     routesutil.sendJson(req, res, 
@@ -181,9 +199,7 @@ router.post('/calendar', function (req, res) {
 function validateCalendarInput(body) {
   var currentDate = new Date();
   var selectedDate = new Date(body.date);
-  if(config.logging === 'debug') {
-     console.log('DEBUG: '+ "currentDate ", currentDate, " selectedDate " , selectedDate);
-  } 
+  logging.debug("currentDate ", currentDate, " selectedDate " , selectedDate); 
   if(+selectedDate >= +currentDate) {
     return true;
   }
