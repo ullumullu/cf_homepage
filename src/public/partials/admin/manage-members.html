@@ -105,7 +105,7 @@
           </div>
           <div id="membersList" class="list-group jscrollpane" style="margin:0px;">
             <ul style="padding:0px;">
-              <li class="list-group-item from-bottom-to-top listelement" ng-repeat="member in members">
+              <li class="list-group-item from-bottom-to-top listelement" ng-repeat="member in members | membersFilter:searchText">
                 <div class="container-fluid">
                   <div class="row contentarea clearfix">
                     <div class="float-left" >

@@ -367,53 +367,92 @@ articlesControllers.controller('ArticleCtrl', ['$scope', '$timeout', '$log', '$r
 
  }]);
 
-articlesControllers.controller('ManageHomeCtrl',
-  function ($scope, $http, $timeout, $log) {
 
-	$http.get('/adminarea/homeContent').success(function(data) {	
-       $scope.home = data;
-       $scope.welcome_text_new = data.welcome_text;
-    });
+/**
+ * Controller for the admin manage-rent.html section. 
+ * @param  {[type]} $scope [description]
+ * @return {[type]}        [description]
+ */
+articlesControllers.controller('ManageRentCtrl', 
+  ['$scope', 'RentResource', '$modal', 'VerifyAcceptActionCtrl', 'VerifyRejectActionCtrl', 
+  function($scope, RentResource, $modal, VerifyAcceptActionCtrl, VerifyRejectActionCtrl){
+    var rentResources = {};
 
-	 $scope.submit = function(form) {
-		  // Trigger validation flag.
-		  $scope.submitted = true;
+    rentResources.getTypeText = function(number) {
+      var text='';
+      if(number == 0) {
+        text = 'Schüler/Student';
+      } else if(number == 1) {
+        text = 'Berufstätig';
+      }
+      return text;
+    }
 
-		  // If form is invalid, return and let AngularJS show validation errors.
-		  if (form.$invalid) {
-		    return;
-		  }
+    rentResources.initSection = function(newSection) {
+      rentResources.status = newSection;
+      RentResource.query({status:newSection}).$promise.then(function(rentrequests) {
+        rentResources.requests = rentrequests;
+      });
+    };
 
-		  // Default values for the request.
+    rentResources.changeRequestStatus = function(newstatus, request) {
 
-		  var config = {
-			callback : 'JSON_CALLBACK',
-			_id : $scope.home._id,
-			welcome_text_new : $scope.welcome_text_new
-		  };
+    };
 
-		  // Perform JSONP request.
-		  $http.post('/adminarea/homeContent', config)
-		    .success(function(data, status, headers, config) {
-		      if (data.status == 'OK') {
-		        $scope.messages = 'Your form has been sent!';
-		        $scope.submitted = false;
-		      } else {
-		        $scope.messages = 'Oops, we received your request, but there was an error.';
-		        $log.error(data);
-		      }
-		    })
-		    .error(function(data, status, headers, config) {
-		      $scope.messages = 'There was a network error. Try again later.';
-		      $log.error(data);
-		    });
-		  
-		  // Hide the status message which was set above after 3 seconds.
-		  $timeout(function() {
-		    $scope.messages = null;
-		  }, 3000);
-		};
-  });
+    function postRequest(request, statuschange) {
+      var rentRequest = new RentResource(request);
+      rentRequest.$save({sc: statuschange});
+    }
+
+    rentResources.verifyAcceptAction = function(request) {
+             var modalInstance = $modal.open({
+             templateUrl : 'acceptVerification.html',
+             controller : VerifyAcceptActionCtrl,
+             resolve: {
+                content: function() {
+                   return {
+                      selectedRequest: request,
+                      header: 'Alert - Accept Verification',
+                      body: 'Are you sure to accept the selected request:'
+                   };
+                }
+             }
+          });
+
+          modalInstance.result.then(function(request) {
+            postRequest(request, 'accepted');
+          });
+    }
+
+    rentResources.verifyRejectAction = function(request) {
+       var modalInstance = $modal.open({
+             templateUrl : 'rejectVerification.html',
+             controller : VerifyRejectActionCtrl,
+             resolve: {
+                content: function() {
+                   return {
+                      selectedRequest: request,
+                      header: 'Alert - Reject Verification',
+                      body: 'Are you sure to reject the selected request:'
+                   };
+                }
+             }
+          });
+
+          modalInstance.result.then(function(request) {
+            postRequest(request, 'rejected');
+          });
+    } 
+
+    rentResources.initSection('new');
+    $scope.rentResources = rentResources;
+
+}]);
+
+
+
+
+
 
 articlesControllers.controller('ManageMembersCtrl', [function(){
     

@@ -33,7 +33,7 @@ exports.sendJson = function(request, response, body) {
 
 	var resp_body = JSONPREFIX + JSON.stringify(body);
 	response.send(resp_body);
-  logging.debug("%s: Response send to %s", _METHOD, response.get('host'), {body: resp_body});
+  // logging.debug("%s: Response send to %s", _METHOD, response.get('host'), {body: resp_body});
 };
 
 /**

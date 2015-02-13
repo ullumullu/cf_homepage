@@ -3,7 +3,7 @@ var config = {};
 // Environment configuration
 config.appname = "Club Forum Homepage";
 config.env = 'production'; // production, environment
-config.hostname = 'clubforumbb.de';
+config.hostname = 'clubforum.de';
 config.port = '3000';
 config.secret_key = 'forumoldbutgold';
 config.requiresauthentication = true;

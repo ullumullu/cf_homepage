@@ -12,7 +12,11 @@ var rentSchema = mongoose.Schema({
         date: Date,
         request: String,
         accepted_by: { type: String, default: "Undefined" },
-        supervision: { type: String, default: ["Undefined"] },
+        supervision: { type: [String], default: ["Undefined"] },
+        remarks: [{
+          from: String,
+          comment: String
+        }],
         gcal_id: String
 });
 

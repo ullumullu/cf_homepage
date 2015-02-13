@@ -32,16 +32,27 @@ GoogleCalendar.prototype.getCalendar = function (anonymized, callback) {
     }
   }); 
 };
-
-GoogleCalendar.prototype.insertNewEvent = function (event) {
+  
+GoogleCalendar.prototype.insertNewEvent = function (event, callback) {
   var self = this;
   authenticate.call(self, function (err, token) {
+    gcal(token).events.insert(self.calendarId, event, function(err, result) {
+      callback(err, result);
+    });
+  }); 
+}
 
+GoogleCalendar.prototype.deleteEvent = function (eventid, callback) {
+  var self = this;
+  authenticate.call(self, function (err, token) {
+    gcal(token).events.delete(self.calendarId, eventid, function(err, result) {
+      callback(err, result);
+    });
   }); 
 }
 
 /**
- * Private Method that retrieves the OAuth Access Token for the Google Calendar Account.
+ * Private Method. Retrieves the OAuth Access Token for the Google Calendar Account.
  * Uses the google-oauth-jwt module.
  * @param  {Function} callback Callback method returns err and token
  */

@@ -149,3 +149,100 @@ adminUtils.factory('VerifyDeleteActionCtrl', function () {
          }
       };
 });
+
+adminUtils.factory('VerifyAcceptActionCtrl', function () {
+   return function($scope, $modalInstance, content) {
+         var _scope = {
+            selected : content.selectedRequest,
+            header : content.header,
+            content : content.body,
+         }; 
+         $scope.acceptAction = _scope;
+
+         $scope.acceptRequest = function(form) {
+            if (form.$invalid) {
+              return;
+            }
+            var selected = $scope.acceptAction.selected;
+            selected.accepted = true;
+            // Accepted
+            selected.accepted_by = $scope.acceptAction.acceptedby;
+            // Supervision
+            selected.supervision = [];
+            var supervision = $scope.acceptAction.supervision;
+            if(supervision) {
+              var supervisors = supervision.split(";");
+              for (var indx = supervisors.length - 1; indx >= 0; indx--) {
+                selected.supervision.push(supervisors[indx]);
+              };
+            }
+            // Remark
+            if($scope.acceptAction.remark) {
+              var remarkby = $scope.acceptAction.remark.from,
+                  comment = $scope.acceptAction.remark.comment;
+              selected.remarks.push({
+                  from: remarkby,
+                  comment: comment
+              });
+            }
+            $modalInstance.close(selected);
+         }
+
+         $scope.cancelAcceptAction = function() {
+            $scope.acceptAction = {};
+            $modalInstance.dismiss('cancel');
+         }
+      };
+});
+
+adminUtils.factory('VerifyRejectActionCtrl', function () {
+   return function($scope, $modalInstance, content) {
+         var _scope = {
+            selected : content.selectedRequest,
+            header : content.header,
+            content : content.body,
+         }; 
+         $scope.rejectAction = _scope;
+
+         $scope.rejectRequest = function(form) {
+            if (form.$invalid) {
+              return;
+            }
+            var selected = $scope.rejectAction.selected;
+            selected.accepted = false;
+            // Accepted
+            selected.accepted_by = $scope.rejectAction.rejectedby;
+            if($scope.rejectAction.remark) {
+              // Remark
+              var remarkby = $scope.rejectAction.remark.from,
+                  comment = $scope.rejectAction.remark.comment;
+              selected.remarks.push({
+                  from: remarkby,
+                  comment: comment
+              });
+            }
+            $modalInstance.close($scope.rejectAction.selected);
+         }
+
+         $scope.cancelRejectAction = function() {
+            $modalInstance.dismiss('cancel');
+         }
+      };
+});
+
+
+/*==========  Services for Renting  ==========*/
+
+
+adminUtils.factory('RentResource', ['$resource', function($resource){
+  var RentResource = $resource('/adminarea/managerent/rent/:rentRequestId', {status:'new', sc:'accepted'});
+
+  angular.extend(RentResource.prototype, {
+    getDetails: function() {
+      // TODO: Maybe make the whole thing a two staged process
+      // in order to save some bandwidth... (nobody will read all articles at once.
+    }
+  });
+
+  return RentResource;
+}]);

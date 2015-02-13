@@ -127,7 +127,8 @@ router.put('/articles/:articleID', function(request, response) {
   }
 
   var articlesmodel =  cfDB.articlesmodel;
-  articlesmodel.findByIdAndUpdate(id, body.article, function (err, updatedArticle) {      if(updatedArticle) {
+  articlesmodel.findByIdAndUpdate(id, body.article, function (err, updatedArticle) {      
+    if(updatedArticle) {
           response.status(200);
                 response.set({
                      'Content-Type': 'application/json',

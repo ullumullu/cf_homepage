@@ -1,0 +1,183 @@
+<div class="container-fluid fullscreen">
+	
+	<!-- Error Messages for this page -->
+	<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
+	<div id="errmessages" class="alert alert-danger alert-dismissable" data-ng-show="errmessages">
+		<button type="button" class="close" ng-click="errmessages = undefined">&times;</button>
+		<span data-ng-bind="errmessages"></span>
+	</div>
+
+	<!-- Content Container -->
+ 	<div>
+ 		<!-- List with all articles -->
+ 		<div id="listOfArticles" class="col-md-12">
+ 			<div>
+ 				<div class="sectionheading" style="margin:0px">
+					<h4 class="inline-block">Rentrequests</h4>
+ 					<div class="container-right">
+	 					<a class="iconlink">
+	 					<button ng-click="rentResources.initSection('new')">
+	 		 				<span>PENDING</span>		
+	 		 			</button>
+	 		 			</a>
+	 					<a class="iconlink">
+	 					<button ng-click="rentResources.initSection('accepted')">
+	 		 				<span>ACCEPTED</span>		
+	 		 			</button>
+	 		 			</a>
+	 		 			<a class="iconlink">
+	 					<button ng-click="rentResources.initSection('rejected')">
+	 		 				<span>REJECTED</span>		
+	 		 			</button>
+	 		 			</a>
+	 				</div>
+				</div>
+				<div class="sectioncontent" style="padding:0px; overflow:none; height: 77vh; margin-top:0px;">
+				  	<div class="actionarea">
+					  	<div class="input-group-admin">
+					      <input type="text" class="form-control input-admin"  name="s" placeholder="Search" value="" ng-model="searchText" />
+					      <span class="input-addon-right">
+					        <button type="button" class="btn btn-default searchbtn"><span class="glyphicon glyphicon-search white"></span></button>
+					      </span>
+					     </div>
+				  	</div>
+					<div class="list-group jscrollpane container-fluid" style="margin:0px;">
+					  <div class="row list-group-item from-bottom-to-top listelement" ng-repeat="request in rentResources.requests | rentRequestFilter:rentResources.status">	
+					  	<h4>[{{request.date | date:'MMM dd, yyyy @ H:mm'}}] Request by {{request.name}} - {{rentResources.getTypeText(request.type)}}</h4>
+					    <div class="col-md-8">
+								<section class="col-md-12">
+					    		<p>{{request.request}}</p>
+					    	</section>
+						    <section class="col-md-6">
+						    	<mailto receiver="{{request.email}}">
+						    		<span style="color:white"class="glyphicon glyphicon-envelope" >
+	  					    	<span style="color:white">{{request.email}}</span>
+	    						</mailto>
+	    					</section>
+								<section class="col-md-6">
+									<button ng-click="rentResources.verifyAcceptAction(request)">Accept</button>
+									<button ng-click="rentResources.verifyRejectAction(request)">Reject</button>
+	    					</section>
+    					</div>
+							<section class="col-md-4" style="border-left: white 5px solid">
+								<ul>
+									<li>Accepted by: {{request.accepted_by}}</li>
+									<li>Supervision: {{request.supervision}}</li>
+									<li>Remarks: {{request.remarks}}</li>
+								</ul>
+    					</section>
+					  </div>
+					</div>
+				</div>
+ 			</div>
+ 		</div>
+ 	</div>	
+</div>
+
+<!-- Initialize fancy scrolling -->
+<script>
+	$(function() {
+		$('.jscrollpane').jScrollPane({autoReinitialise: true});
+	});
+</script>
+
+<!-- Template has to be moved on the first page at some point in time -->
+<script type="text/ng-template" id="deleteVerification.html">
+	<div class="modal-header cf-modal-header ">
+		<h3 class="modal-title cf-modal-title">{{header}}</h3>
+	</div>
+	<div class="modal-body cf-modal-body">
+		<p>{{content}}</br> 
+		{{selected.title}}{{selected.status=='Draft' ? ' - Draft' : ''}}</p>
+	</div>
+	<div class="modal-footer cf-modal-footer">
+		<button class="btn btn-primary" ng-click="deleteArticle()">OK</button>
+		<button class="btn btn-warning" ng-click="cancelDeleteAction()">Cancel</button>
+	</div>
+</script>
+
+<script type="text/ng-template" id="acceptVerification.html">
+	<form name="acceptAddInfo_frm" enctype="application/x-www-form-urlencoded">	
+	<div class="modal-header cf-modal-header ">
+		<h3 class="modal-title cf-modal-title">{{acceptAction.header}}</h3>
+	</div>
+	<div class="modal-body cf-modal-body container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<p>{{acceptAction.content}}</br> 
+				<b>{{acceptAction.selected.name}}</b></p>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-3">
+					<span>Accepted by </span>
+				</div>
+				<div class="col-md-9">
+					<input type="text" name="acceptedby" ng-model="acceptAction.acceptedby" required />
+				</div>
+				<div class="col-md-3">
+					<span>Supervision </span>
+				</div>
+				<div class="col-md-9">
+					<input type="text" name="supervision" ng-model="acceptAction.supervision" /> 
+				</div>
+				<div class="col-md-3">
+					<span>Remark by </span>
+				</div>
+				<div class="col-md-9">
+					<input type="text" name="remarkby" ng-model="acceptAction.remark.from" />
+				</div>
+				<div class="col-md-12">
+					<span>Comment </span>
+				</div>
+				<div class="col-md-12">
+					<textarea name="remark" ng-model="acceptAction.remark.comment" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer cf-modal-footer">
+		<button class="btn btn-primary" ng-click="acceptRequest(acceptAddInfo_frm)">OK</button>
+		<button class="btn btn-warning" ng-click="cancelAcceptAction()">Cancel</button>
+	</div>
+	</form>
+</script>
+
+<script type="text/ng-template" id="rejectVerification.html">
+	<form name="rejectReqInfo_frm" enctype="application/x-www-form-urlencoded">
+	<div class="modal-header cf-modal-header ">
+		<h3 class="modal-title cf-modal-title">{{rejectAction.header}}</h3>
+	</div>
+	<div class="modal-body cf-modal-body">
+		<div class="row">
+		<div class="col-md-12">
+				<p>{{rejectAction.content}}</br> 
+			{{rejectAction.selected.name}}</p>
+		</div>
+		<div class="col-md-12">
+					<div class="col-md-3">
+						<span>Rejected by </span>
+					</div>
+					<div class="col-md-9">
+						<input type="text" name="rejectby" ng-model="rejectAction.rejectedby" required />
+					</div>
+					<div class="col-md-3">
+						<span>Remark by </span>
+					</div>
+					<div class="col-md-9">
+						<input type="text" name="remarkby" ng-model="rejectAction.remark.from" />
+					</div>
+					<div class="col-md-12">
+						<span>Comment </span>
+					</div>
+					<div class="col-md-12">
+						<textarea name="remark" ng-model="rejectAction.remark.comment" />
+					</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer cf-modal-footer">
+		<button class="btn btn-primary" ng-click="rejectRequest(rejectReqInfo_frm)">OK</button>
+		<button class="btn btn-warning" ng-click="cancelRejectAction()">Cancel</button>
+	</div>
+	</form>
+</script>

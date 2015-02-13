@@ -414,9 +414,6 @@ html[xmlns] .clearfix {
   border-top-color: white;
   border-top-radius: 4px;
 }
-.input-addon-right {
-  display: table-cell;
-}
 .shadow {
   -webkit-box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.75);
@@ -440,7 +437,19 @@ html[xmlns] .clearfix {
   position: relative;
   display: table;
   border-collapse: separate;
-  min-width: 100%;
+  width: 100%;
+}
+.input-group-admin input,
+.input-group-admin .input-addon-right {
+  display: table-cell;
+}
+.input-group-admin input {
+  width: 100%;
+}
+.input-group-admin .input-addon-right {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 .searchbtn {
   background: inherit;
@@ -473,6 +482,10 @@ html[xmlns] .clearfix {
 .cf-modal-body {
   color: black;
   font-size: 18px;
+}
+.cf-modal-body input,
+.cf-modal-body textarea {
+  width: 100%;
 }
 .cf-modal-title {
   color: black;

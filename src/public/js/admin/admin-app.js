@@ -9,7 +9,8 @@ var adminApp = angular.module('adminApp', [
   'angularFileUpload',
   'CFfacebook',
   'CF-Fileupload',
-  'ckEdit'
+  'ckEdit',
+  'CF-MailTo'
 ]);
 
 /* CONFIGURATION TASKS */
@@ -32,6 +33,10 @@ adminApp.config(['$routeProvider',
       when('/managemembers', {
         templateUrl: '../partials/admin/manage-members.html',
         controller: 'ManageMembersCtrl'
+      }).
+      when('/managerent', {
+        templateUrl: '../partials/admin/manage-rent.html',
+        controller: 'ManageRentCtrl'
       }).
       otherwise({
         redirectTo: '/'
@@ -146,6 +151,68 @@ adminApp.filter('listOfArticlesFilter',['$filter',function ($filter) {
           || article.author.toLowerCase().indexOf(searchTextLow) > -1
           || $filter('date')(article.date, 'medium').toLowerCase().indexOf(searchTextLow) > -1) {
           filteredInput.push(article);
+        }
+      }
+      return filteredInput;
+    } else {
+      return input;
+    }
+  };
+}]);
+
+adminApp.filter('membersFilter',['$filter',function ($filter) {
+  return function(input, searchText) {
+    if(searchText) {
+      var searchTextLow = searchText.toLowerCase();
+      var filteredInput = [];
+      for(membersCount in input) {
+        var member = input[membersCount];
+        if(member._id == null) {
+          continue;
+        }
+        var name = member.name.toLowerCase(),
+            age = new String(member.age),
+            description = member.description.toLowerCase();
+
+        if (name.indexOf(searchTextLow) > -1
+          || age.indexOf(searchTextLow) > -1
+          || description.indexOf(searchTextLow) > -1) {
+          filteredInput.push(member);
+        }
+      }
+      return filteredInput;
+    } else {
+      return input;
+    }
+  };
+}]);
+
+adminApp.filter('rentRequestFilter',['$filter',function ($filter) {
+  return function(input, searchText) {
+    console.log(input);
+    if(searchText) {
+      var searchTextLow = searchText.toLowerCase();
+      var filteredInput = [];
+      for(requestCount in input) {
+        var request = input[requestCount],
+            status = request.accepted,
+            accepted_by = request.accepted_by;
+
+        if(searchText == 'new' 
+          && status == false 
+          && accepted_by == 'Undefined') 
+        {
+          filteredInput.push(request);
+        } else if (searchText == 'accepted' 
+          && status == true 
+          && accepted_by != 'Undefined') 
+        {
+          filteredInput.push(request);
+        } else if (searchText == 'rejected' 
+          && status == false 
+          && accepted_by != 'Undefined') 
+        {
+          filteredInput.push(request);
         }
       }
       return filteredInput;
