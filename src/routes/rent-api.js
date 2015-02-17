@@ -10,7 +10,9 @@ var env = process.env.NODE_ENV || 'development',
 // External dependencies
 var express = require('express'),
     router = express.Router(),
-    Q = require('q');
+    Q = require('q'),
+    fs = require('fs'),
+    hbs = require('hbs');
 
 // Dependencies to libs
 var routesutil = require('./routesutil.js'),
@@ -85,10 +87,10 @@ router.post('/rent', function (req, resp) {
       processflow.push(createGCalEntry(event));
        if(config.email.enabled) {
         // Also send reject mail to requester
-        var mailContent = mailContentAccept();
-        processflow.push(mailUtil.sendMailAsync());
-        var mailContent = mailContentAcceptForum();
-        processflow.push(mailUtil.sendMailAsync());
+        var mailContentAcc = mailContentAccept(rentrequest);
+        processflow.push(mailUtil.sendMailAsync(mailContentAcc));
+        var mailContentAccFm = mailContentAcceptForum(rentrequest);
+        processflow.push(mailUtil.sendMailAsync(mailContentAccFm));
       }
     }
   } else if( newStatus == "rejected" ) {
@@ -99,8 +101,8 @@ router.post('/rent', function (req, resp) {
     }
     if(config.email.enabled) {
       // Also send reject mail to requester
-      var mailContent = mailContentReject();
-      processflow.push(mailUtil.sendMailAsync(mailContent));
+      var mailContentRej = mailContentReject(rentrequest);
+      processflow.push(mailUtil.sendMailAsync(mailContentRej));
     }
   }
 
@@ -127,7 +129,6 @@ router.post('/rent', function (req, resp) {
         logging.err(result.err);
         response.status(500);
       } else {
-        logging(result);
         response.status(200);
         routesutil.sendJson(request, response, {rentrequest: result})
       }
@@ -187,38 +188,46 @@ function storeInDB(rentrequest) {
   return deferred.promise;
 }
 
+function mailContentAccept(rentrequest) {
 
-function mailContentAccept() {
+  var source = fs.readFileSync('src/lib/mail_templates/accepted_request.handlebars', 'utf8');
+  var acceptTemplate = hbs.compile(source);
+  var acceptTextHTMLRes = acceptTemplate(rentrequest);
+     
   return {
-      fromInput: 'club.forum.bb@gmail.com',
-      toInput: rentrequest.email, 
-      subjectInput: 'Deine Anfrage wurde angenommen!', 
-      textInput: 'TODO', 
-      htmltextInput: 'TODO', 
-      attachmentsInput: []
-    };
+       from: 'club.forum.bb@gmail.com',
+       to: rentrequest.email, 
+       subject: 'Club Forum - Deine Anfrage wurde angenommen!', 
+       htmltext: acceptTextHTMLRes, 
+       attachments: [{   // filename and content type is derived from path
+            path: 'src/public/pdf/Vertrag_zur_privaten_Discomietung.pdf'
+        }]
+     }
 }
 
 function mailContentAcceptForum() {
   return {
-      fromInput: 'club.forum.bb@gmail.com', 
-      toInput: 'club.forum.bb@gmail.com', 
-      subjectInput: 'Deine Anfrage wurde angenommen!', 
-      textInput: 'TODO', 
-      htmltextInput: 'TODO', 
-      attachmentsInput: []
+      from: 'club.forum.bb@gmail.com', 
+      to: 'club.forum.bb@gmail.com', 
+      subject: 'Rent Request - Bestätigung versendet!',  
+      htmltext: 'TODO', 
+      attachments: []
     };
 }
 
-function mailContentReject() {
-  return {
-      fromInput: 'club.forum.bb@gmail.com', 
-      toInput: rentrequest.email, 
-      subjectInput: 'Deine Anfrage wurde abgelehnt!', 
-      textInput: 'TODO', 
-      htmltextInput: 'TODO', 
-      attachmentsInput: []
-    };
+function mailContentReject(rentrequest) {
+
+ var source = fs.readFileSync('src/lib/mail_templates/rejected_request.handlebars', 'utf8');
+ var rejectTemplate = hbs.compile(source);
+ var rejectTextHTMLRes = rejectTemplate(rentrequest);
+
+ return {
+    from: 'club.forum.bb@gmail.com', 
+    to: rentrequest.email, 
+    subject: 'Club Forum - Deine Anfrage wurde abgelehnt!',  
+    htmltext: rejectTextHTMLRes, 
+    attachments: []
+  };
 }
 
 module.exports = router;

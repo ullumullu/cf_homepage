@@ -561,3 +561,113 @@
 {"errors":[{"domain":"global","reason":"deleted","message":"Resource has been deleted"}],"code":410,"message":"","level":"error","timestamp":"2015-02-13T16:21:24.983Z"}
 {"errors":[{"domain":"global","reason":"deleted","message":"Resource has been deleted"}],"code":410,"message":"","level":"error","timestamp":"2015-02-13T16:21:30.728Z"}
 {"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-13T16:25:12.811Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:26:06.791Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:46:48.211Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:47:42.486Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:48:05.364Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:48:16.144Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:48:33.417Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:49:41.014Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:51:19.851Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:55:13.428Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:55:32.701Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:56:14.550Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:57:06.724Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T19:57:40.382Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:03:06.440Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:09:21.254Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:11:06.502Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:11:40.256Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:11:55.125Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:12:38.305Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:13:32.753Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:13:45.636Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:13:58.373Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:14:35.968Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:15:10.267Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:15:16.609Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:16:24.199Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:18:53.329Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:23:07.768Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:23:17.076Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:23:47.935Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:24:23.171Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:31:21.764Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:31:41.849Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:32:57.916Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:33:28.711Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:34:53.939Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:35:01.319Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:35:41.225Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:36:29.400Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:38:06.376Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:38:11.029Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:38:15.827Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:39:14.339Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:39:54.364Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:40:07.928Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:40:51.141Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:41:05.474Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:41:43.376Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:42:18.013Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:42:38.781Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:45:50.818Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:46:25.334Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:49:25.666Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:49:34.754Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:50:42.072Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:51:13.022Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:51:53.981Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:52:05.034Z"}
+{"code":"EENVELOPE","level":"error","message":"","timestamp":"2015-02-17T20:53:00.352Z"}
+{"code":"EENVELOPE","level":"error","message":"","timestamp":"2015-02-17T20:53:00.375Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T20:58:50.264Z"}
+{"code":"EENVELOPE","level":"error","message":"","timestamp":"2015-02-17T20:59:12.482Z"}
+{"code":"EENVELOPE","level":"error","message":"","timestamp":"2015-02-17T20:59:12.533Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T21:00:34.087Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:00:34.375Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:00:34.392Z"}
+{"code":"EENVELOPE","level":"error","message":"","timestamp":"2015-02-17T21:00:34.886Z"}
+{"code":"EENVELOPE","level":"error","message":"","timestamp":"2015-02-17T21:00:34.895Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T21:01:36.106Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:02:15.942Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:02:15.969Z"}
+{"level":"error","message":"Send Mail Async: Error: No recipients defined","timestamp":"2015-02-17T21:02:16.429Z"}
+{"level":"error","message":"Send Mail Async: Error: No recipients defined","timestamp":"2015-02-17T21:02:16.433Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T21:03:56.302Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:03:56.618Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:03:56.647Z"}
+{"level":"error","message":"Send Mail Async: Error: No recipients defined","timestamp":"2015-02-17T21:03:57.117Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T21:04:35.762Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:05:14.938Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:05:14.991Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T21:06:29.363Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T21:08:26.177Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T21:18:18.685Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:20:35.858Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:20:35.863Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T21:22:03.576Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:22:03.716Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:22:03.751Z"}
+{"errors":[{"domain":"global","reason":"deleted","message":"Resource has been deleted"}],"code":410,"message":"","level":"error","timestamp":"2015-02-17T21:24:21.796Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T21:24:46.720Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:25:02.282Z"}
+{"errors":[{"domain":"global","reason":"deleted","message":"Resource has been deleted"}],"code":410,"message":"","level":"error","timestamp":"2015-02-17T21:25:04.373Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:25:29.612Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:25:29.617Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:27:02.581Z"}
+{"errors":[{"domain":"global","reason":"deleted","message":"Resource has been deleted"}],"code":410,"message":"","level":"error","timestamp":"2015-02-17T21:27:04.567Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:27:29.922Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:27:29.938Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T21:28:09.847Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:28:40.025Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:28:48.680Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:28:48.684Z"}
+{"level":"info","message":"Starting Server in mode: development","timestamp":"2015-02-17T21:30:34.006Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:30:34.084Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:30:34.100Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:30:34.115Z"}
+{"errors":[{"domain":"global","reason":"deleted","message":"Resource has been deleted"}],"code":410,"message":"","level":"error","timestamp":"2015-02-17T21:30:34.960Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:30:46.704Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:31:01.696Z"}
+{"level":"info","message":"Entering  sendMailAsync(mailInput)","timestamp":"2015-02-17T21:31:01.699Z"}

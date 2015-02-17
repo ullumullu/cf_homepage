@@ -1,6 +1,7 @@
 # Ignore configuration files that may contain sensitive inf
 certificates/*
 src/config/config.development.js
+src/logs/*
 
 # Ignore paths that contain generated content.
 build/
